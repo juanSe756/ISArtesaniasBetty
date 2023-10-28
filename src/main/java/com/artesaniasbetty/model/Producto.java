@@ -13,15 +13,16 @@ import javax.persistence.*;
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
-    @Column(name = "nombre")
+    @Column(name = "id_prod")
+    private int id;
+    @Column(name = "nom_prod")
     private String nombre;
     @Column(name = "precio")
     private double precio;
-    @Column(name = "cant_disp")
-    private int cant_disp;
-    @Column(name = "desc")
+    @Column(name = "descrip_prod")
     private String desc;
-
+    @Column(name = "stock")
+    private int stock;
+    @Column(name = "categoria")
+    private Categoria categoria;
 }
