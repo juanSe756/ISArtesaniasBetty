@@ -5,11 +5,12 @@ import lombok.*;
 import javax.persistence.*;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "Productos")
+@Table(name = "productos")
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +24,6 @@ public class Producto {
     private String desc;
     @Column(name = "stock")
     private int stock;
-    @Column(name = "categoria")
+    @Column(name = "id_categ")
     private Categoria categoria;
 }
