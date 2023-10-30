@@ -2,11 +2,9 @@ package com.artesaniasbetty.controllers;
 
 import com.artesaniasbetty.model.Categoria;
 import com.artesaniasbetty.model.Producto;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import jakarta.persistence.*;
 
-import javax.persistence.EntityManager;
+
 
 
 public class ProductoController {
@@ -17,22 +15,17 @@ public class ProductoController {
                 .getSingleResult();
     }
     public String createProduct(String nombre, double precio, String desc, int stock, String categ){
-        SessionFactory sf = new Configuration().configure("META-INF/hibernate.cfg.xml")
-                .addAnnotatedClass(Producto.class).buildSessionFactory();
-        Session session = sf.openSession();
-        EntityManager em = (EntityManager) sf.createEntityManager();
+        EntityManagerFactory emf = Persistence
+                .createEntityManagerFactory("persistence-betty");
+        EntityManager em = emf.createEntityManager();
         Categoria categoria = searchCategoria(categ, em);
 
         try {
-            Producto producto = new Producto();
-            producto.setNombre(nombre);
-            producto.setPrecio(precio);
-            producto.setDesc(desc);
-            producto.setStock(stock);
+            Producto producto = new Producto(nombre, precio, desc, stock, categoria);
             producto.setCategoria(categoria);
-            session.beginTransaction();
-            session.save(producto);
-            session.getTransaction().commit();
+            em.getTransaction().begin();
+            em.persist(producto);
+            em.getTransaction().commit();
             em.close();
             return "Producto created";
         }catch (Exception e) {

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 @Getter
 @Setter
@@ -24,6 +24,5 @@ public class Categoria {
     private String desc;
     @OneToMany(mappedBy = "categoria")
     private List<Producto> productos;
-
 }
 

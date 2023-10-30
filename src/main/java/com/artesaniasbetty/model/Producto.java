@@ -2,7 +2,7 @@ package com.artesaniasbetty.model;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Getter
 @Setter
@@ -27,4 +27,11 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "id_categ")
     private Categoria categoria;
+    public Producto(String nombre, double precio, String desc, int stock, Categoria categoria) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.desc = desc;
+        this.stock = stock;
+        this.categoria = categoria;
+    }
 }

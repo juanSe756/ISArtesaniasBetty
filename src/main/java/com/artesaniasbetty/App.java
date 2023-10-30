@@ -2,8 +2,7 @@ package com.artesaniasbetty;
 
 import com.artesaniasbetty.gui.StartFrame;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
