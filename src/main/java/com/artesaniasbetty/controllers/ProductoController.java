@@ -12,10 +12,9 @@ import javax.persistence.EntityManager;
 public class ProductoController {
     public Categoria searchCategoria(String categ, EntityManager em){
         String jpql = "SELECT c FROM Categoria c WHERE c.nombre = :nombre";
-        Categoria categoria = em.createQuery(jpql, Categoria.class)
+        return em.createQuery(jpql, Categoria.class)
                 .setParameter("nombre", categ)
                 .getSingleResult();
-        return null;
     }
     public String createProduct(String nombre, double precio, String desc, int stock, String categ){
         SessionFactory sf = new Configuration().configure("META-INF/hibernate.cfg.xml")
