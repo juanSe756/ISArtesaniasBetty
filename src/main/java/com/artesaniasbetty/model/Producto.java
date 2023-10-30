@@ -24,6 +24,7 @@ public class Producto {
     private String desc;
     @Column(name = "stock")
     private int stock;
-    @Column(name = "id_categ")
+    @ManyToOne
+    @JoinColumn(name = "id_categ")
     private Categoria categoria;
 }
