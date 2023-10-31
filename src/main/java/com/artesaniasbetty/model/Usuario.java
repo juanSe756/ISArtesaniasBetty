@@ -6,33 +6,46 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import jakarta.persistence.*;
-import java.util.Date;
+
+import java.sql.Timestamp;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Entity
 @Table(name = "Usuarios")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     private int id;
     @Column(name = "nickname_usuario")
     private String nickname;
     @Column(name = "contrasena")
-    private double contrasena;
+    private String contrasena;
     @Column(name = "nombre_usuario")
     private String nombreUsuario;
     @Column(name = "apellido_usuario")
     private String apellidoUsuario;
     @Column(name = "telefono")
     private String telefono;
-    @Column(name = "estado_usuario")
+    @ManyToOne
+    @JoinColumn(name = "id_estado")
     private Estado estadoUsuario;
     @Column(name = "fecha_regist_usuario")
-    private Date fechaRegistroUsuario;
-    @Column(name = "id_rol")
+    private Timestamp fechaRegistroUsuario;
+    @ManyToOne
+    @JoinColumn(name = "id_rol")
     private Rol rol;
+    public Usuario(String nickname, String contrasena, String nombreUsuario, String apellidoUsuario, String telefono, Estado estadoUsuario, Timestamp fechaRegistroUsuario, Rol rol) {
+        this.nickname = nickname;
+        this.contrasena = contrasena;
+        this.nombreUsuario = nombreUsuario;
+        this.apellidoUsuario = apellidoUsuario;
+        this.telefono = telefono;
+        this.estadoUsuario = estadoUsuario;
+        this.fechaRegistroUsuario = fechaRegistroUsuario;
+        this.rol = rol;
+
+    }
 }

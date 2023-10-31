@@ -6,14 +6,12 @@ import jakarta.persistence.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "productos")
 public class Producto {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_prod")
     private int id;
     @Column(name = "nom_prod")
@@ -33,5 +31,15 @@ public class Producto {
         this.desc = desc;
         this.stock = stock;
         this.categoria = categoria;
+    }
+
+    public String toString() {
+        return "Producto{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", precio=" + precio +
+                ", desc='" + desc + '\'' +
+                ", stock=" + stock +
+                '}';
     }
 }
