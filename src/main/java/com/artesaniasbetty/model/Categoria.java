@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import java.util.List;
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -22,5 +21,12 @@ public class Categoria {
     private String desc;
     @OneToMany(mappedBy = "categoria")
     private List<Producto> productos;
+    public String toString() {
+        return "Categoria{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", desc='" + desc + '\'' +
+                '}';
+    }
 }
 

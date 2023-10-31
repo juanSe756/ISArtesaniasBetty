@@ -40,6 +40,7 @@ public class Producto {
                 ", precio=" + precio +
                 ", desc='" + desc + '\'' +
                 ", stock=" + stock +
+                ", categoria=" + categoria.toString() +
                 '}';
     }
 }

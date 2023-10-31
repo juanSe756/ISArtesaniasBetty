@@ -1,17 +1,15 @@
 package com.artesaniasbetty.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "Usuarios")
 public class Usuario {
@@ -37,6 +35,8 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "id_rol")
     private Rol rol;
+    @OneToMany(mappedBy = "idUsuario")
+    private List<Venta> ventas;
     public Usuario(String nickname, String contrasena, String nombreUsuario, String apellidoUsuario, String telefono, Estado estadoUsuario, Timestamp fechaRegistroUsuario, Rol rol) {
         this.nickname = nickname;
         this.contrasena = contrasena;
@@ -46,6 +46,5 @@ public class Usuario {
         this.estadoUsuario = estadoUsuario;
         this.fechaRegistroUsuario = fechaRegistroUsuario;
         this.rol = rol;
-
     }
 }

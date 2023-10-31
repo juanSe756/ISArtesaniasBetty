@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import jakarta.persistence.*;
-import java.util.Date;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -22,7 +24,8 @@ public class Venta {
     @Column(name = "descrip_venta")
     private String desc;
     @Column(name = "fecha_regist_venta")
-    private Date fechaRegistroVenta;
-    @Column(name = "id_usuario")
-    private int idUsuario;
+    private Timestamp fechaRegistroVenta;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario idUsuario;
 }

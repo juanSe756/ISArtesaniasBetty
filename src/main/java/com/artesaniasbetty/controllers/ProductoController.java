@@ -59,5 +59,33 @@ public class ProductoController {
         }
         return "Error incrementing stock";
     }
-
+    public String removeProduct(int id) {
+        EntityManagerFactory emf = Persistence
+                .createEntityManagerFactory("persistence-betty");
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            Producto producto = em.find(Producto.class, id);
+            em.remove(producto);
+            em.getTransaction().commit();
+            em.close();
+            return "product removed";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Error removing product";
+    }
+    public Producto searchProduct(int id) {
+        EntityManagerFactory emf = Persistence
+                .createEntityManagerFactory("persistence-betty");
+        EntityManager em = emf.createEntityManager();
+        return em.find(Producto.class, id);
+    }
+    public Producto searchProduct(String name){
+        EntityManagerFactory emf = Persistence
+                .createEntityManagerFactory("persistence-betty");
+        EntityManager em = emf.createEntityManager();
+        Query query = em.createQuery("SELECT p FROM Producto p WHERE p.nombre = :name");
+        query.setParameter("name", name);
+        return (Producto) query.getSingleResult();
+    }
 }
