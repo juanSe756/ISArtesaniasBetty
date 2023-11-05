@@ -7,14 +7,14 @@ import jakarta.persistence.*;
 
 public class ProductoController {
 
-    public String createProduct(String nombre, double precio, String desc, int stock, int categ) {
+    public String createProduct(String nombre, double precio, String desc, int stock, int categ, String foto) {
         EntityManagerFactory emf = Persistence
                 .createEntityManagerFactory("persistence-betty");
         EntityManager em = emf.createEntityManager();
         try (em) {
             em.getTransaction().begin();
             Categoria categoria = em.find(Categoria.class, categ);
-            Producto producto = new Producto(nombre, precio, desc, stock, categoria);
+            Producto producto = new Producto(nombre, precio, desc, stock, categoria, foto);
             em.persist(producto);
             em.getTransaction().commit();
             em.close();
@@ -32,9 +32,11 @@ public class ProductoController {
         try (em) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
-            producto.setStock(producto.getStock() - cantidad);
-            em.persist(producto);
-            em.getTransaction().commit();
+            if(producto.getStock() > cantidad){
+                producto.setStock(producto.getStock() - cantidad);
+                em.persist(producto);
+                em.getTransaction().commit();;
+            }
             em.close();
             return "decremented stock";
         } catch (Exception e) {
@@ -59,7 +61,7 @@ public class ProductoController {
         }
         return "Error incrementing stock";
     }
-    public String modifyProduct(int id, String nombre, double precio, String desc, int stock, int categoria) {
+    public String modifyProduct(int id, String nombre, double precio, String desc, int stock, int categoria, String foto) {
         EntityManagerFactory emf = Persistence
                 .createEntityManagerFactory("persistence-betty");
         try (EntityManager em = emf.createEntityManager()) {
@@ -71,6 +73,7 @@ public class ProductoController {
             producto.setDesc(desc);
             producto.setStock(stock);
             producto.setCategoria(categ);
+            producto.setFoto(foto);
             em.getTransaction().commit();
             em.close();
             return "product modified";

@@ -11,7 +11,6 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Entity
@@ -28,4 +27,11 @@ public class Venta {
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario idUsuario;
+    @OneToMany(mappedBy = "venta")
+    private List<DetalleVenta> detalleVentas;
+    public Venta(String desc, Timestamp fechaRegistroVenta, Usuario idUsuario) {
+        this.desc = desc;
+        this.fechaRegistroVenta = fechaRegistroVenta;
+        this.idUsuario = idUsuario;
+    }
 }

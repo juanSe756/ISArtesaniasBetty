@@ -4,6 +4,8 @@ import lombok.*;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,12 +27,17 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "id_categ")
     private Categoria categoria;
-    public Producto(String nombre, double precio, String desc, int stock, Categoria categoria) {
+    @Column(name = "foto_prod")
+    private String  foto;
+    @OneToMany(mappedBy = "producto")
+    private List<DetalleVenta> detalleVentas;
+    public Producto(String nombre, double precio, String desc, int stock, Categoria categoria, String foto) {
         this.nombre = nombre;
         this.precio = precio;
         this.desc = desc;
         this.stock = stock;
         this.categoria = categoria;
+        this.foto= foto;
     }
 
     public String toString() {
@@ -41,6 +48,7 @@ public class Producto {
                 ", desc='" + desc + '\'' +
                 ", stock=" + stock +
                 ", categoria=" + categoria.toString() +
+                ", foto='" + foto + '\'' +
                 '}';
     }
 }

@@ -21,7 +21,7 @@ public class UsuarioController {
             em.close();
             return "User created";
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return "Error creating user";
     }
@@ -37,9 +37,32 @@ public class UsuarioController {
             em.close();
             return "user removed";
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return "Error removing user";
+    }
+    public String modifyUser(int id, String contrasena, String nombreUsuario,
+                             String apellidoUsuario, String telefono, int estadoUsuario, String foto) {
+        EntityManagerFactory emf = Persistence
+                .createEntityManagerFactory("persistence-betty");
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            Usuario usuario = em.find(Usuario.class, id);
+            Estado estado = em.find(Estado.class, estadoUsuario);
+            String pass = BCrypt.hashpw(contrasena, BCrypt.gensalt());
+            usuario.setContrasena(pass);
+            usuario.setNombreUsuario(nombreUsuario);
+            usuario.setApellidoUsuario(apellidoUsuario);
+            usuario.setTelefono(telefono);
+            usuario.setEstadoUsuario(estado);
+            usuario.setFoto(foto);
+            em.getTransaction().commit();
+            em.close();
+            return "user modified";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "Error modifying user";
     }
     public boolean verifyPassword(String password, String hash){
         return BCrypt.checkpw(password, hash);
