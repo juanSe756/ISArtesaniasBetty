@@ -20,7 +20,7 @@ public class ProductoController {
             em.close();
             return "Product created";
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return "Error creating product";
     }
@@ -38,7 +38,7 @@ public class ProductoController {
             em.close();
             return "decremented stock";
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return "Error decrementing stock";
     }
@@ -55,9 +55,29 @@ public class ProductoController {
             em.close();
             return "incremented stock";
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return "Error incrementing stock";
+    }
+    public String modifyProduct(int id, String nombre, double precio, String desc, int stock, int categoria) {
+        EntityManagerFactory emf = Persistence
+                .createEntityManagerFactory("persistence-betty");
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            Producto producto = em.find(Producto.class, id);
+            Categoria categ = em.find(Categoria.class, categoria);
+            producto.setNombre(nombre);
+            producto.setPrecio(precio);
+            producto.setDesc(desc);
+            producto.setStock(stock);
+            producto.setCategoria(categ);
+            em.getTransaction().commit();
+            em.close();
+            return "product modified";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "Error modifying product";
     }
     public String removeProduct(int id) {
         EntityManagerFactory emf = Persistence
@@ -70,7 +90,7 @@ public class ProductoController {
             em.close();
             return "product removed";
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return "Error removing product";
     }

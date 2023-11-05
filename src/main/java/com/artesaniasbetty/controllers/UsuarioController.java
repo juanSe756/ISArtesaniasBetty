@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import org.mindrot.jbcrypt.BCrypt;
 public class UsuarioController {
     public String createUser(String nickname, String contrasena, String nombreUsuario,
-                             String apellidoUsuario, String telefono, int estadoUsuario, Timestamp fechaRegistroUsuario, int rol){
+                             String apellidoUsuario, String telefono, int estadoUsuario, Timestamp fechaRegistroUsuario, int rol, String foto){
         EntityManagerFactory emf = Persistence
                 .createEntityManagerFactory("persistence-betty");
         try (EntityManager em = emf.createEntityManager()) {
@@ -15,7 +15,7 @@ public class UsuarioController {
             Rol roLl = em.find(Rol.class, rol);
             em.getTransaction().begin();
             Usuario usuario = new Usuario(nickname, pass, nombreUsuario,
-                    apellidoUsuario, telefono, estado, fechaRegistroUsuario, roLl);
+                    apellidoUsuario, telefono, estado, fechaRegistroUsuario, roLl, foto);
             em.persist(usuario);
             em.getTransaction().commit();
             em.close();
