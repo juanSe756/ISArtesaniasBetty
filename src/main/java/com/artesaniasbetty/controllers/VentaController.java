@@ -18,8 +18,6 @@ public class VentaController {
             Usuario usuario = em.find(Usuario.class, idUsuario);
             Venta venta = new Venta(desc, fecha_regist_venta, usuario);
             em.persist(venta);
-            /*em.getTransaction().commit();
-            em.getTransaction().begin();*/
             for (Integer producto : productosVenta.keySet()) {
                 DetalleVenta detalleVenta = new DetalleVenta(em.find(Producto.class, producto),venta, productosVenta.get(producto));
                 productoController.decrementStock(producto, productosVenta.get(producto));

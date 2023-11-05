@@ -31,6 +31,8 @@ public class Producto {
     private String  foto;
     @OneToMany(mappedBy = "producto")
     private List<DetalleVenta> detalleVentas;
+    @OneToMany(mappedBy = "productoReStock")
+    private List<ReStock> reStocks;
     public Producto(String nombre, double precio, String desc, int stock, Categoria categoria, String foto) {
         this.nombre = nombre;
         this.precio = precio;

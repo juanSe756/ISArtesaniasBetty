@@ -39,6 +39,8 @@ public class Usuario {
     private String  foto;
     @OneToMany(mappedBy = "idUsuario")
     private List<Venta> ventas;
+    @OneToMany(mappedBy = "usuarioReStock")
+    private List<ReStock> reStocks;
     public Usuario(String nickname, String contrasena, String nombreUsuario, String apellidoUsuario, String telefono, Estado estadoUsuario, Timestamp fechaRegistroUsuario, Rol rol, String foto) {
         this.nickname = nickname;
         this.contrasena = contrasena;

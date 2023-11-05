@@ -2,7 +2,11 @@ package com.artesaniasbetty.controllers;
 
 import com.artesaniasbetty.model.Categoria;
 import com.artesaniasbetty.model.Producto;
+import com.artesaniasbetty.model.ReStock;
+import com.artesaniasbetty.model.Usuario;
 import jakarta.persistence.*;
+
+import java.sql.Timestamp;
 
 
 public class ProductoController {
@@ -44,13 +48,16 @@ public class ProductoController {
         }
         return "Error decrementing stock";
     }
-    public String incrementStock(int id, int cantidad) {
+    public String incrementStock(int id, int cantidad,String desc, int idUsuario, Timestamp fecha_reabast) {
         EntityManagerFactory emf = Persistence
                 .createEntityManagerFactory("persistence-betty");
         EntityManager em = emf.createEntityManager();
+        ReStock reStock;
         try (em) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
+            reStock= new ReStock(desc, producto, cantidad, fecha_reabast, em.find(Usuario.class, idUsuario));
+            em.persist(reStock);
             producto.setStock(producto.getStock() + cantidad);
             em.persist(producto);
             em.getTransaction().commit();

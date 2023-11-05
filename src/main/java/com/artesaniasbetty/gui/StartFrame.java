@@ -35,14 +35,12 @@ public class StartFrame extends JFrame {
 
     public void managePasswordButton() {
         if (!isEyeEnabled) {
-            System.out.println("if"+isEyeEnabled);
             isEyeEnabled = true;
             loginPnl.getEyeButton().setIcon(
                     new ImageIcon(Objects.requireNonNull(getClass()
                             .getResource("/assets/eye.png"))));
             loginPnl.getPassword().setEchoChar((char) 0);
         } else {
-            System.out.println("else"+isEyeEnabled);
             isEyeEnabled = false;
             loginPnl.getEyeButton().setIcon(
                     new ImageIcon(Objects.requireNonNull(getClass()
