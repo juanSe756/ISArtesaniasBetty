@@ -2,10 +2,11 @@ package com.artesaniasbetty;
 
 import com.artesaniasbetty.controllers.UsuarioController;
 import com.artesaniasbetty.gui.StartFrame;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.Query;
 
-import jakarta.persistence.*;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -36,9 +37,7 @@ public class App implements ActionListener {
         EntityManager em = emf.createEntityManager();
         Query q = em.createQuery("SELECT u.contrasena FROM Usuario u WHERE u.nickname = :username");
         q.setParameter("username",sf.getLoginPnl().getUsername());
-        System.out.println(sf.getLoginPnl().getUsername());
         String pass = String.valueOf(q.getSingleResult());
-        System.out.println(pass);
         if(uc.verifyPassword(sf.getLoginPnl().getPassword(),pass)){
             sf.setLogined(true);
             sf.login();
