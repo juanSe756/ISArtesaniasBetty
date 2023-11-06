@@ -1,6 +1,7 @@
 package com.artesaniasbetty.gui;
 
 import com.artesaniasbetty.gui.customs.*;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 
 public class LoginPnl extends JPanel {
     private JButton logo;
+    @Getter
     private JButton login;
     private JLabel title;
     private JLabel title2;
@@ -17,6 +19,7 @@ public class LoginPnl extends JPanel {
     private JLabel passwordTag;
     private JPasswordField password;
 
+    @Getter
     private JButton eyeButton;
     private int radius;
     public LoginPnl(ActionListener a){
@@ -32,7 +35,8 @@ public class LoginPnl extends JPanel {
         Font fontSubtitle = new Font("Inter",Font.BOLD,15);
         Font fontTitle = new Font("Inter",Font.BOLD,20);
         login = new RoundButton("Ingresar",18,100,45,fontButton,blues);
-
+        login.setActionCommand("LOGIN");
+        login.addActionListener(a);
         logo = new ClearMiniButton(new ImageIcon(getClass().getResource("/assets/logo_betty.png")),100,100);
         //logo.setEnabled(false);
         title = new MyJLabel("Artesanías",fontTitle,Color.BLACK);
@@ -131,10 +135,14 @@ public class LoginPnl extends JPanel {
         g2.fillRoundRect(0,0,getWidth(),getHeight(),radius,radius);
         super.paintComponent(graphics);
     }
-    public JButton getEyeButton() {
-        return eyeButton;
+
+    public String getUsername() {
+        return username.getText();
     }
-    public JPasswordField getPassword() {
+    public JPasswordField getPasswordField() {
         return password;
+    }
+    public String getPassword(){
+        return new String(getPasswordField().getPassword());
     }
 }

@@ -1,5 +1,8 @@
 package com.artesaniasbetty.gui;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -7,6 +10,10 @@ import java.util.Objects;
 
 public class StartFrame extends JFrame {
     private boolean isEyeEnabled = false;
+    @Getter
+    @Setter
+    private boolean logined = false;
+    @Getter
     private LoginPnl loginPnl;
 
     public StartFrame(ActionListener a) {
@@ -39,13 +46,22 @@ public class StartFrame extends JFrame {
             loginPnl.getEyeButton().setIcon(
                     new ImageIcon(Objects.requireNonNull(getClass()
                             .getResource("/assets/eye.png"))));
-            loginPnl.getPassword().setEchoChar((char) 0);
+            loginPnl.getPasswordField().setEchoChar((char) 0);
         } else {
             isEyeEnabled = false;
             loginPnl.getEyeButton().setIcon(
                     new ImageIcon(Objects.requireNonNull(getClass()
                             .getResource("/assets/eye-off.png"))));
-            loginPnl.getPassword().setEchoChar('*');
+            loginPnl.getPasswordField().setEchoChar('*');
         }
     }
+    public void login(){
+        if(logined){
+            remove(loginPnl);
+            getContentPane().setBackground(Color.WHITE);
+            revalidate();
+            repaint();
+        }
+    }
+
 }
