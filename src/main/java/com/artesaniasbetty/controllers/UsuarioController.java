@@ -7,9 +7,8 @@ import org.mindrot.jbcrypt.BCrypt;
 public class UsuarioController {
     public String createUser(String nickname, String contrasena, String nombreUsuario,
                              String apellidoUsuario, String telefono, int estadoUsuario, Timestamp fechaRegistroUsuario, int rol, String foto){
-        EntityManagerFactory emf = Persistence
-                .createEntityManagerFactory("persistence-betty");
-        try (EntityManager em = emf.createEntityManager()) {
+        EntityManager em = EntityMF.getInstance().createEntityManager();
+        try (em) {
             String pass = BCrypt.hashpw(contrasena, BCrypt.gensalt());
             Estado estado = em.find(Estado.class, estadoUsuario);
             Rol roLl = em.find(Rol.class, rol);
@@ -26,9 +25,7 @@ public class UsuarioController {
         return "Error creating user";
     }
     public String removeUser(int id) {
-        EntityManagerFactory emf = Persistence
-                .createEntityManagerFactory("persistence-betty");
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EntityMF.getInstance().createEntityManager();
         try (em) {
             em.getTransaction().begin();
             Usuario user = em.find(Usuario.class, id);
@@ -43,9 +40,8 @@ public class UsuarioController {
     }
     public String modifyUser(int id, String contrasena, String nombreUsuario,
                              String apellidoUsuario, String telefono, int estadoUsuario, String foto) {
-        EntityManagerFactory emf = Persistence
-                .createEntityManagerFactory("persistence-betty");
-        try (EntityManager em = emf.createEntityManager()) {
+        EntityManager em = EntityMF.getInstance().createEntityManager();
+        try (em) {
             em.getTransaction().begin();
             Usuario usuario = em.find(Usuario.class, id);
             Estado estado = em.find(Estado.class, estadoUsuario);

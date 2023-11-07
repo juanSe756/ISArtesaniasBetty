@@ -9,9 +9,7 @@ import java.util.List;
 
 public class VentaController {
     public String recordSale(String desc, Timestamp fecha_regist_venta, int idUsuario, HashMap<Integer, Integer> productosVenta) {
-        EntityManagerFactory emf = Persistence
-                .createEntityManagerFactory("persistence-betty");
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EntityMF.getInstance().createEntityManager();
         ProductoController productoController = new ProductoController();
         try (em) {
             em.getTransaction().begin();

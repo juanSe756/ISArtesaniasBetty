@@ -12,9 +12,7 @@ import java.sql.Timestamp;
 public class ProductoController {
 
     public String createProduct(String nombre, double precio, String desc, int stock, int categ, String foto) {
-        EntityManagerFactory emf = Persistence
-                .createEntityManagerFactory("persistence-betty");
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EntityMF.getInstance().createEntityManager();
         try (em) {
             em.getTransaction().begin();
             Categoria categoria = em.find(Categoria.class, categ);
@@ -30,9 +28,7 @@ public class ProductoController {
     }
 
     public String decrementStock(int id, int cantidad) {
-        EntityManagerFactory emf = Persistence
-                .createEntityManagerFactory("persistence-betty");
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EntityMF.getInstance().createEntityManager();
         try (em) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
@@ -49,9 +45,7 @@ public class ProductoController {
         return "Error decrementing stock";
     }
     public String incrementStock(int id, int cantidad,String desc, int idUsuario, Timestamp fecha_reabast) {
-        EntityManagerFactory emf = Persistence
-                .createEntityManagerFactory("persistence-betty");
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EntityMF.getInstance().createEntityManager();
         ReStock reStock;
         try (em) {
             em.getTransaction().begin();
@@ -69,9 +63,8 @@ public class ProductoController {
         return "Error incrementing stock";
     }
     public String modifyProduct(int id, String nombre, double precio, String desc, int stock, int categoria, String foto) {
-        EntityManagerFactory emf = Persistence
-                .createEntityManagerFactory("persistence-betty");
-        try (EntityManager em = emf.createEntityManager()) {
+        EntityManager em = EntityMF.getInstance().createEntityManager();
+        try (em) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
             Categoria categ = em.find(Categoria.class, categoria);
@@ -90,9 +83,8 @@ public class ProductoController {
         return "Error modifying product";
     }
     public String removeProduct(int id) {
-        EntityManagerFactory emf = Persistence
-                .createEntityManagerFactory("persistence-betty");
-        try (EntityManager em = emf.createEntityManager()) {
+        EntityManager em = EntityMF.getInstance().createEntityManager();
+        try (em) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
             em.remove(producto);
@@ -105,15 +97,11 @@ public class ProductoController {
         return "Error removing product";
     }
     public Producto searchProduct(int id) {
-        EntityManagerFactory emf = Persistence
-                .createEntityManagerFactory("persistence-betty");
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EntityMF.getInstance().createEntityManager();
         return em.find(Producto.class, id);
     }
     public Producto searchProduct(String name){
-        EntityManagerFactory emf = Persistence
-                .createEntityManagerFactory("persistence-betty");
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EntityMF.getInstance().createEntityManager();
         Query query = em.createQuery("SELECT p FROM Producto p WHERE p.nombre = :name");
         query.setParameter("name", name);
         return (Producto) query.getSingleResult();

@@ -1,5 +1,6 @@
 package com.artesaniasbetty;
 
+import com.artesaniasbetty.controllers.EntityMF;
 import com.artesaniasbetty.controllers.UsuarioController;
 import com.artesaniasbetty.gui.StartFrame;
 import jakarta.persistence.EntityManager;
@@ -33,8 +34,7 @@ public class App implements ActionListener {
         }
     }
     private void authorizeLogin(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence-betty");
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EntityMF.getInstance().createEntityManager();
         Query q = em.createQuery("SELECT u.contrasena FROM Usuario u WHERE u.nickname = :username");
         q.setParameter("username",sf.getLoginPnl().getUsername());
         String pass = String.valueOf(q.getSingleResult());
