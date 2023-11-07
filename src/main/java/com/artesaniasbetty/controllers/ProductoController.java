@@ -12,42 +12,38 @@ import java.sql.Timestamp;
 public class ProductoController {
 
     public String createProduct(String nombre, double precio, String desc, int stock, int categ, String foto) {
-        EntityManager em = EntityMF.getInstance().createEntityManager();
-        try (em) {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Categoria categoria = em.find(Categoria.class, categ);
             Producto producto = new Producto(nombre, precio, desc, stock, categoria, foto);
             em.persist(producto);
             em.getTransaction().commit();
-            em.close();
             return "Product created";
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return "Error creating product";
         }
-        return "Error creating product";
     }
 
     public String decrementStock(int id, int cantidad) {
-        EntityManager em = EntityMF.getInstance().createEntityManager();
-        try (em) {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
             if(producto.getStock() > cantidad){
                 producto.setStock(producto.getStock() - cantidad);
                 em.persist(producto);
-                em.getTransaction().commit();;
+                em.getTransaction().commit();
+                return "decremented stock";
             }
-            em.close();
-            return "decremented stock";
+            else{
+                return "Not enough stock";
+            }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return "Error decrementing stock";
         }
-        return "Error decrementing stock";
     }
     public String incrementStock(int id, int cantidad,String desc, int idUsuario, Timestamp fecha_reabast) {
-        EntityManager em = EntityMF.getInstance().createEntityManager();
         ReStock reStock;
-        try (em) {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
             reStock= new ReStock(desc, producto, cantidad, fecha_reabast, em.find(Usuario.class, idUsuario));
@@ -63,8 +59,7 @@ public class ProductoController {
         return "Error incrementing stock";
     }
     public String modifyProduct(int id, String nombre, double precio, String desc, int stock, int categoria, String foto) {
-        EntityManager em = EntityMF.getInstance().createEntityManager();
-        try (em) {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
             Categoria categ = em.find(Categoria.class, categoria);
@@ -83,13 +78,11 @@ public class ProductoController {
         return "Error modifying product";
     }
     public String removeProduct(int id) {
-        EntityManager em = EntityMF.getInstance().createEntityManager();
-        try (em) {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
             em.remove(producto);
             em.getTransaction().commit();
-            em.close();
             return "product removed";
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -97,13 +90,21 @@ public class ProductoController {
         return "Error removing product";
     }
     public Producto searchProduct(int id) {
-        EntityManager em = EntityMF.getInstance().createEntityManager();
-        return em.find(Producto.class, id);
+        try(EntityManager em = EntityMF.getInstance().createEntityManager()){
+            return em.find(Producto.class, id);
+        }
+        catch (NoResultException e){
+            return null;
+        }
     }
-    public Producto searchProduct(String name){
-        EntityManager em = EntityMF.getInstance().createEntityManager();
-        Query query = em.createQuery("SELECT p FROM Producto p WHERE p.nombre = :name");
-        query.setParameter("name", name);
-        return (Producto) query.getSingleResult();
+    public Producto searchProduct(String name) {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            TypedQuery<Producto> query = em.createQuery("SELECT p FROM Producto p WHERE p.nombre = :name", Producto.class);
+            query.setParameter("name", name);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
+
 }

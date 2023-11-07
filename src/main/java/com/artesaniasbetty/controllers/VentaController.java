@@ -9,9 +9,8 @@ import java.util.List;
 
 public class VentaController {
     public String recordSale(String desc, Timestamp fecha_regist_venta, int idUsuario, HashMap<Integer, Integer> productosVenta) {
-        EntityManager em = EntityMF.getInstance().createEntityManager();
         ProductoController productoController = new ProductoController();
-        try (em) {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Usuario usuario = em.find(Usuario.class, idUsuario);
             Venta venta = new Venta(desc, fecha_regist_venta, usuario);
@@ -22,11 +21,9 @@ public class VentaController {
                 em.persist(detalleVenta);
             }
             em.getTransaction().commit();
-            em.close();
             return "Sale recorded";
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return "Error recording sale";
         }
-        return "Error recording sale";
     }
 }
