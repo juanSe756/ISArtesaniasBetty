@@ -23,4 +23,6 @@ public class Estado {
     private String desc;
     @OneToMany(mappedBy = "estadoUsuario")
     private List<Usuario> usuarios;
+    @OneToMany(mappedBy = "estadoProducto")
+    private List<Producto> productos;
 }

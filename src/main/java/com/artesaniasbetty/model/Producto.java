@@ -33,12 +33,16 @@ public class Producto {
     private List<DetalleVenta> detalleVentas;
     @OneToMany(mappedBy = "productoReStock")
     private List<ReStock> reStocks;
-    public Producto(String nombre, double precio, String desc, int stock, Categoria categoria, String foto) {
+    @ManyToOne
+    @JoinColumn(name = "id_estado")
+    private Estado estadoProducto;
+    public Producto(String nombre, double precio, String desc, int stock, Categoria categoria, Estado estadoProducto, String foto) {
         this.nombre = nombre;
         this.precio = precio;
         this.desc = desc;
         this.stock = stock;
         this.categoria = categoria;
+        this.estadoProducto = estadoProducto;
         this.foto= foto;
     }
 
@@ -50,6 +54,7 @@ public class Producto {
                 ", desc='" + desc + '\'' +
                 ", stock=" + stock +
                 ", categoria=" + categoria.toString() +
+                ", estadoProducto=" + estadoProducto.toString() +
                 ", foto='" + foto + '\'' +
                 '}';
     }

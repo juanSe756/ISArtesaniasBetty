@@ -1,9 +1,6 @@
 package com.artesaniasbetty.controllers;
 
-import com.artesaniasbetty.model.Categoria;
-import com.artesaniasbetty.model.Producto;
-import com.artesaniasbetty.model.ReStock;
-import com.artesaniasbetty.model.Usuario;
+import com.artesaniasbetty.model.*;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -15,7 +12,8 @@ public class ProductoController {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Categoria categoria = em.find(Categoria.class, categ);
-            Producto producto = new Producto(nombre, precio, desc, stock, categoria, foto);
+            Estado estado = em.find(Estado.class, 1);
+            Producto producto = new Producto(nombre, precio, desc, stock, categoria, estado,foto);
             em.persist(producto);
             em.getTransaction().commit();
             return "Product created";
