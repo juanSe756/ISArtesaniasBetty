@@ -3,13 +3,26 @@ package com.artesaniasbetty.controllers;
 import com.artesaniasbetty.model.*;
 import jakarta.persistence.*;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 
 
 public class ProductoController {
-
-    public String createProduct(String nombre, double precio, String desc, int stock, int categ, String foto) {
+    private static final int IMG_SIZE = 80;
+    public String createProduct(String nombre, double precio, String desc, int stock, int categ, String fotoURL) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            byte[] foto=convertImageToBytes(fotoURL);
             em.getTransaction().begin();
             Categoria categoria = em.find(Categoria.class, categ);
             Estado estado = em.find(Estado.class, 1);
@@ -19,6 +32,31 @@ public class ProductoController {
             return "Product created";
         } catch (Exception e) {
             return "Error creating product";
+        }
+    }
+    private static byte[] convertImageToBytes(String imagePath) throws IOException {
+        BufferedImage originalImage = ImageIO.read(new File(imagePath));
+        BufferedImage resizedImage = resize(originalImage, IMG_SIZE, IMG_SIZE);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(resizedImage, "jpg", baos);
+        return baos.toByteArray();
+    }
+    private static BufferedImage resize(BufferedImage img, int newW, int newH) {
+        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return dimg;
+    }
+    private static void convertBytesToImage(byte[] imageBytes, String productName) {
+        try {
+            String outputPath = "src/main/resources/assets/prods/" + productName + ".jpg";
+            FileOutputStream fos = new FileOutputStream(outputPath);
+            fos.write(imageBytes);
+            fos.close();
+        } catch (IOException e) {
+            System.out.println("Couldn't convert bytes to image, check the path");
         }
     }
 
@@ -56,8 +94,9 @@ public class ProductoController {
         }
         return "Error incrementing stock";
     }
-    public String modifyProduct(int id, String nombre, double precio, String desc, int stock, int categoria, String foto) {
+    public String modifyProduct(int id, String nombre, double precio, String desc, int stock, int categoria, String fotoURL) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            byte[] foto=convertImageToBytes(fotoURL);
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
             Categoria categ = em.find(Categoria.class, categoria);

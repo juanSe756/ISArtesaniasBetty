@@ -5,9 +5,10 @@ import java.awt.*;
 //Panel para TextPassword customizado
 public class MinimalTextPassword extends JPasswordField {
     Color borderColor;
-    public MinimalTextPassword(Font font, Color borderColor){
+    public MinimalTextPassword(Font font, Color borderColor, Dimension size){
         setFont(font);
         setOpaque(false);
+        setPreferredSize(size);
         setBorder(BorderFactory.createEmptyBorder());
         //Asterisco para tener seguridad :o
         setEchoChar('*');

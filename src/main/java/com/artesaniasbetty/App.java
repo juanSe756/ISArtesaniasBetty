@@ -25,9 +25,8 @@ public class App implements ActionListener {
         switch (e.getActionCommand()){
             case "SEE_PASSWORD":    sf.managePasswordButton();
                                     break;
-            case "LOGIN":
-                sf.getLoginPnl().getLogin().setIcon(new ImageIcon(getClass().getResource("/assets/loadingx28.gif")));
-                                authorizeLogin();
+            case "LOGIN":           sf.getLoginPnl().getLogin().setEnabled(false);
+                authorizeLogin();
                                     break;
         }
     }
@@ -44,10 +43,12 @@ public class App implements ActionListener {
                 System.out.println("Logined");
                 // sf.dispose();
             } else {
-                System.out.println("Wrong password");
+                sf.getLoginPnl().setLoginInfo("Contraseña incorrecta");
+                sf.getLoginPnl().getLogin().setEnabled(true);
             }
         } catch (NoResultException e) {
-            System.out.println("User not found");
+            sf.getLoginPnl().setLoginInfo("Usuario no encontrado");
+            sf.getLoginPnl().getLogin().setEnabled(true);
         }
     }
 

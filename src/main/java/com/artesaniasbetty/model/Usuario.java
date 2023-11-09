@@ -35,13 +35,11 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "id_rol")
     private Rol rol;
-    @Column(name = "foto")
-    private String  foto;
     @OneToMany(mappedBy = "idUsuario")
     private List<Venta> ventas;
     @OneToMany(mappedBy = "usuarioReStock")
     private List<ReStock> reStocks;
-    public Usuario(String nickname, String contrasena, String nombreUsuario, String apellidoUsuario, String telefono, Estado estadoUsuario, Timestamp fechaRegistroUsuario, Rol rol, String foto) {
+    public Usuario(String nickname, String contrasena, String nombreUsuario, String apellidoUsuario, String telefono, Estado estadoUsuario, Timestamp fechaRegistroUsuario, Rol rol) {
         this.nickname = nickname;
         this.contrasena = contrasena;
         this.nombreUsuario = nombreUsuario;
@@ -50,6 +48,5 @@ public class Usuario {
         this.estadoUsuario = estadoUsuario;
         this.fechaRegistroUsuario = fechaRegistroUsuario;
         this.rol = rol;
-        this.foto= foto;
     }
 }

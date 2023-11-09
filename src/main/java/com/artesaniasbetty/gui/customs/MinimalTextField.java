@@ -5,9 +5,10 @@ import java.awt.*;
 //Panel para TextField customizado
 public class MinimalTextField extends JTextField {
     Color borderColor;
-    public MinimalTextField(Font font, Color borderColor, String placeholder){
+    public MinimalTextField(Font font, Color borderColor, String placeholder, Dimension size){
         new TextPrompt(placeholder,this);
         setFont(font);
+        setPreferredSize(size);
         setOpaque(false);
         setBorder(BorderFactory.createEmptyBorder());
         this.borderColor=borderColor;
