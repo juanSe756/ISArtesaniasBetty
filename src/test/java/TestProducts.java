@@ -5,9 +5,9 @@ import java.sql.Timestamp;
 
 public class TestProducts {
     public static void main(String[] args) {
-        String absolutePath = "C:\\Users\\USUARIO PC\\Documents\\UPTC\\2023-2\\zzzoftware\\canasto_osito.jpg";
-        String prod = new ProductoController().createProduct("Canasto de osito", 45000,"Canasto personalizado con diseño de osito"
-                ,18, 2,absolutePath);
+        String absolutePath = "C:\\Users\\USUARIO PC\\Documents\\UPTC\\2023-2\\zzzoftware\\canasta.jpg";
+        String prod = new ProductoController().createProduct("Canasta", 15000,"Canasta de mimbre"
+                ,5, 2,absolutePath);
         //String prod = new ProductoController().removeProduct(4);
         //String prod = new ProductoController().decrementStock(1, 1);
 //        String prod = new ProductoController().incrementStock( 2, 10,"reabastecimiento de canastoxd",2, new Timestamp(System.currentTimeMillis()));

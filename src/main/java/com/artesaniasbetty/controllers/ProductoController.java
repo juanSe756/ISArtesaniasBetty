@@ -4,17 +4,12 @@ import com.artesaniasbetty.model.*;
 import jakarta.persistence.*;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Timestamp;
 
 
@@ -34,22 +29,22 @@ public class ProductoController {
             return "Error creating product";
         }
     }
-    private static byte[] convertImageToBytes(String imagePath) throws IOException {
+    private byte[] convertImageToBytes(String imagePath) throws IOException {
         BufferedImage originalImage = ImageIO.read(new File(imagePath));
-        BufferedImage resizedImage = resize(originalImage, IMG_SIZE, IMG_SIZE);
+        BufferedImage resizedImage = resize(originalImage);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(resizedImage, "jpg", baos);
         return baos.toByteArray();
     }
-    private static BufferedImage resize(BufferedImage img, int newW, int newH) {
-        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
-        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_RGB);
+    private BufferedImage resize(BufferedImage img) {
+        Image tmp = img.getScaledInstance(IMG_SIZE, IMG_SIZE, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(IMG_SIZE, IMG_SIZE, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = dimg.createGraphics();
         g2d.drawImage(tmp, 0, 0, null);
         g2d.dispose();
         return dimg;
     }
-    private static void convertBytesToImage(byte[] imageBytes, String productName) {
+    private void convertBytesToImage(byte[] imageBytes, String productName) {
         try {
             String outputPath = "src/main/resources/assets/prods/" + productName + ".jpg";
             FileOutputStream fos = new FileOutputStream(outputPath);
