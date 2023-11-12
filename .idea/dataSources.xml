@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="betty@localhost" uuid="3cea995e-b847-4792-838f-76aefebf7f0c">
+    <data-source source="LOCAL" name="betty_cloud" uuid="2edc07df-d254-40e9-95e5-0a344627c0d4">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/betty</jdbc-url>
+      <jdbc-url>jdbc:mysql://roundhouse.proxy.rlwy.net:28572</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

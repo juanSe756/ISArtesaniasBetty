@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "reabastecimientos")
+@Table(name = "REABASTECIMIENTOS")
 public class ReStock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

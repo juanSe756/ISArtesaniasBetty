@@ -26,6 +26,7 @@ public class ProductoController {
             em.getTransaction().commit();
             return "Product created";
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return "Error creating product";
         }
     }

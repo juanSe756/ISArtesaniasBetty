@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "roles")
+@Table(name = "ROLES")
 public class Rol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +23,9 @@ public class Rol {
     private String desc;
     @OneToMany(mappedBy = "rol")
     private List<Usuario> usuarios;
+//    builder
+    public Rol(String nombre, String desc) {
+        this.nombre = nombre;
+        this.desc = desc;
+    }
 }
