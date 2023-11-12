@@ -1,0 +1,69 @@
+.home-container{
+    -fx-background-color: rgb(194, 168, 148);
+    -fx-font-family: "Poppins";
+    -fx-font-weight: bold;
+}
+
+.home-container-top{
+    -fx-background-color: rgba(16, 14, 11, 0.44);
+}
+
+.home-container-search{
+    -fx-background-color: rgb(255, 255, 255);
+}
+
+.home-container-center{
+    -fx-background-color: rgb(237, 237, 237);
+}
+
+.home-container-products{
+    -fx-background-color: rgb(255, 15, 15);
+}
+
+.font {
+    -fx-font-family: "Poppins";
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+.font-middle {
+    -fx-font-family: "Poppins";
+    -fx-font-size: 30px;
+}
+.font-sub {
+    -fx-font-family: "Poppins";
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+.home-product-cancel {
+    -fx-background-color: rgba(255, 61, 61, 0.93);
+    -fx-font-family: "Poppins SemiBold";
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+.home-product-success {
+    -fx-background-color: rgb(39, 203, 67);
+    -fx-font-family: "Poppins SemiBold";
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+
+.home-product-special {
+    -fx-border-color: rgb(194, 168, 148);
+    -fx-border-width: 2px;
+}
+
+.home-product-redondeado {
+    -fx-background-color: rgb(194, 168, 148);
+    border-radius: 10px 20px 30px 40px;
+    -fx-border-color: rgb(194, 168, 148);
+    -fx-font-family: "Inter";
+}
+
+.button:pressed {
+    -fx-background-color: #ffffff; /* Color de fondo cuando se presiona el botón */
+    -fx-border-color: black;
+    -fx-text-fill: #000000;
+    -fx-transition: color 2s;
+}

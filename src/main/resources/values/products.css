@@ -1,0 +1,30 @@
+/* Estilos para la tabla */
+.table-view {
+    -fx-background-color: #f2f2f2; /* Color de fondo */
+    -fx-border-radius: 10px; /* Radio de borde */
+    -fx-background-radius: 10px; /* Radio de fondo */
+    -fx-padding: 10px; /* Espaciado interno */
+    -fx-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+/* Estilos para las celdas */
+.table-cell {
+    -fx-alignment: center; /* Alineación del contenido */
+    -fx-font-size: 18px; /* Tamaño de fuente */
+    -fx-text-fill: #333; /* Color de texto */
+}
+
+/* Estilo para las filas impares */
+.table-row-cell:odd {
+    -fx-background-color: #e0e0e0; /* Color de fondo para filas impares */
+}
+
+/* Estilo para las filas pares */
+.table-row-cell:even {
+    -fx-background-color: #d3d3d3; /* Color de fondo para filas pares */
+}
+
+/* Estilo para los encabezados de la tabla */
+.table-header {
+    -fx-background-color: black; /* Cambiar el color de fondo de los encabezados a negro */
+}

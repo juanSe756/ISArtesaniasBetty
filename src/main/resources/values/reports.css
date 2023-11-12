@@ -1,0 +1,35 @@
+.bar-chart {
+    width: 400px; /* Ancho del gráfico */
+    height: 300px; /* Alto del gráfico */
+    background-color: #f0f0f0; /* Color de fondo del gráfico */
+    border: 1px solid #ccc; /* Borde del gráfico */
+    position: relative; /* Para posicionar las barras correctamente */
+}
+
+/* Estilo para las barras del gráfico */
+.bar {
+    background-color: #007bff; /* Color de las barras */
+    position: absolute; /* Para posicionar las barras correctamente */
+    bottom: 0; /* Alinea la parte inferior de las barras con el eje X */
+    width: 20px; /* Ancho de las barras */
+    margin-right: 10px; /* Espacio entre las barras */
+    transition: height 0.5s; /* Animación de la altura de las barras */
+}
+
+/* Estilo para las etiquetas de datos en el eje X */
+.x-axis-label {
+    text-align: center; /* Centra el texto horizontalmente */
+    margin-top: 5px; /* Espacio entre las etiquetas y el gráfico */
+}
+
+/* Cambia el color de las barras cuando se pasa el ratón por encima */
+.bar:hover {
+    background-color: #0056b3;
+}
+
+/* Agrega un estilo para las etiquetas de datos en el eje Y si es necesario */
+.y-axis-label {
+    position: absolute;
+    right: 5px;
+    top: 0;
+}
