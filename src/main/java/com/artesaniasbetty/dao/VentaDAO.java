@@ -1,4 +1,4 @@
-package com.artesaniasbetty.controllers;
+package com.artesaniasbetty.dao;
 
 import com.artesaniasbetty.model.*;
 import jakarta.persistence.*;
@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 @Getter
-public class VentaController {
+public class VentaDAO {
     private HashMap<Integer, Integer> productosVenta;
 
     public List<Venta> getSales() {
@@ -20,7 +20,7 @@ public class VentaController {
     }
 
     public String recordSale(String desc, Timestamp fecha_regist_venta, int idUsuario, HashMap<Integer, Integer> productosVenta) {
-        ProductoController productoController = new ProductoController();
+        ProductoDAO productoController = new ProductoDAO();
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Usuario usuario = em.find(Usuario.class, idUsuario);

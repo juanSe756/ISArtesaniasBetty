@@ -1,4 +1,4 @@
-package com.artesaniasbetty.controllers;
+package com.artesaniasbetty.dao;
 
 import com.artesaniasbetty.model.*;
 import jakarta.persistence.*;
@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 
-public class ProductoController {
+public class ProductoDAO {
     private static final int IMG_SIZE = 80;
     public String createProduct(String nombre, double precio, String desc, int stock, int categ, String fotoURL) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {

@@ -1,10 +1,10 @@
-package com.artesaniasbetty.controllers;
+package com.artesaniasbetty.dao;
 import com.artesaniasbetty.model.*;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 import org.mindrot.jbcrypt.BCrypt;
-public class UsuarioController {
+public class UsuarioDAO {
     public String createUser(String nickname, String contrasena, String nombreUsuario,
                              String apellidoUsuario, String telefono, int estadoUsuario, Timestamp fechaRegistroUsuario, int rol){
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {

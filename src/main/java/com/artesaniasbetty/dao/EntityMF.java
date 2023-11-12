@@ -1,4 +1,4 @@
-package com.artesaniasbetty.controllers;
+package com.artesaniasbetty.dao;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;

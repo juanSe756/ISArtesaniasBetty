@@ -1,20 +1,19 @@
 package com.artesaniasbetty;
 
-import com.artesaniasbetty.controllers.EntityMF;
-import com.artesaniasbetty.controllers.UsuarioController;
+import com.artesaniasbetty.dao.EntityMF;
+import com.artesaniasbetty.dao.UsuarioDAO;
 import com.artesaniasbetty.gui.StartFrame;
 import jakarta.persistence.*;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class App implements ActionListener {
     StartFrame sf;
-    UsuarioController uc;
+    UsuarioDAO uc;
     public App() {
         sf = new StartFrame(this);
-        uc = new UsuarioController();
+        uc = new UsuarioDAO();
     }
     public static void main(String[] args) {
         new App();
