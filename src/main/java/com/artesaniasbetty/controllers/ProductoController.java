@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 public class ProductoController {
@@ -121,6 +122,15 @@ public class ProductoController {
             System.out.println(e.getMessage());
         }
         return "Error removing product";
+    }
+//    metodo para traer todos los productos en una lista
+    public List<Producto> getAllProducts() {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            TypedQuery<Producto> query = em.createQuery("SELECT p FROM Producto p", Producto.class);
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
     public Producto searchProduct(int id) {
         try(EntityManager em = EntityMF.getInstance().createEntityManager()){
