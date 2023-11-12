@@ -58,9 +58,7 @@ public class StartFrame extends JFrame {
     public void login(){
         if(logined){
             remove(loginPnl);
-            getContentPane().setBackground(Color.WHITE);
-            revalidate();
-            repaint();
+            this.dispose();
         }
     }
 
