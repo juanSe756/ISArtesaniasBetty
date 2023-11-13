@@ -16,7 +16,7 @@ import java.util.List;
 
 
 public class ProductoDAO {
-    private static final int IMG_SIZE = 80;
+    private static final int IMG_SIZE = 200;
     public String createProduct(String nombre, double precio, String desc, int stock, int categ, String fotoURL) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             byte[] foto=convertImageToBytes(fotoURL);
