@@ -2,6 +2,7 @@ package com.artesaniasbetty.dao;
 
 import com.artesaniasbetty.model.*;
 import jakarta.persistence.*;
+import javafx.scene.image.ImageView;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,11 +12,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ProductoDAO {
     private static final int IMG_SIZE = 80;
+    public static String outputPath;
+
     public String createProduct(String nombre, double precio, String desc, int stock, int categ, String fotoURL) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             byte[] foto=convertImageToBytes(fotoURL);
@@ -31,6 +35,21 @@ public class ProductoDAO {
             return "Error creating product";
         }
     }
+
+    public List<StringBuilder> getProductsTable() {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            TypedQuery<Object[]> query = em.createQuery("SELECT p.id, p.nombre, p.precio, p.desc, p.stock, p.categoria.nombre FROM Producto p", Object[].class);
+            List<Object[]> resultList = query.getResultList();
+            List<StringBuilder> resultStrings = new ArrayList<>();
+            for (Object[] result : resultList) {
+                resultStrings.add(new StringBuilder().append(result[0]).append(":::").append(result[1]).append(":::").append(result[2]).append(":::").append(result[3]).append(":::").append(result[4]).append(":::").append(result[5]));
+            }
+            return resultStrings;
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
     private byte[] convertImageToBytes(String imagePath) throws IOException {
         BufferedImage originalImage = ImageIO.read(new File(imagePath));
         BufferedImage resizedImage = resize(originalImage);
@@ -46,9 +65,9 @@ public class ProductoDAO {
         g2d.dispose();
         return dimg;
     }
-    private void convertBytesToImage(byte[] imageBytes, String productName) {
+    public static void convertBytesToImage(byte[] imageBytes, String productName) {
         try {
-            String outputPath = "src/main/resources/assets/prods/" + productName + ".jpg";
+            outputPath = "src/main/resources/assets/prods/" + productName + ".jpg";
             FileOutputStream fos = new FileOutputStream(outputPath);
             fos.write(imageBytes);
             fos.close();

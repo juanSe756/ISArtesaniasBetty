@@ -13,7 +13,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
 //        Parent root = FXMLLoader.load(getClass().getResource("views/SaleWindow.fxml"));
 //        Parent root1 = FXMLLoader.load(getClass().getResource("views/resupply.fxml"));
-        Parent root2 = FXMLLoader.load(getClass().getResource("/archivesViews/newProduct.fxml"));
+        Parent root2 = FXMLLoader.load(getClass().getResource("/archivesViews/onlyProduct.fxml"));
 
 //        Scene scene = new Scene(root, 500, 600);
 //        Scene scene1 = new Scene(root1, 450, 350);

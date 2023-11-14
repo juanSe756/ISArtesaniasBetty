@@ -9,11 +9,15 @@
 
 /* Estilos para las celdas */
 .table-cell {
+    -fx-background-color: #f2f2f2; /* Color de fondo */
     -fx-alignment: center; /* Alineación del contenido */
     -fx-font-size: 18px; /* Tamaño de fuente */
     -fx-text-fill: #333; /* Color de texto */
 }
 
+.table-view .column-header-background {
+    -fx-background-color: #f0f0f0; /* Cambia este color al que desees para las cabeceras */
+}
 /* Estilo para las filas impares */
 .table-row-cell:odd {
     -fx-background-color: #e0e0e0; /* Color de fondo para filas impares */
@@ -27,4 +31,8 @@
 /* Estilo para los encabezados de la tabla */
 .table-header {
     -fx-background-color: black; /* Cambiar el color de fondo de los encabezados a negro */
+}
+
+.productsTable.column-header {
+    -fx-background-color: #YourColorHere;
 }

@@ -1,3 +1,5 @@
+package com.artesaniasbetty;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,8 +10,8 @@ import javafx.stage.Stage;
 public class Test extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("views/history.fxml"));
-        Parent root1 = FXMLLoader.load(getClass().getResource("../../../resources/archivesViews/home.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("/archivesViews/history.fxml"));
+        Parent root1 = FXMLLoader.load(getClass().getResource("/archivesViews/home.fxml"));
 //        Parent root2 = FXMLLoader.load(getClass().getResource("views/products.fxml"));
 //        Parent root3 = FXMLLoader.load(getClass().getResource("views/reports.fxml"));
         Screen screen = Screen.getPrimary();

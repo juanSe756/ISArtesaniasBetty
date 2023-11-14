@@ -14,14 +14,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.ResupplyController">
    <top>
       <Pane prefHeight="21.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
             <FlowPane prefHeight="26.0" prefWidth="450.0">
                <children>
                   <Label prefHeight="22.0" prefWidth="387.0" />
-                  <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: black;" stylesheets="@../values/saleWindow.css">
+                  <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: black;" stylesheets="@../styles/saleWindow.css">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -49,7 +49,7 @@
          <children>
             <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="340.0" prefWidth="450.0">
                <top>
-                  <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="443.0" styleClass="home-container" stylesheets="@../values/saleWindow.css" BorderPane.alignment="CENTER">
+                  <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="443.0" styleClass="home-container" stylesheets="@../styles/saleWindow.css" BorderPane.alignment="CENTER">
                      <children>
                         <FlowPane layoutY="-1.0" prefHeight="68.0" prefWidth="450.0">
                            <children>
@@ -87,21 +87,21 @@
                <center>
                   <AnchorPane prefHeight="253.0" prefWidth="449.0" BorderPane.alignment="CENTER">
                      <children>
-                        <ComboBox layoutX="46.4" layoutY="36.6" prefHeight="30.0" prefWidth="143.0" promptText="Producto" style="-fx-font-size: 15;" styleClass="font" stylesheets="@../values/saleWindow.css" AnchorPane.leftAnchor="46.4" AnchorPane.topAnchor="36.6" />
-                        <Spinner layoutX="214.0" layoutY="39.0" prefHeight="35.0" prefWidth="69.0" AnchorPane.leftAnchor="214.0" AnchorPane.topAnchor="39.0" />
-                        <Label layoutX="219.0" layoutY="22.0" style="-fx-font-size: 13;" styleClass="font" stylesheets="@../values/home_style.css" text="Cantidad" AnchorPane.leftAnchor="219.0" AnchorPane.topAnchor="22.0" />
-                        <TextArea layoutX="46.0" layoutY="100.0" prefHeight="66.0" prefWidth="349.0" style="-fx-border-color: black;" />
+                        <ComboBox fx:id="comboProductos" layoutX="46.4" layoutY="36.6" prefHeight="30.0" prefWidth="143.0" promptText="Producto" style="-fx-font-size: 15;" styleClass="font" stylesheets="@../styles/saleWindow.css" AnchorPane.leftAnchor="46.4" AnchorPane.topAnchor="36.6" />
+                        <Spinner fx:id="spinnerCantidad" layoutX="214.0" layoutY="39.0" prefHeight="35.0" prefWidth="69.0" AnchorPane.leftAnchor="214.0" AnchorPane.topAnchor="39.0" />
+                        <Label layoutX="219.0" layoutY="22.0" style="-fx-font-size: 13;" styleClass="font" stylesheets="@../styles/home_style.css" text="Cantidad" AnchorPane.leftAnchor="219.0" AnchorPane.topAnchor="22.0" />
+                        <TextArea fx:id="areaDescripcion" layoutX="46.0" layoutY="100.0" prefHeight="66.0" prefWidth="349.0" style="-fx-border-color: black;" />
                         <Label layoutX="47.0" layoutY="84.0" text="Descripción">
                            <font>
                               <Font name="Inter Regular" size="13.0" />
                            </font>
                         </Label>
-                        <Button layoutX="61.0" layoutY="191.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-cancel" stylesheets="@../values/saleWindow.css" text="Cancelar">
+                        <Button fx:id="btnCancelResupply" layoutX="61.0" layoutY="191.0" mnemonicParsing="false" onAction="#cancelSupply" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-cancel" stylesheets="@../styles/saleWindow.css" text="Cancelar">
                            <font>
                               <Font name="Poppins SemiBold" size="12.0" />
                            </font>
                         </Button>
-                        <Button layoutX="229.0" layoutY="191.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-success" stylesheets="@../values/saleWindow.css" text="Confirmar">
+                        <Button fx:id="btnConfirmResupply" layoutX="229.0" layoutY="191.0" mnemonicParsing="false" onAction="#updateSupply" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-success" stylesheets="@../styles/saleWindow.css" text="Confirmar">
                            <font>
                               <Font name="Poppins SemiBold" size="12.0" />
                            </font>

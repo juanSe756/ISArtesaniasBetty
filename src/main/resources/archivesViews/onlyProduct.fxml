@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 
-<FlowPane fx:id="productPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="400.0" prefWrapLength="420.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProductController">
+<FlowPane fx:id="productPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="400.0" prefWrapLength="420.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.ProductController">
    <children>
       <Button minHeight="0.0" minWidth="0.0" mnemonicParsing="false" prefHeight="400.0" prefWidth="400.0" text="Button">
          <graphic>
@@ -18,11 +18,11 @@
                <children>
                   <BorderPane layoutX="-14.0" layoutY="-4.0" minHeight="0.0" minWidth="0.0" prefHeight="405.0" prefWidth="407.0">
                      <center>
-                        <Pane minHeight="0.0" minWidth="0.0" prefHeight="289.0" prefWidth="306.0" stylesheets="@../values/home_style.css" BorderPane.alignment="CENTER">
+                        <Pane minHeight="0.0" minWidth="0.0" prefHeight="289.0" prefWidth="306.0" stylesheets="@../styles/home_style.css" BorderPane.alignment="CENTER">
                            <children>
                               <BorderPane layoutX="2.0" layoutY="1.0" prefHeight="295.0" prefWidth="302.0" styleClass="home-container-search">
                                  <bottom>
-                                    <Label fx:id="amountProduct" alignment="CENTER" contentDisplay="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="41.0" prefWidth="302.0" stylesheets="@../values/home_style.css" text="Cantidad : 10" textAlignment="CENTER" BorderPane.alignment="CENTER">
+                                    <Label fx:id="amountProduct" alignment="CENTER" contentDisplay="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="45.0" prefWidth="302.0" stylesheets="@../styles/home_style.css" text="Cantidad : 10" textAlignment="CENTER" BorderPane.alignment="CENTER">
                                        <styleClass>
                                           <String fx:value="font-sub" />
                                           <String fx:value="home-product-redondeado" />
@@ -33,18 +33,21 @@
                                     <Insets />
                                  </opaqueInsets>
                                  <center>
-                                    <Pane minHeight="0.0" minWidth="0.0" prefHeight="206.0" prefWidth="298.0" BorderPane.alignment="CENTER">
+                                    <Pane maxWidth="1.7976931348623157E308" prefHeight="223.0" prefWidth="302.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <ImageView fx:id="imageProduct" fitHeight="206.0" fitWidth="168.0" layoutX="69.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="imageProduct" fitHeight="208.0" fitWidth="200.0" layoutX="56.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../assets/producto1.jpeg" />
+                                                <Image url="@../assets/prods/Pantalla.jpg" />
                                              </image>
                                           </ImageView>
                                        </children>
+                                       <BorderPane.margin>
+                                          <Insets />
+                                       </BorderPane.margin>
                                     </Pane>
                                  </center>
                                  <top>
-                                    <FlowPane minHeight="0.0" minWidth="0.0" prefHeight="46.0" prefWidth="318.0" styleClass="home-product-redondeado" BorderPane.alignment="CENTER">
+                                    <FlowPane minHeight="0.0" minWidth="0.0" prefHeight="49.0" prefWidth="302.0" styleClass="home-product-redondeado" BorderPane.alignment="CENTER">
                                        <children>
                                           <Label prefHeight="18.0" prefWidth="24.0" />
                                           <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -52,7 +55,7 @@
                                                 <Image url="@../assets/campana.png" />
                                              </image>
                                           </ImageView>
-                                          <Label fx:id="nameProduct" alignment="CENTER" prefHeight="42.0" prefWidth="189.0" text="Nombre" textAlignment="CENTER" textFill="WHITE">
+                                          <Label fx:id="nameProduct" alignment="CENTER" prefHeight="42.0" prefWidth="190.0" text="Nombre" textAlignment="CENTER" textFill="WHITE">
                                              <styleClass>
                                                 <String fx:value="home-product-redondeado" />
                                                 <String fx:value="font-middle" />

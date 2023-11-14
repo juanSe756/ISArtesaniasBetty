@@ -41,7 +41,7 @@ public class VentaDAO {
     public double getTotalCostByBill(List<StringBuilder> bill) {
         double total = 0;
         for (StringBuilder stringBuilder : bill) {
-            total += Double.parseDouble(stringBuilder.substring(stringBuilder.lastIndexOf(" ") + 1));
+            total += Double.parseDouble(stringBuilder.substring(stringBuilder.lastIndexOf(":::") + 1));
         }
         return total;
     }
@@ -52,7 +52,7 @@ public class VentaDAO {
 //            cant, nombre, precio, subtotal separados por espacios
             for (Integer producto : productosVenta.keySet()) {
                 Producto p = em.find(Producto.class, producto);
-                bill.add(new StringBuilder().append(productosVenta.get(producto)).append(" ").append(p.getNombre()).append(" ").append(p.getPrecio()).append(" ").append(p.getPrecio() * productosVenta.get(producto)));
+                bill.add(new StringBuilder().append(productosVenta.get(producto)).append(":::").append(p.getNombre()).append(":::").append(p.getPrecio()).append(":::").append(p.getPrecio() * productosVenta.get(producto)));
             }
             return bill;
         } catch (Exception e) {

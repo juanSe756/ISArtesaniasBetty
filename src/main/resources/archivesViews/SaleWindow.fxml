@@ -24,7 +24,7 @@
             <FlowPane prefHeight="22.0" prefWidth="500.0">
                <children>
                   <Label prefHeight="22.0" prefWidth="433.0" />
-                  <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: black;" stylesheets="@../values/saleWindow.css">
+                  <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: black;" stylesheets="@../styles/saleWindow.css">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -52,7 +52,7 @@
          <children>
             <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="579.0" prefWidth="500.0">
                <top>
-                  <Pane prefHeight="70.0" prefWidth="542.0" styleClass="home-container" stylesheets="@../values/saleWindow.css" BorderPane.alignment="CENTER">
+                  <Pane prefHeight="70.0" prefWidth="542.0" styleClass="home-container" stylesheets="@../styles/saleWindow.css" BorderPane.alignment="CENTER">
                      <children>
                         <FlowPane layoutY="-1.0" prefHeight="68.0" prefWidth="500.0">
                            <children>
@@ -87,9 +87,9 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <ComboBox layoutX="42.0" layoutY="35.0" prefHeight="30.0" prefWidth="143.0" promptText="Producto" style="-fx-font-size: 15;" styleClass="font" stylesheets="@../values/saleWindow.css" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="35.0" />
+                        <ComboBox layoutX="42.0" layoutY="35.0" prefHeight="30.0" prefWidth="143.0" promptText="Producto" style="-fx-font-size: 15;" styleClass="font" stylesheets="@../styles/saleWindow.css" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="35.0" />
                         <Spinner layoutX="210.0" layoutY="37.0" prefHeight="35.0" prefWidth="69.0" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="37.0" />
-                        <Label layoutX="215.0" layoutY="19.0" style="-fx-font-size: 13;" styleClass="font" stylesheets="@../values/home_style.css" text="Cantidad" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="19.0" />
+                        <Label layoutX="215.0" layoutY="19.0" style="-fx-font-size: 13;" styleClass="font" stylesheets="@../styles/home_style.css" text="Cantidad" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="19.0" />
                         <Button alignment="CENTER" layoutX="302.0" layoutY="33.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: white; -fx-border-color: green; -fx-border-radius: 8;" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="33.0">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
@@ -132,12 +132,12 @@
                               <Font name="Inter Regular" size="13.0" />
                            </font>
                         </Label>
-                        <Button layoutX="88.0" layoutY="447.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-cancel" stylesheets="@../values/saleWindow.css" text="Cancelar">
+                        <Button layoutX="88.0" layoutY="447.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-cancel" stylesheets="@../styles/saleWindow.css" text="Cancelar">
                            <font>
                               <Font name="Poppins SemiBold" size="12.0" />
                            </font>
                         </Button>
-                        <Button layoutX="273.0" layoutY="447.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-success" stylesheets="@../values/saleWindow.css" text="Confirmar">
+                        <Button layoutX="273.0" layoutY="447.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-success" stylesheets="@../styles/saleWindow.css" text="Confirmar">
                            <font>
                               <Font name="Poppins SemiBold" size="12.0" />
                            </font>
