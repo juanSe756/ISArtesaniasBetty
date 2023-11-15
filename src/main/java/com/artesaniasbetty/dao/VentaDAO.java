@@ -19,12 +19,12 @@ public class VentaDAO {
         }
     }
 
-    public String recordSale(String desc, Timestamp fecha_regist_venta, int idUsuario, HashMap<Integer, Integer> productosVenta) {
+    public String recordSale(String desc, int idUsuario, HashMap<Integer, Integer> productosVenta) {
         ProductoDAO productoController = new ProductoDAO();
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Usuario usuario = em.find(Usuario.class, idUsuario);
-            Venta venta = new Venta(desc, fecha_regist_venta, usuario);
+            Venta venta = new Venta(desc, new Timestamp(System.currentTimeMillis()), usuario);
             em.persist(venta);
             for (Integer producto : productosVenta.keySet()) {
                 DetalleVenta detalleVenta = new DetalleVenta(em.find(Producto.class, producto), venta, productosVenta.get(producto));
@@ -45,14 +45,49 @@ public class VentaDAO {
         }
         return total;
     }
-
+//    Obtener las ventas hechas este mes
+//    2592000000L = 30 dias en milisegundos
+    public List<Venta> getSalesThisMonth() {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            return em.createQuery("SELECT v FROM Venta v WHERE v.fechaRegistroVenta BETWEEN :start AND :end", Venta.class)
+                    .setParameter("start", new Timestamp(System.currentTimeMillis() - 2592000000L))
+                    .setParameter("end", new Timestamp(System.currentTimeMillis()))
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+//    Obtener los reabastecimientos hechos este mes
+//    2592000000L = 30 dias en milisegundos
+    public List<DetalleVenta> getReabastecimientosThisMonth() {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            return em.createQuery("SELECT dv FROM DetalleVenta dv WHERE dv.venta.fechaRegistroVenta BETWEEN :start AND :end AND dv.cantidad < 0", DetalleVenta.class)
+                    .setParameter("start", new Timestamp(System.currentTimeMillis() - 2592000000L))
+                    .setParameter("end", new Timestamp(System.currentTimeMillis()))
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+//    Obtener la cantidad de productos creados en el ultimo mes
+//    2592000000L = 30 dias en milisegundos
+    public List<Producto> getProductsCreatedThisMonth() {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            return em.createQuery("SELECT p FROM Producto p WHERE p.fechaRegistroProducto BETWEEN :start AND :end", Producto.class)
+                    .setParameter("start", new Timestamp(System.currentTimeMillis() - 2592000000L))
+                    .setParameter("end", new Timestamp(System.currentTimeMillis()))
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
     public List<StringBuilder> getBill() {
         List<StringBuilder> bill = new ArrayList<>();
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
 //            cant, nombre, precio, subtotal separados por espacios
             for (Integer producto : productosVenta.keySet()) {
                 Producto p = em.find(Producto.class, producto);
-                bill.add(new StringBuilder().append(productosVenta.get(producto)).append(" ").append(p.getNombre()).append(" ").append(p.getPrecio()).append(" ").append(p.getPrecio() * productosVenta.get(producto)));
+                bill.add(new StringBuilder().append(productosVenta.get(producto)).append(":::").append(p.getNombre()).append(":::").append(p.getPrecio()).append(":::").append(p.getPrecio() * productosVenta.get(producto)));
             }
             return bill;
         } catch (Exception e) {

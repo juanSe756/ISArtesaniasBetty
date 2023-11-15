@@ -23,7 +23,7 @@ public class ProductoDAO {
             em.getTransaction().begin();
             Categoria categoria = em.find(Categoria.class, categ);
             Estado estado = em.find(Estado.class, 1);
-            Producto producto = new Producto(nombre, precio, desc, stock, categoria, estado,foto);
+            Producto producto = new Producto(nombre, precio, desc, stock, categoria, estado,foto, new Timestamp(System.currentTimeMillis()));
             em.persist(producto);
             em.getTransaction().commit();
             return "Product created";
@@ -38,7 +38,7 @@ public class ProductoDAO {
             List<Object[]> resultList = query.getResultList();
             List<StringBuilder> resultStrings = new ArrayList<>();
             for (Object[] result : resultList) {
-                resultStrings.add(new StringBuilder().append(result[0]).append(" ").append(result[1]).append(" ").append(result[2]).append(" ").append(result[3]).append(" ").append(result[4]).append(" ").append(result[5]));
+                resultStrings.add(new StringBuilder().append(result[0]).append(":::").append(result[1]).append(":::").append(result[2]).append(":::").append(result[3]).append(":::").append(result[4]).append(":::").append(result[5]));
             }
             return resultStrings;
         } catch (NoResultException e) {

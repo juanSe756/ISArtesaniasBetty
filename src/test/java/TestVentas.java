@@ -9,7 +9,7 @@ public class TestVentas {
         productos.put(1, 5);
         productos.put(2, 5);
         productos.put(4, 5);
-        String sale = new VentaDAO().recordSale("Venta de prueba3", new Timestamp(System.currentTimeMillis()), 8, productos);
+        String sale = new VentaDAO().recordSale("Venta a cliente", 1, productos);
         System.out.println(sale);
     }
 }

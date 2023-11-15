@@ -6,14 +6,14 @@ import java.sql.Timestamp;
 import org.mindrot.jbcrypt.BCrypt;
 public class UsuarioDAO {
     public String createUser(String nickname, String contrasena, String nombreUsuario,
-                             String apellidoUsuario, String telefono, int estadoUsuario, Timestamp fechaRegistroUsuario, int rol){
+                             String apellidoUsuario, String telefono, int estadoUsuario, int rol){
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             String pass = BCrypt.hashpw(contrasena, BCrypt.gensalt());
             Estado estado = em.find(Estado.class, estadoUsuario);
             Rol roLl = em.find(Rol.class, rol);
             em.getTransaction().begin();
             Usuario usuario = new Usuario(nickname, pass, nombreUsuario,
-                    apellidoUsuario, telefono, estado, fechaRegistroUsuario, roLl);
+                    apellidoUsuario, telefono, estado, new Timestamp(System.currentTimeMillis()), roLl);
             em.persist(usuario);
             em.getTransaction().commit();
             return "User created";
