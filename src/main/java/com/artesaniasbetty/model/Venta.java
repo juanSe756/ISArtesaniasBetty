@@ -23,15 +23,18 @@ public class Venta {
     private String desc;
     @Column(name = "fecha_regist_venta")
     private Timestamp fechaRegistroVenta;
+    @Column(name = "total_venta")
+    private double totalVenta;
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario idUsuario;
     @OneToMany(mappedBy = "venta")
     private List<DetalleVenta> detalleVentas;
-    public Venta(String desc, Timestamp fechaRegistroVenta, Usuario idUsuario) {
+    public Venta(String desc, Timestamp fechaRegistroVenta, Usuario idUsuario, double totalVenta) {
         this.desc = desc;
         this.fechaRegistroVenta = fechaRegistroVenta;
         this.idUsuario = idUsuario;
+        this.totalVenta = totalVenta;
     }
     public String toString() {
         return "Venta{" +
@@ -39,6 +42,7 @@ public class Venta {
                 ", desc='" + desc + '\'' +
                 ", fechaRegistroVenta=" + fechaRegistroVenta +
                 ", idUsuario=" + idUsuario +
+                ", totalVenta=" + totalVenta +
                 '}';
     }
 }
