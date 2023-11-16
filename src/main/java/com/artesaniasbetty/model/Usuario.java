@@ -49,4 +49,17 @@ public class Usuario {
         this.fechaRegistroUsuario = fechaRegistroUsuario;
         this.rol = rol;
     }
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", contrasena='" + contrasena + '\'' +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", apellidoUsuario='" + apellidoUsuario + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", estadoUsuario=" + estadoUsuario +
+                ", fechaRegistroUsuario=" + fechaRegistroUsuario +
+                ", rol=" + rol +
+                '}';
+    }
 }

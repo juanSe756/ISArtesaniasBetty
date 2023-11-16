@@ -37,4 +37,14 @@ public class ReStock {
         this.fecha = fecha;
         this.usuarioReStock = usuarioReStock;
     }
+    public String toString() {
+        return "ReStock{" +
+                "id=" + id +
+                ", desc='" + desc + '\'' +
+                ", productoReStock=" + productoReStock +
+                ", cantidad=" + cantidad +
+                ", fecha=" + fecha +
+                ", usuarioReStock=" + usuarioReStock +
+                '}';
+    }
 }

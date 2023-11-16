@@ -45,6 +45,36 @@ public class ProductoDAO {
             return null;
         }
     }
+    public List<ReStock> getReStocksThisMonth() {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            return em.createQuery("SELECT r FROM ReStock r WHERE r.fecha BETWEEN :start AND :end AND r.cantidad > 0", ReStock.class)
+                    .setParameter("start", new Timestamp(System.currentTimeMillis() - 2592000000L))
+                    .setParameter("end", new Timestamp(System.currentTimeMillis()))
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public List<ReStock> getReStocks() {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            return em.createQuery("SELECT r FROM ReStock r WHERE r.cantidad > 0", ReStock.class)
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    //    Obtener la cantidad de productos creados en el ultimo mes
+//    2592000000L = 30 dias en milisegundos
+    public List<Producto> getProductsCreatedThisMonth() {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            return em.createQuery("SELECT p FROM Producto p WHERE p.fechaRegistroProducto BETWEEN :start AND :end", Producto.class)
+                    .setParameter("start", new Timestamp(System.currentTimeMillis() - 2592000000L))
+                    .setParameter("end", new Timestamp(System.currentTimeMillis()))
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
     private byte[] convertImageToBytes(String imagePath) throws IOException {
         BufferedImage originalImage = ImageIO.read(new File(imagePath));
         BufferedImage resizedImage = resize(originalImage);
@@ -88,12 +118,12 @@ public class ProductoDAO {
             return "Error decrementing stock";
         }
     }
-    public String incrementStock(int id, int cantidad,String desc, int idUsuario, Timestamp fecha_reabast) {
+    public String incrementStock(int id, int cantidad,String desc, int idUsuario) {
         ReStock reStock;
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
-            reStock= new ReStock(desc, producto, cantidad, fecha_reabast, em.find(Usuario.class, idUsuario));
+            reStock= new ReStock(desc, producto, cantidad, new Timestamp(System.currentTimeMillis()), em.find(Usuario.class, idUsuario));
             em.persist(reStock);
             producto.setStock(producto.getStock() + cantidad);
             em.persist(producto);

@@ -29,4 +29,12 @@ public class DetalleVenta {
         this.venta = venta;
         this.cantidad = cantidad;
     }
+    public String toString() {
+        return "DetalleVenta{" +
+                "id=" + id +
+                ", producto=" + producto +
+                ", venta=" + venta +
+                ", cantidad=" + cantidad +
+                '}';
+    }
 }

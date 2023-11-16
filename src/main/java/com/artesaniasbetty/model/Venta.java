@@ -12,7 +12,6 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "VENTAS")
 public class Venta {
@@ -33,5 +32,13 @@ public class Venta {
         this.desc = desc;
         this.fechaRegistroVenta = fechaRegistroVenta;
         this.idUsuario = idUsuario;
+    }
+    public String toString() {
+        return "Venta{" +
+                "id=" + id +
+                ", desc='" + desc + '\'' +
+                ", fechaRegistroVenta=" + fechaRegistroVenta +
+                ", idUsuario=" + idUsuario +
+                '}';
     }
 }

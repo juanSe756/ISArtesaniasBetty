@@ -7,7 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -25,4 +24,16 @@ public class Estado {
     private List<Usuario> usuarios;
     @OneToMany(mappedBy = "estadoProducto")
     private List<Producto> productos;
+//    builder
+    public Estado(String nombre, String desc) {
+        this.nombre = nombre;
+        this.desc = desc;
+    }
+    public String toString() {
+        return "Estado{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", desc='" + desc + '\'' +
+                '}';
+    }
 }

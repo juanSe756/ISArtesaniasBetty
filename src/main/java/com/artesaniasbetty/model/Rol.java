@@ -7,7 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -27,5 +26,12 @@ public class Rol {
     public Rol(String nombre, String desc) {
         this.nombre = nombre;
         this.desc = desc;
+    }
+    public String toString() {
+        return "Rol{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", desc='" + desc + '\'' +
+                '}';
     }
 }
