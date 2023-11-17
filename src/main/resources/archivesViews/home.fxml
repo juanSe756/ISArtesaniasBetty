@@ -74,6 +74,22 @@
                   <String fx:value="home-container" />
                </styleClass>
             </Button>
+            <Button fx:id="btnVentas" alignment="BASELINE_LEFT" graphicTextGap="10.0" minWidth="0.0" mnemonicParsing="false" onAction="#changeViewSales" prefHeight="50.0" prefWidth="260.0" stylesheets="@../styles/home_style.css" text="Ventas" textAlignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/shop.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Century Schoolbook" size="30.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="home-container" />
+                  <String fx:value="font" />
+               </styleClass>
+            </Button>
             <Button fx:id="btnReportes" alignment="BASELINE_LEFT" graphicTextGap="10.0" minWidth="0.0" mnemonicParsing="false" onAction="#changeViewReports" prefHeight="50.0" prefWidth="260.0" stylesheets="@../styles/home_style.css" text="Reportes" textAlignment="CENTER">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">

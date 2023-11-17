@@ -4,7 +4,6 @@
     -fx-border-radius: 10px; /* Radio de borde */
     -fx-background-radius: 10px; /* Radio de fondo */
     -fx-padding: 10px; /* Espaciado interno */
-    -fx-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra */
 }
 
 /* Estilos para las celdas */
@@ -31,8 +30,4 @@
 /* Estilo para los encabezados de la tabla */
 .table-header {
     -fx-background-color: black; /* Cambiar el color de fondo de los encabezados a negro */
-}
-
-.productsTable.column-header {
-    -fx-background-color: #YourColorHere;
 }

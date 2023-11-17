@@ -31,6 +31,7 @@ public class HomeController implements Initializable{
     public HBox hBoxBottom;
     public Button btnAlabaster;
     public Button btnRegistrarVenta;
+    public Button btnVentas;
     private ProductoDAO productoDAO;
 
     public void inicializar() {
@@ -84,9 +85,7 @@ public class HomeController implements Initializable{
         MainProductController mainProductController = new MainProductController();
         try {
             mainProductController = loader.getController();
-            for (StringBuilder s : productoDAO.getProductsTable()){
-                mainProductController.setData(s);
-            }
+            for (StringBuilder s : productoDAO.getProductsTable()) mainProductController.setData(s);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -102,7 +101,7 @@ public class HomeController implements Initializable{
             borderHome.setLeft(borderPane.getLeft());
             borderHome.setTop(borderPane.getTop());
             borderHome.setRight(borderPane.getRight());
-            fillTable(loader);
+            initComponentsReports(loader);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -142,6 +141,17 @@ public class HomeController implements Initializable{
         }
     }
 
+    public void initComponentsReports(FXMLLoader loader){
+        ProductoDAO productoDAO = new ProductoDAO();
+        ReportsController reportsController = null;
+        try {
+            reportsController = loader.getController();
+            reportsController.init();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void changeViewRegisterSale(ActionEvent actionEvent) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/SaleWindow.fxml"));
         BorderPane panel = null;
@@ -162,6 +172,18 @@ public class HomeController implements Initializable{
 
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void changeViewSales(ActionEvent actionEvent) {
+        btnVentas.setStyle("-fx-background-color: #523814; -fx-text-fill: #ffffff;");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/history.fxml"));
+            BorderPane borderPane = loader.load();
+            borderHome.setCenter(borderPane.getCenter());
+            borderHome.setBottom(null);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

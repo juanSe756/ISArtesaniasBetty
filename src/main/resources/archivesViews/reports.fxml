@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="800.0" prefWidth="1350.0" stylesheets="@../styles/home_style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="800.0" prefWidth="1350.0" stylesheets="@../styles/home_style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.ReportsController">
    <center>
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="471.0" prefWidth="807.0" BorderPane.alignment="CENTER">
          <content>
@@ -155,12 +155,12 @@
                <left>
                   <Pane prefHeight="504.0" prefWidth="1325.0" BorderPane.alignment="CENTER">
                      <children>
-                        <BarChart layoutX="329.0" layoutY="80.0" prefHeight="450.0" prefWidth="759.0" stylesheets="@../styles/reports.css">
+                        <BarChart fx:id="barChart" layoutX="329.0" layoutY="80.0" prefHeight="450.0" prefWidth="759.0" stylesheets="@../styles/reports.css">
                            <xAxis>
-                              <CategoryAxis side="BOTTOM" />
+                              <CategoryAxis fx:id="axisX" label="Producto" prefWidth="703.0" side="BOTTOM" />
                            </xAxis>
                            <yAxis>
-                              <NumberAxis side="LEFT" />
+                              <NumberAxis fx:id="axisY" label="Unidades vendidas" side="LEFT" />
                            </yAxis>
                            <styleClass>
                               <String fx:value="bar" />
