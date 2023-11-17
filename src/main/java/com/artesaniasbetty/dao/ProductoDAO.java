@@ -65,14 +65,14 @@ public class ProductoDAO {
     }
     //    Obtener la cantidad de productos creados en el ultimo mes
 //    2592000000L = 30 dias en milisegundos
-    public List<Producto> getProductsCreatedThisMonth() {
+    public int getProductsCreatedThisMonth() {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             return em.createQuery("SELECT p FROM Producto p WHERE p.fechaRegistroProducto BETWEEN :start AND :end", Producto.class)
                     .setParameter("start", new Timestamp(System.currentTimeMillis() - 2592000000L))
                     .setParameter("end", new Timestamp(System.currentTimeMillis()))
-                    .getResultList();
+                    .getResultList().size();
         } catch (Exception e) {
-            return null;
+            return 0;
         }
     }
     private byte[] convertImageToBytes(String imagePath) throws IOException {
