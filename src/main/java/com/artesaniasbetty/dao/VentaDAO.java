@@ -21,17 +21,17 @@ public class VentaDAO {
                 em.persist(venta);
                 for (Integer producto : productosVenta.keySet()) {
                     DetalleVenta detalleVenta = new DetalleVenta(em.find(Producto.class, producto), venta, productosVenta.get(producto));
-                    productoController.decrementStock(producto, productosVenta.get(producto),em);
+                    productoController.decrementStock(producto, productosVenta.get(producto), em);
                     em.persist(detalleVenta);
                 }
                 em.getTransaction().commit();
             } else {
-                return "Not enough stock";
+                return "No hay suficiente inventario";
             }
-            return "Sale recorded";
+            return "Venta realizada exitosamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return "Error recording sale";
+            return "Error realizando venta";
         }
     }
 

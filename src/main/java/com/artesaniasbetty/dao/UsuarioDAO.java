@@ -1,12 +1,15 @@
 package com.artesaniasbetty.dao;
+
 import com.artesaniasbetty.model.*;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+
 import org.mindrot.jbcrypt.BCrypt;
+
 public class UsuarioDAO {
     public String createUser(String nickname, String contrasena, String nombreUsuario,
-                             String apellidoUsuario, String telefono, int rol){
+                             String apellidoUsuario, String telefono, int rol) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             String pass = BCrypt.hashpw(contrasena, BCrypt.gensalt());
             Estado estado = em.find(Estado.class, 1);
@@ -16,24 +19,27 @@ public class UsuarioDAO {
                     apellidoUsuario, telefono, estado, new Timestamp(System.currentTimeMillis()), roLl);
             em.persist(usuario);
             em.getTransaction().commit();
-            return "User created";
+            return "Usuario creado exitosamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "Error creating user";
+        return "Error creando usuario";
     }
+
     public String removeUser(int id) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Usuario user = em.find(Usuario.class, id);
-            em.remove(user);
+            user.setEstadoUsuario(em.find(Estado.class, 2));
+            em.persist(user);
             em.getTransaction().commit();
-            return "user removed";
+            return "Usuario eliminado exitosamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "Error removing user";
+        return "Error eliminando usuario";
     }
+
     public String modifyUser(int id, String contrasena, String nombreUsuario,
                              String apellidoUsuario, String telefono, int estadoUsuario) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
@@ -47,12 +53,13 @@ public class UsuarioDAO {
             usuario.setTelefono(telefono);
             usuario.setEstadoUsuario(estado);
             em.getTransaction().commit();
-            return "user modified";
+            return "Usuario modificado exitosamente";
         } catch (Exception e) {
-            return "Error modifying user";
+            return "Error modificando usuario";
         }
     }
-    public boolean verifyPassword(String password, String hash){
+
+    public boolean verifyPassword(String password, String hash) {
         return BCrypt.checkpw(password, hash);
     }
 }

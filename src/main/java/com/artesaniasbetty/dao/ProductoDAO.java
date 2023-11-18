@@ -34,7 +34,8 @@ public class ProductoDAO {
 
     public List<StringBuilder> getProductsTable() {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            TypedQuery<Object[]> query = em.createQuery("SELECT p.id, p.nombre, p.precio, p.desc, p.stock, p.categoria.nombre FROM Producto p", Object[].class);
+            TypedQuery<Object[]> query = em.createQuery("SELECT p.id, p.nombre, p.precio, p.desc, p.stock, p.categoria.nombre FROM Producto p WHERE p.estadoProducto = :activo", Object[].class)
+                    .setParameter("activo", em.find(Estado.class, 1));
             List<Object[]> resultList = query.getResultList();
             List<StringBuilder> resultStrings = new ArrayList<>();
             for (Object[] result : resultList) {
@@ -125,11 +126,11 @@ public class ProductoDAO {
             em.persist(producto);
             em.getTransaction().commit();
             em.close();
-            return "incremented stock";
+            return "Producto reabastecido exitosamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "Error incrementing stock";
+        return "Error reabasteciendo producto";
     }
 
     public String modifyProduct(int id, String nombre, double precio, String desc, int stock, int categoria, String
@@ -147,30 +148,32 @@ public class ProductoDAO {
             producto.setFoto(foto);
             em.getTransaction().commit();
             em.close();
-            return "product modified";
+            return "Producto modificado exitosamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "Error modifying product";
+        return "Error modificando producto";
     }
 
     public String removeProduct(int id) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
-            em.remove(producto);
+            producto.setEstadoProducto(em.find(Estado.class, 2));
+            em.persist(producto);
             em.getTransaction().commit();
-            return "product removed";
+            return "Producto eliminado exitosamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "Error removing product";
+        return "Error eliminando producto";
     }
 
     //    metodo para traer todos los productos en una lista
     public List<Producto> getAllProducts() {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            TypedQuery<Producto> query = em.createQuery("SELECT p FROM Producto p", Producto.class);
+            TypedQuery<Producto> query = em.createQuery("SELECT p FROM Producto p WHERE p.estadoProducto = :activo", Producto.class);
+            query.setParameter("activo", em.find(Estado.class, 1));
             return query.getResultList();
         } catch (NoResultException e) {
             return null;
