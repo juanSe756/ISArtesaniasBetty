@@ -66,6 +66,33 @@ public class VentaDAO {
             return null;
         }
     }
+//    obtener el nombre y la cantidad vendida de los 5 productos mas vendidos como un hashmap
+    public HashMap<String, Integer> getTop5Products() {
+        HashMap<String, Integer> top5 = new HashMap<>();
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            List<Producto> resultList = em.createQuery("SELECT dv.producto FROM DetalleVenta dv GROUP BY dv.producto ORDER BY SUM(dv.cantidad) DESC", Producto.class)
+                    .setMaxResults(5)
+                    .getResultList();
+            for (Producto producto : resultList) {
+                top5.put(producto.getNombre(), getQuantitySold(producto));
+            }
+            return top5;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+//    obtener la cantidad total vendida de un producto
+    private int getQuantitySold(Producto producto) {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            return em.createQuery("SELECT SUM(dv.cantidad) FROM DetalleVenta dv WHERE dv.producto = :idProducto", Long.class)
+                    .setParameter("idProducto", producto)
+                    .getSingleResult().intValue();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return 0;
+        }
+    }
+
 
     public List<DetalleVenta> getDetalleFromVenta(int idVenta) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
