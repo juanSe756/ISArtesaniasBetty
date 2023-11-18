@@ -20,6 +20,7 @@ public class ProductoDAO {
 
     public void createProduct(String nombre, double precio, String desc, int stock, int categ, String fotoURL) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            saveImage(fotoURL, nombre);
             byte[] foto = convertImageToBytes(fotoURL);
             em.getTransaction().begin();
             Categoria categoria = em.find(Categoria.class, categ);
@@ -108,6 +109,16 @@ public class ProductoDAO {
         }
     }
 
+    //guarda la imagen en la carpeta assets/prods apartir de una ruta dada por parametro
+    public void saveImage(String imagePath, String productName) {
+        try {
+            byte[] imageBytes = convertImageToBytes(imagePath);
+            convertBytesToImage(imageBytes, productName);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void decrementStock(int id, int cantidad, EntityManager em) {
         Producto producto = em.find(Producto.class, id);
         producto.setStock(producto.getStock() - cantidad);
@@ -136,6 +147,7 @@ public class ProductoDAO {
     public String modifyProduct(int id, String nombre, double precio, String desc, int stock, int categoria, String
             fotoURL) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            saveImage(fotoURL, nombre);
             byte[] foto = convertImageToBytes(fotoURL);
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
