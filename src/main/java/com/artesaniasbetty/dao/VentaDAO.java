@@ -15,17 +15,22 @@ public class VentaDAO {
         ProductoDAO productoController = new ProductoDAO();
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
-            Usuario usuario = em.find(Usuario.class, idUsuario);
-            Venta venta = new Venta(desc, new Timestamp(System.currentTimeMillis()), usuario, getCostOfProducts(productosVenta));
-            em.persist(venta);
-            for (Integer producto : productosVenta.keySet()) {
-                DetalleVenta detalleVenta = new DetalleVenta(em.find(Producto.class, producto), venta, productosVenta.get(producto));
-                productoController.decrementStock(producto, productosVenta.get(producto));
-                em.persist(detalleVenta);
+            if (hasEnoughStock(productosVenta, em)) {
+                Usuario usuario = em.find(Usuario.class, idUsuario);
+                Venta venta = new Venta(desc, new Timestamp(System.currentTimeMillis()), usuario, getCostOfProducts(productosVenta));
+                em.persist(venta);
+                for (Integer producto : productosVenta.keySet()) {
+                    DetalleVenta detalleVenta = new DetalleVenta(em.find(Producto.class, producto), venta, productosVenta.get(producto));
+                    productoController.decrementStock(producto, productosVenta.get(producto),em);
+                    em.persist(detalleVenta);
+                }
+                em.getTransaction().commit();
+            } else {
+                return "Not enough stock";
             }
-            em.getTransaction().commit();
             return "Sale recorded";
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return "Error recording sale";
         }
     }
@@ -36,6 +41,17 @@ public class VentaDAO {
         } catch (Exception e) {
             return null;
         }
+    }
+
+
+    public boolean hasEnoughStock(HashMap<Integer, Integer> productosVenta, EntityManager em) {
+        for (Integer producto : productosVenta.keySet()) {
+            Producto p = em.find(Producto.class, producto);
+            if (p.getStock() < productosVenta.get(producto)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public double getIncomeThisMonth() {
@@ -66,7 +82,8 @@ public class VentaDAO {
             return null;
         }
     }
-//    obtener el nombre y la cantidad vendida de los 5 productos mas vendidos como un hashmap
+
+    //    obtener el nombre y la cantidad vendida de los 5 productos mas vendidos como un hashmap
     public HashMap<String, Integer> getTop5Products() {
         HashMap<String, Integer> top5 = new HashMap<>();
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
@@ -81,7 +98,8 @@ public class VentaDAO {
             return null;
         }
     }
-//    obtener la cantidad total vendida de un producto
+
+    //    obtener la cantidad total vendida de un producto
     private int getQuantitySold(Producto producto) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             return em.createQuery("SELECT SUM(dv.cantidad) FROM DetalleVenta dv WHERE dv.producto = :idProducto", Long.class)
