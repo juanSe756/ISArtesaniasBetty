@@ -4,6 +4,7 @@ import lombok.*;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class Producto {
     private Categoria categoria;
     @Column(name = "foto_prod")
     private byte[] foto;
+    @Column(name = "fecha_regist_prod")
+    private Timestamp fechaRegistroProducto;
     @OneToMany(mappedBy = "producto")
     private List<DetalleVenta> detalleVentas;
     @OneToMany(mappedBy = "productoReStock")
@@ -37,7 +40,7 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "id_estado")
     private Estado estadoProducto;
-    public Producto(String nombre, double precio, String desc, int stock, Categoria categoria, Estado estadoProducto, byte[] foto) {
+    public Producto(String nombre, double precio, String desc, int stock, Categoria categoria, Estado estadoProducto, byte[] foto, Timestamp fechaRegistroProducto) {
         this.nombre = nombre;
         this.precio = precio;
         this.desc = desc;
@@ -45,6 +48,7 @@ public class Producto {
         this.categoria = categoria;
         this.estadoProducto = estadoProducto;
         this.foto= foto;
+        this.fechaRegistroProducto = fechaRegistroProducto;
     }
 
     public String toString() {

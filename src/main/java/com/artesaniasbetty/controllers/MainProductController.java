@@ -1,7 +1,9 @@
 package com.artesaniasbetty.controllers;
 
 import com.artesaniasbetty.dao.ProductoDAO;
+import com.artesaniasbetty.dao.VentaDAO;
 import com.artesaniasbetty.model.Producto;
+import com.artesaniasbetty.model.Venta;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +30,7 @@ import java.util.List;
 
 public class MainProductController {
     public Button btnNewProduct;
-    public TableView<ProductTable> productsTable  ;
+    public TableView<ProductTable> productsTable;
     @Getter
     public TableColumn<ProductTable,Integer> idColumn;
     public TableColumn<ProductTable,String> nameColumn;
@@ -39,7 +41,6 @@ public class MainProductController {
     public TableColumn colButtonDelete;
     public TableColumn colButtonModify;
     private ObservableList<ProductTable> products = FXCollections.observableArrayList();
-
 
     public ProductTable toProductTable(StringBuilder producto) {
         ProductTable productTable = null;
@@ -92,11 +93,24 @@ public class MainProductController {
             panelStage.setScene(scene);
             panelStage.initModality(Modality.APPLICATION_MODAL); // Esto hará que la nueva ventana sea modal
             panelStage.initOwner(stage); // Establece la ventana principal como propietaria de la nueva ventana
-
+            initComponentsNewProduct(loader,stage);
             panelStage.show();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void initComponentsNewProduct(FXMLLoader loader,Stage stage){
+        ProductoDAO productoDAO = new ProductoDAO();
+        NewProductController newProductController = null;
+        //List<ProductoDAO> ventas = productoDAO;
+        try {
+            newProductController = loader.getController();
+            newProductController.setStage(stage);
+            newProductController.initComponents();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     @FXML

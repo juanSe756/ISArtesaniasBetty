@@ -60,7 +60,6 @@ public class ResupplyController{
         int amount = (int) spinnerCantidad.getValue();
         String description = areaDescripcion.getText();
         //App.usuarioLogeado.getId(
-        productoDAO.incrementStock(productoDAO.searchProduct(name).getId(),amount,description,1,
-                new Timestamp(System.currentTimeMillis()));
+        productoDAO.incrementStock(productoDAO.searchProduct(name).getId(),amount,description,1);
     }
 }

@@ -2,7 +2,6 @@ package com.artesaniasbetty.dao;
 
 import com.artesaniasbetty.model.*;
 import jakarta.persistence.*;
-import javafx.scene.image.ImageView;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -17,16 +16,15 @@ import java.util.List;
 
 
 public class ProductoDAO {
-    private static final int IMG_SIZE = 80;
+    private static final int IMG_SIZE = 200;
     public static String outputPath;
-
     public String createProduct(String nombre, double precio, String desc, int stock, int categ, String fotoURL) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             byte[] foto=convertImageToBytes(fotoURL);
             em.getTransaction().begin();
             Categoria categoria = em.find(Categoria.class, categ);
             Estado estado = em.find(Estado.class, 1);
-            Producto producto = new Producto(nombre, precio, desc, stock, categoria, estado,foto);
+            Producto producto = new Producto(nombre, precio, desc, stock, categoria, estado,foto, new Timestamp(System.currentTimeMillis()));
             em.persist(producto);
             em.getTransaction().commit();
             return "Product created";
@@ -35,7 +33,6 @@ public class ProductoDAO {
             return "Error creating product";
         }
     }
-
     public List<StringBuilder> getProductsTable() {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             TypedQuery<Object[]> query = em.createQuery("SELECT p.id, p.nombre, p.precio, p.desc, p.stock, p.categoria.nombre FROM Producto p", Object[].class);
@@ -49,7 +46,36 @@ public class ProductoDAO {
             return null;
         }
     }
-
+    public List<ReStock> getReStocksThisMonth() {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            return em.createQuery("SELECT r FROM ReStock r WHERE r.fecha BETWEEN :start AND :end AND r.cantidad > 0", ReStock.class)
+                    .setParameter("start", new Timestamp(System.currentTimeMillis() - 2592000000L))
+                    .setParameter("end", new Timestamp(System.currentTimeMillis()))
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public List<ReStock> getReStocks() {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            return em.createQuery("SELECT r FROM ReStock r WHERE r.cantidad > 0", ReStock.class)
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    //    Obtener la cantidad de productos creados en el ultimo mes
+//    2592000000L = 30 dias en milisegundos
+    public List<Producto> getProductsCreatedThisMonth() {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            return em.createQuery("SELECT p FROM Producto p WHERE p.fechaRegistroProducto BETWEEN :start AND :end", Producto.class)
+                    .setParameter("start", new Timestamp(System.currentTimeMillis() - 2592000000L))
+                    .setParameter("end", new Timestamp(System.currentTimeMillis()))
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
     private byte[] convertImageToBytes(String imagePath) throws IOException {
         BufferedImage originalImage = ImageIO.read(new File(imagePath));
         BufferedImage resizedImage = resize(originalImage);
@@ -93,12 +119,12 @@ public class ProductoDAO {
             return "Error decrementing stock";
         }
     }
-    public String incrementStock(int id, int cantidad,String desc, int idUsuario, Timestamp fecha_reabast) {
+    public String incrementStock(int id, int cantidad,String desc, int idUsuario) {
         ReStock reStock;
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
-            reStock= new ReStock(desc, producto, cantidad, fecha_reabast, em.find(Usuario.class, idUsuario));
+            reStock= new ReStock(desc, producto, cantidad, new Timestamp(System.currentTimeMillis()), em.find(Usuario.class, idUsuario));
             em.persist(reStock);
             producto.setStock(producto.getStock() + cantidad);
             em.persist(producto);
@@ -142,7 +168,7 @@ public class ProductoDAO {
         }
         return "Error removing product";
     }
-//    metodo para traer todos los productos en una lista
+    //    metodo para traer todos los productos en una lista
     public List<Producto> getAllProducts() {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             TypedQuery<Producto> query = em.createQuery("SELECT p FROM Producto p", Producto.class);
@@ -159,13 +185,20 @@ public class ProductoDAO {
             return null;
         }
     }
-    public Producto searchProduct(String name) {
+    public static Producto searchProduct(String name) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             TypedQuery<Producto> query = em.createQuery("SELECT p FROM Producto p WHERE p.nombre = :name", Producto.class);
             query.setParameter("name", name);
             return query.getSingleResult();
         } catch (NoResultException e) {
             return null;
+        }
+    }
+
+    public static List<Categoria> getAllCategories() {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            TypedQuery<Categoria> query = em.createQuery("SELECT c FROM Categoria c", Categoria.class);
+            return query.getResultList();
         }
     }
 

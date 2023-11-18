@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.NewProductController">
    <top>
       <Pane prefHeight="21.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
@@ -64,7 +64,7 @@
                                  <graphic>
                                     <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../resources/nuevo%20producto.png" />
+                                          <Image url="@../assets/adjuntar.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -85,34 +85,34 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <ComboBox layoutX="296.8" layoutY="107.4" prefHeight="30.0" prefWidth="145.0" style="-fx-font-size: 15;" styleClass="font" stylesheets="@../styles/saleWindow.css" AnchorPane.leftAnchor="296.8" AnchorPane.topAnchor="107.4" />
-                        <Spinner layoutX="298.4" layoutY="165.0" prefHeight="31.0" prefWidth="70.0" AnchorPane.leftAnchor="298.0" AnchorPane.topAnchor="165.0" />
-                        <TextArea layoutX="55.0" layoutY="302.0" prefHeight="66.0" prefWidth="390.0" />
+                        <ComboBox fx:id="comboCategoria" layoutX="296.8" layoutY="107.4" prefHeight="30.0" prefWidth="145.0" style="-fx-font-size: 15;" styleClass="font" stylesheets="@../styles/saleWindow.css" AnchorPane.leftAnchor="296.8" AnchorPane.topAnchor="107.4" />
+                        <Spinner fx:id="spinnerCantidad" layoutX="298.4" layoutY="165.0" prefHeight="31.0" prefWidth="70.0" AnchorPane.leftAnchor="298.0" AnchorPane.topAnchor="165.0" />
+                        <TextArea fx:id="campoDescripcion" layoutX="55.0" layoutY="302.0" prefHeight="66.0" prefWidth="390.0" />
                         <Label layoutX="55.0" layoutY="282.0" text="Descripción">
                            <font>
                               <Font name="Inter Regular" size="13.0" />
                            </font>
                         </Label>
-                        <Button layoutX="88.0" layoutY="390.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-cancel" stylesheets="@../styles/saleWindow.css" text="Cancelar">
+                        <Button fx:id="btnCancelar" layoutX="88.0" layoutY="390.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-cancel" stylesheets="@../styles/saleWindow.css" text="Cancelar">
                            <font>
                               <Font name="Poppins SemiBold" size="12.0" />
                            </font>
                         </Button>
-                        <Button layoutX="270.0" layoutY="390.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-success" stylesheets="@../styles/saleWindow.css" text="Confirmar">
+                        <Button fx:id="btnConfirmar" layoutX="270.0" layoutY="390.0" mnemonicParsing="false" onAction="#registerProduct" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-success" stylesheets="@../styles/saleWindow.css" text="Confirmar">
                            <font>
                               <Font name="Poppins SemiBold" size="12.0" />
                            </font>
                         </Button>
-                        <Button layoutX="55.0" layoutY="34.0" mnemonicParsing="false" prefHeight="220.0" prefWidth="220.0" AnchorPane.leftAnchor="55.0" AnchorPane.topAnchor="34.0">
+                        <Button fx:id="btnImagen" layoutX="55.0" layoutY="34.0" mnemonicParsing="false" onAction="#uploadImage" prefHeight="220.0" prefWidth="220.0" AnchorPane.leftAnchor="55.0" AnchorPane.topAnchor="34.0">
                            <graphic>
-                              <ImageView fitHeight="90.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imagenProducto" fitHeight="228.0" fitWidth="202.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../assets/adjuntar.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <TextField layoutX="297.6" layoutY="50.6" prefHeight="36.0" prefWidth="145.0" AnchorPane.leftAnchor="297.6" AnchorPane.topAnchor="50.6" />
+                        <TextField fx:id="campoNombre" layoutX="297.6" layoutY="50.6" prefHeight="36.0" prefWidth="145.0" AnchorPane.leftAnchor="297.6" AnchorPane.topAnchor="50.6" />
                         <Label layoutX="299.2" layoutY="30.6" text="Nombre" AnchorPane.rightAnchor="152.8" AnchorPane.topAnchor="30.6">
                            <font>
                               <Font name="Poppins" size="12.0" />
@@ -128,7 +128,7 @@
                               <Font name="Poppins" size="12.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="298.0" layoutY="215.0" prefHeight="36.0" prefWidth="145.0" />
+                        <TextField fx:id="campoPrecio" layoutX="298.0" layoutY="215.0" prefHeight="36.0" prefWidth="145.0" />
                         <Label layoutX="299.0" layoutY="197.0" text="Precio">
                            <font>
                               <Font name="Poppins" size="12.0" />

@@ -17,183 +17,188 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="800.0" prefWidth="1350.0" stylesheets="@../styles/home_style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.ReportsController">
-   <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="471.0" prefWidth="807.0" BorderPane.alignment="CENTER">
-         <content>
-            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="722.0" prefWidth="1326.0">
-               <top>
-                  <FlowPane prefHeight="122.0" prefWidth="1326.0" BorderPane.alignment="CENTER">
+
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.ReportsController">
+   <content>
+      <BorderPane prefHeight="800.0" prefWidth="1350.0" stylesheets="@../styles/home_style.css">
+         <center>
+            <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="800.0" minWidth="1340.0" prefHeight="800.0" prefWidth="1340.0" BorderPane.alignment="CENTER">
+               <content>
+                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="722.0" prefWidth="1326.0">
+                     <top>
+                        <FlowPane prefHeight="122.0" prefWidth="1326.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Pane prefHeight="110.0" prefWidth="214.0" style="-fx-background-radius: 10px;" styleClass="home-product">
+                                 <FlowPane.margin>
+                                    <Insets bottom="10.0" left="200.0" right="10.0" top="10.0" />
+                                 </FlowPane.margin>
+                                 <children>
+                                    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="109.0" prefWidth="215.0">
+                                       <children>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="72.0" prefWidth="215.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Ingresos">
+                                             <font>
+                                                <Font name="Poppins SemiBold" size="12.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="44.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../assets/ingresos.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <Label fx:id="infoIngresos" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="195.0" style="-fx-background-color: black; -fx-background-radius: 10px;" styleClass="font-sub" text="\$20K" textAlignment="CENTER" textFill="#fcfcfc">
+                                             <font>
+                                                <Font name="System Bold" size="36.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="110.0" prefWidth="214.0" style="-fx-background-radius: 10px;" styleClass="home-product">
+                                 <children>
+                                    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="109.0" prefWidth="215.0">
+                                       <children>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="72.0" prefWidth="215.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Ventas">
+                                             <font>
+                                                <Font name="Poppins SemiBold" size="12.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="44.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../assets/ventas.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <Label fx:id="infoVentas" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="195.0" style="-fx-background-color: black; -fx-background-radius: 10px;" styleClass="font-sub" text="0" textAlignment="CENTER" textFill="#fcfcfc">
+                                             <font>
+                                                <Font name="System Bold" size="36.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                                 <FlowPane.margin>
+                                    <Insets bottom="10.0" left="30.0" top="10.0" />
+                                 </FlowPane.margin>
+                              </Pane>
+                              <Pane prefHeight="110.0" prefWidth="214.0" style="-fx-background-radius: 10px;" styleClass="home-product">
+                                 <children>
+                                    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="109.0" prefWidth="215.0">
+                                       <children>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="72.0" prefWidth="215.0" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Cant Productos">
+                                             <font>
+                                                <Font name="Poppins SemiBold" size="12.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="44.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../assets/amount.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <Label fx:id="infoCantidadProductos" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="195.0" style="-fx-background-color: black; -fx-background-radius: 10px;" styleClass="font-sub" text="0" textAlignment="CENTER" textFill="#fcfcfc">
+                                             <font>
+                                                <Font name="System Bold" size="36.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                                 <FlowPane.margin>
+                                    <Insets bottom="10.0" left="40.0" top="10.0" />
+                                 </FlowPane.margin>
+                              </Pane>
+                              <Pane prefHeight="110.0" prefWidth="214.0" style="-fx-background-radius: 10px;" styleClass="home-product">
+                                 <children>
+                                    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="109.0" prefWidth="215.0">
+                                       <children>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="72.0" prefWidth="215.0" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Nuevos productos">
+                                             <font>
+                                                <Font name="Poppins SemiBold" size="12.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="44.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../assets/new_product.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <Label fx:id="infoNuevosProductos" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="195.0" style="-fx-background-color: black; -fx-background-radius: 10px;" styleClass="font-sub" text="0" textAlignment="CENTER" textFill="#fcfcfc">
+                                             <font>
+                                                <Font name="System Bold" size="36.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                                 <FlowPane.margin>
+                                    <Insets bottom="10.0" left="40.0" top="10.0" />
+                                 </FlowPane.margin>
+                              </Pane>
+                           </children>
+                        </FlowPane>
+                     </top>
+                     <left>
+                        <Pane prefHeight="800.0" prefWidth="1325.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <BarChart fx:id="barChart" layoutX="329.0" layoutY="80.0" prefHeight="450.0" prefWidth="759.0" stylesheets="@../styles/reports.css">
+                                 <xAxis>
+                                    <CategoryAxis fx:id="axisX" label="Producto" prefWidth="703.0" side="BOTTOM" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis fx:id="axisY" label="Unidades vendidas" side="LEFT" />
+                                 </yAxis>
+                                 <styleClass>
+                                    <String fx:value="bar" />
+                                    <String fx:value="x-axis-label" />
+                                    <String fx:value="y-axis-label" />
+                                    <String fx:value="bar-chart" />
+                                 </styleClass>
+                              </BarChart>
+                              <RadioButton layoutX="523.0" layoutY="7.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" styleClass="font-sub" text="Ventas" />
+                              <RadioButton layoutX="680.0" layoutY="19.0" mnemonicParsing="false" styleClass="font-sub" text="Abastecimientos" />
+                           </children>
+                        </Pane>
+                     </left>
+                  </BorderPane>
+               </content>
+            </ScrollPane>
+         </center>
+         <bottom>
+            <Pane prefHeight="83.0" prefWidth="1344.0" BorderPane.alignment="CENTER">
+               <children>
+                  <FlowPane layoutY="11.0" prefHeight="70.0" prefWidth="1341.0">
                      <children>
-                        <Pane prefHeight="110.0" prefWidth="214.0" style="-fx-background-radius: 10px;" styleClass="home-product">
-                           <FlowPane.margin>
-                              <Insets bottom="10.0" left="200.0" right="10.0" top="10.0" />
-                           </FlowPane.margin>
-                           <children>
-                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="109.0" prefWidth="215.0">
-                                 <children>
-                                    <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="72.0" prefWidth="215.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Ingresos">
-                                       <font>
-                                          <Font name="Poppins SemiBold" size="12.0" />
-                                       </font>
-                                       <graphic>
-                                          <ImageView fitHeight="44.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/ingresos.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Label>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="195.0" style="-fx-background-color: black; -fx-background-radius: 10px;" styleClass="font-sub" text="\$20K" textAlignment="CENTER" textFill="#fcfcfc">
-                                       <font>
-                                          <Font name="System Bold" size="36.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" right="10.0" />
-                                 </padding>
-                              </VBox>
-                           </children>
-                        </Pane>
-                        <Pane prefHeight="110.0" prefWidth="214.0" style="-fx-background-radius: 10px;" styleClass="home-product">
-                           <children>
-                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="109.0" prefWidth="215.0">
-                                 <children>
-                                    <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="72.0" prefWidth="215.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Ventas">
-                                       <font>
-                                          <Font name="Poppins SemiBold" size="12.0" />
-                                       </font>
-                                       <graphic>
-                                          <ImageView fitHeight="44.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/ventas.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Label>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="195.0" style="-fx-background-color: black; -fx-background-radius: 10px;" styleClass="font-sub" text="0" textAlignment="CENTER" textFill="#fcfcfc">
-                                       <font>
-                                          <Font name="System Bold" size="36.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" right="10.0" />
-                                 </padding>
-                              </VBox>
-                           </children>
-                           <FlowPane.margin>
-                              <Insets bottom="10.0" left="30.0" top="10.0" />
-                           </FlowPane.margin>
-                        </Pane>
-                        <Pane prefHeight="110.0" prefWidth="214.0" style="-fx-background-radius: 10px;" styleClass="home-product">
-                           <children>
-                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="109.0" prefWidth="215.0">
-                                 <children>
-                                    <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="72.0" prefWidth="215.0" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Cant Productos">
-                                       <font>
-                                          <Font name="Poppins SemiBold" size="12.0" />
-                                       </font>
-                                       <graphic>
-                                          <ImageView fitHeight="44.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/amount.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Label>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="195.0" style="-fx-background-color: black; -fx-background-radius: 10px;" styleClass="font-sub" text="0" textAlignment="CENTER" textFill="#fcfcfc">
-                                       <font>
-                                          <Font name="System Bold" size="36.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" right="10.0" />
-                                 </padding>
-                              </VBox>
-                           </children>
-                           <FlowPane.margin>
-                              <Insets bottom="10.0" left="40.0" top="10.0" />
-                           </FlowPane.margin>
-                        </Pane>
-                        <Pane prefHeight="110.0" prefWidth="214.0" style="-fx-background-radius: 10px;" styleClass="home-product">
-                           <children>
-                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="109.0" prefWidth="215.0">
-                                 <children>
-                                    <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="72.0" prefWidth="215.0" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Nuevos productos">
-                                       <font>
-                                          <Font name="Poppins SemiBold" size="12.0" />
-                                       </font>
-                                       <graphic>
-                                          <ImageView fitHeight="44.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/new_product.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Label>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="195.0" style="-fx-background-color: black; -fx-background-radius: 10px;" styleClass="font-sub" text="0" textAlignment="CENTER" textFill="#fcfcfc">
-                                       <font>
-                                          <Font name="System Bold" size="36.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" right="10.0" />
-                                 </padding>
-                              </VBox>
-                           </children>
-                           <FlowPane.margin>
-                              <Insets bottom="10.0" left="40.0" top="10.0" />
-                           </FlowPane.margin>
-                        </Pane>
+                        <Label prefHeight="54.0" prefWidth="515.0" />
+                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="280.0" text="Historial" textFill="WHITE">
+                           <styleClass>
+                              <String fx:value="home-product" />
+                              <String fx:value="font" />
+                           </styleClass>
+                        </Button>
+                        <Label prefHeight="19.0" prefWidth="108.0" />
                      </children>
                   </FlowPane>
-               </top>
-               <left>
-                  <Pane prefHeight="504.0" prefWidth="1325.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <BarChart fx:id="barChart" layoutX="329.0" layoutY="80.0" prefHeight="450.0" prefWidth="759.0" stylesheets="@../styles/reports.css">
-                           <xAxis>
-                              <CategoryAxis fx:id="axisX" label="Producto" prefWidth="703.0" side="BOTTOM" />
-                           </xAxis>
-                           <yAxis>
-                              <NumberAxis fx:id="axisY" label="Unidades vendidas" side="LEFT" />
-                           </yAxis>
-                           <styleClass>
-                              <String fx:value="bar" />
-                              <String fx:value="x-axis-label" />
-                              <String fx:value="y-axis-label" />
-                              <String fx:value="bar-chart" />
-                           </styleClass>
-                        </BarChart>
-                        <RadioButton layoutX="523.0" layoutY="7.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" styleClass="font-sub" text="Ventas" />
-                        <RadioButton layoutX="680.0" layoutY="19.0" mnemonicParsing="false" styleClass="font-sub" text="Abastecimientos" />
-                     </children>
-                  </Pane>
-               </left>
-            </BorderPane>
-         </content>
-      </ScrollPane>
-   </center>
-   <bottom>
-      <Pane prefHeight="83.0" prefWidth="1344.0" BorderPane.alignment="CENTER">
-         <children>
-            <FlowPane layoutY="11.0" prefHeight="70.0" prefWidth="1341.0">
-               <children>
-                  <Label prefHeight="54.0" prefWidth="515.0" />
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="280.0" text="Historial" textFill="WHITE">
-                     <styleClass>
-                        <String fx:value="home-product" />
-                        <String fx:value="font" />
-                     </styleClass>
-                  </Button>
-                  <Label prefHeight="19.0" prefWidth="108.0" />
                </children>
-            </FlowPane>
-         </children>
-      </Pane>
-   </bottom>
-</BorderPane>
+            </Pane>
+         </bottom>
+      </BorderPane>
+   </content>
+</ScrollPane>

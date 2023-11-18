@@ -8,33 +8,38 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1340.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.MainProductController">
-   <children>
-      <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="150.0" layoutY="98.0" minHeight="0.0" minWidth="0.0" prefHeight="568.0" prefWidth="1056.0" style="-fx-font-size: 20px;">
-         <content>
-            <TableView fx:id="productsTable" editable="true" minHeight="0.0" minWidth="0.0" prefHeight="546.0" prefWidth="1054.0" style="-fx-border-width: 7px; -fx-border-radius: 10px; -fx-border-color: rgb(194, 168, 148);">
-               <columns>
-                  <TableColumn fx:id="idColumn" prefWidth="73.59997272491455" text="Id" />
-                  <TableColumn fx:id="nameColumn" prefWidth="166.4000244140625" text="Nombre" />
-                  <TableColumn fx:id="priceColumn" prefWidth="154.39988708496094" text="Precio unitario" />
-                  <TableColumn fx:id="descriptionColum" prefWidth="216.0" text="Descripción" />
-                  <TableColumn fx:id="stockColumn" minWidth="8.800048828125" prefWidth="130.4000244140625" text="Stock" />
-                  <TableColumn fx:id="categoryColumn" prefWidth="158.4000244140625" text="Categoria" />
-                  <TableColumn fx:id="colButtonDelete" prefWidth="56.0" />
-                  <TableColumn fx:id="colButtonModify" prefWidth="56.0" />
-               </columns>
-            </TableView>
-         </content>
-      </ScrollPane>
-      <Button fx:id="btnNewProduct" layoutX="953.0" layoutY="673.0" mnemonicParsing="false" onAction="#changeViewNewProduct" prefHeight="68.0" prefWidth="252.0" style="-fx-background-radius: 10px; -fx-font-size: 25px; -fx-background-color: rgb(194, 168, 148);" styleClass="font-sub" text="Nuevo producto" AnchorPane.bottomAnchor="59.799999999999955" AnchorPane.rightAnchor="135.0">
-         <font>
-            <Font name="Poppins SemiBold" size="12.0" />
-         </font>
-      </Button>
-      <Label layoutX="523.0" layoutY="38.0" prefHeight="52.0" prefWidth="327.0" styleClass="font-middle" stylesheets="@../styles/home_style.css" text="Listado de productos" AnchorPane.leftAnchor="523.0" AnchorPane.topAnchor="38.0">
-         <font>
-            <Font name="System Bold" size="29.0" />
-         </font>
-      </Label>
-   </children>
-</AnchorPane>
+
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.MainProductController">
+   <content>
+      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="800.0" minWidth="1340.0" prefHeight="800.0" prefWidth="1340.0">
+         <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="150.0" layoutY="98.0" minHeight="0.0" minWidth="0.0" prefHeight="568.0" prefWidth="1056.0" style="-fx-font-size: 20px;">
+               <content>
+                  <TableView fx:id="productsTable" editable="true" minHeight="0.0" minWidth="0.0" prefHeight="546.0" prefWidth="1054.0" style="-fx-border-width: 7px; -fx-border-radius: 10px; -fx-border-color: rgb(194, 168, 148);">
+                     <columns>
+                        <TableColumn fx:id="idColumn" prefWidth="73.59997272491455" text="Id" />
+                        <TableColumn fx:id="nameColumn" prefWidth="166.4000244140625" text="Nombre" />
+                        <TableColumn fx:id="priceColumn" prefWidth="154.39988708496094" text="Precio unitario" />
+                        <TableColumn fx:id="descriptionColum" prefWidth="216.0" text="Descripción" />
+                        <TableColumn fx:id="stockColumn" minWidth="8.800048828125" prefWidth="130.4000244140625" text="Stock" />
+                        <TableColumn fx:id="categoryColumn" prefWidth="158.4000244140625" text="Categoria" />
+                        <TableColumn fx:id="colButtonDelete" prefWidth="56.0" />
+                        <TableColumn fx:id="colButtonModify" prefWidth="56.0" />
+                     </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
+            <Button fx:id="btnNewProduct" layoutX="953.0" layoutY="673.0" mnemonicParsing="false" onAction="#changeViewNewProduct" prefHeight="68.0" prefWidth="252.0" style="-fx-background-radius: 10px; -fx-font-size: 25px; -fx-background-color: rgb(194, 168, 148);" styleClass="font-sub" text="Nuevo producto" AnchorPane.bottomAnchor="59.799999999999955" AnchorPane.rightAnchor="135.0">
+               <font>
+                  <Font name="Poppins SemiBold" size="12.0" />
+               </font>
+            </Button>
+            <Label layoutX="523.0" layoutY="38.0" prefHeight="52.0" prefWidth="327.0" styleClass="font-middle" stylesheets="@../styles/home_style.css" text="Listado de productos" AnchorPane.leftAnchor="523.0" AnchorPane.topAnchor="38.0">
+               <font>
+                  <Font name="System Bold" size="29.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>

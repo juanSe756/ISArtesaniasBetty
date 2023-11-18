@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.registerSaleController">
    <top>
       <Pane prefHeight="21.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
@@ -87,10 +87,10 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <ComboBox layoutX="42.0" layoutY="35.0" prefHeight="30.0" prefWidth="143.0" promptText="Producto" style="-fx-font-size: 15;" styleClass="font" stylesheets="@../styles/saleWindow.css" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="35.0" />
-                        <Spinner layoutX="210.0" layoutY="37.0" prefHeight="35.0" prefWidth="69.0" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="37.0" />
+                        <ComboBox fx:id="scrollProductos" layoutX="42.0" layoutY="35.0" prefHeight="30.0" prefWidth="143.0" promptText="Producto" style="-fx-font-size: 15;" styleClass="font" stylesheets="@../styles/saleWindow.css" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="35.0" />
+                        <Spinner fx:id="spinnerCantidad" layoutX="210.0" layoutY="37.0" prefHeight="35.0" prefWidth="69.0" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="37.0" />
                         <Label layoutX="215.0" layoutY="19.0" style="-fx-font-size: 13;" styleClass="font" stylesheets="@../styles/home_style.css" text="Cantidad" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="19.0" />
-                        <Button alignment="CENTER" layoutX="302.0" layoutY="33.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: white; -fx-border-color: green; -fx-border-radius: 8;" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="33.0">
+                        <Button fx:id="btnAgregarVenta" alignment="CENTER" layoutX="302.0" layoutY="33.0" mnemonicParsing="false" onAction="#addSaleTable" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: white; -fx-border-color: green; -fx-border-radius: 8;" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="33.0">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -103,12 +103,12 @@
                            <children>
                               <ScrollPane prefHeight="200.0" prefWidth="425.0">
                                  <content>
-                                    <TableView prefHeight="197.0" prefWidth="410.0">
+                                    <TableView fx:id="tablaVentas" prefHeight="197.0" prefWidth="410.0">
                                       <columns>
-                                        <TableColumn prefWidth="60.79995805025101" text="Cantidad" />
-                                        <TableColumn prefWidth="126.39995956420898" text="Nombre" />
-                                          <TableColumn prefWidth="97.60005187988281" text="Precio unitario" />
-                                          <TableColumn maxWidth="1.7976931348623157E308" prefWidth="89.5999755859375" text="Precio total" />
+                                        <TableColumn fx:id="colCantidad" prefWidth="60.79995805025101" text="Cantidad" />
+                                        <TableColumn fx:id="colNombre" prefWidth="126.39995956420898" text="Nombre" />
+                                          <TableColumn fx:id="colPrecioUnitario" prefWidth="97.60005187988281" text="Precio unitario" />
+                                          <TableColumn fx:id="colPrecioTotal" maxWidth="1.7976931348623157E308" prefWidth="89.5999755859375" text="Precio total" />
                                           <TableColumn prefWidth="39.20001220703125" />
                                       </columns>
                                     </TableView>
@@ -121,12 +121,12 @@
                               <Font name="Poppins Medium" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="380.0" layoutY="295.0" text="\$00.000">
+                        <Label fx:id="txtPrecio" layoutX="380.0" layoutY="295.0" text="\$00.000">
                            <font>
                               <Font name="Poppins SemiBold" size="18.0" />
                            </font>
                         </Label>
-                        <TextArea layoutX="42.0" layoutY="339.0" prefHeight="66.0" prefWidth="412.0" />
+                        <TextArea fx:id="areaDescripcion" layoutX="42.0" layoutY="339.0" prefHeight="66.0" prefWidth="412.0" />
                         <Label layoutX="44.0" layoutY="319.0" text="Descripción">
                            <font>
                               <Font name="Inter Regular" size="13.0" />
@@ -137,7 +137,7 @@
                               <Font name="Poppins SemiBold" size="12.0" />
                            </font>
                         </Button>
-                        <Button layoutX="273.0" layoutY="447.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-success" stylesheets="@../styles/saleWindow.css" text="Confirmar">
+                        <Button fx:id="btnConfirmar" layoutX="273.0" layoutY="447.0" mnemonicParsing="false" onAction="#generateSale" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-success" stylesheets="@../styles/saleWindow.css" text="Confirmar">
                            <font>
                               <Font name="Poppins SemiBold" size="12.0" />
                            </font>

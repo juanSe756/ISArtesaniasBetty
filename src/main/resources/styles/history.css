@@ -14,17 +14,17 @@
     -fx-text-fill: #333; /* Color de texto */
 }
 
-/* Estilo para las filas impares */
-.table-row-cell:odd {
-    -fx-background-color: #e0e0e0; /* Color de fondo para filas impares */
+.font-sub {
+    -fx-font-family: "Inter";
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
 }
 
-/* Estilo para las filas pares */
-.table-row-cell:even {
-    -fx-background-color: #d3d3d3; /* Color de fondo para filas pares */
+.font-titles {
+    -fx-font-family: "Inter";
+    -fx-font-weight: bold;
+    -fx-font-size: 25px;
 }
 
-/* Estilo para los encabezados de la tabla */
-.table-header {
-    -fx-background-color: black; /* Cambiar el color de fondo de los encabezados a negro */
-}
+
+

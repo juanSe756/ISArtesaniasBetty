@@ -1,7 +1,9 @@
 package com.artesaniasbetty.controllers;
 
 import com.artesaniasbetty.dao.ProductoDAO;
+import com.artesaniasbetty.dao.VentaDAO;
 import com.artesaniasbetty.model.Producto;
+import com.artesaniasbetty.model.Venta;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -71,8 +73,8 @@ public class HomeController implements Initializable{
         btnProducts.setStyle("-fx-background-color: #523814; -fx-text-fill: #ffffff;");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/products.fxml"));
-            AnchorPane anchorPaneContent = loader.load();
-            borderHome.setCenter(anchorPaneContent);
+            ScrollPane scrollPane = loader.load();
+            borderHome.setCenter(scrollPane);
             borderHome.setBottom(null);
             fillTable(loader);
         } catch (Exception e) {
@@ -95,12 +97,8 @@ public class HomeController implements Initializable{
         btnReportes.setStyle("-fx-background-color: #523814; -fx-text-fill: #ffffff;");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/reports.fxml"));
-            BorderPane borderPane = loader.load();
-            borderHome.setCenter(borderPane.getCenter());
-            borderHome.setBottom(borderPane.getBottom());
-            borderHome.setLeft(borderPane.getLeft());
-            borderHome.setTop(borderPane.getTop());
-            borderHome.setRight(borderPane.getRight());
+            ScrollPane scroll = loader.load();
+            borderHome.setCenter(scroll);
             initComponentsReports(loader);
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,11 +140,12 @@ public class HomeController implements Initializable{
     }
 
     public void initComponentsReports(FXMLLoader loader){
-        ProductoDAO productoDAO = new ProductoDAO();
+        VentaDAO ventaDAO = new VentaDAO();
         ReportsController reportsController = null;
+        List<Venta> ventas = ventaDAO.getSalesThisMonth();
         try {
             reportsController = loader.getController();
-            reportsController.init();
+            reportsController.init(ventas);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -167,13 +166,24 @@ public class HomeController implements Initializable{
             panelStage.setScene(scene);
             panelStage.initModality(Modality.APPLICATION_MODAL); // Esto hará que la nueva ventana sea modal
             panelStage.initOwner(stage); // Establece la ventana principal como propietaria de la nueva ventana
-
+            initComponentsRegisterSale(loader);
             panelStage.show();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+    public void initComponentsRegisterSale(FXMLLoader loader){
+        ProductoDAO productoDAO = new ProductoDAO();
+        registerSaleController registerSaleController = null;
+        try {
+            registerSaleController = loader.getController();
+            registerSaleController.initComponents(productoDAO.getAllProducts());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
     public void changeViewSales(ActionEvent actionEvent) {
         btnVentas.setStyle("-fx-background-color: #523814; -fx-text-fill: #ffffff;");
@@ -182,7 +192,22 @@ public class HomeController implements Initializable{
             BorderPane borderPane = loader.load();
             borderHome.setCenter(borderPane.getCenter());
             borderHome.setBottom(null);
+            initComponentsSales(loader);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void initComponentsSales(FXMLLoader loader){
+        VentaDAO ventaDAO = new VentaDAO();
+        SalesController salesController = null;
+        List<Venta> ventas = ventaDAO.getSales();
+        try {
+            salesController = loader.getController();
+            for (Venta v : ventas) {
+                salesController.setData(v);
+            }
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
