@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -30,6 +31,21 @@ public class ProductoDAO {
             em.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+//    traer un hashmap con el nombre del producto y su imagen para cada producto
+    public HashMap<String,byte[]> getProductsImage() {
+        HashMap<String,byte[]> resultStrings = new HashMap<>();
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            TypedQuery<Object[]> query = em.createQuery("SELECT p.nombre, p.foto FROM Producto p WHERE p.estadoProducto = :activo", Object[].class)
+                    .setParameter("activo", em.find(Estado.class, 1));
+            List<Object[]> resultList = query.getResultList();
+            for (Object[] result : resultList) {
+                resultStrings.put((String) result[0],(byte[]) result[1]);
+            }
+            return resultStrings;
+        } catch (NoResultException e) {
+            return null;
         }
     }
 
