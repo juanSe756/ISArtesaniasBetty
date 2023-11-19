@@ -11,13 +11,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 
@@ -47,6 +50,7 @@ public class HomeController implements Initializable{
         borderHome.setCenter(scrollProducts);
         borderHome.setBottom(hBoxBottom);
         ProductController productController = null;
+        loadImage(productoDAO);
         for (int i = 0; i < products.size(); i++) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/onlyProduct.fxml"));
@@ -59,18 +63,44 @@ public class HomeController implements Initializable{
             }
         }
     }
+
+    private void loadImage(ProductoDAO productoDAO){
+        Thread loadImageThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // Método loadImage
+                List<Producto> listProductos = productoDAO.getAllProducts();
+                for (Producto producto : listProductos) {
+                    productoDAO.convertBytesToImage(producto.getFoto(), producto.getNombre());
+                }
+            }
+        });
+
+        // Iniciar el hilo
+        loadImageThread.start();
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         inicializar();
     }
 
-    public void changeBackground(ActionEvent actionEvent) {
+    public void changeBackground(javafx.scene.input.MouseEvent mouseEvent) {
         btnInicio.setStyle("-fx-background-color: #523814; -fx-text-fill: #ffffff;");
+        btnVentas.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
+        btnProducts.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
+        btnReportes.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
         inicializar();
     }
 
-    public void changeViewProducts(ActionEvent actionEvent) {
+    public void backChangeBackground(MouseEvent mouseEvent) {
+        btnInicio.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
+    }
+
+    public void changeViewProducts(javafx.scene.input.MouseEvent mouseEvent) {
         btnProducts.setStyle("-fx-background-color: #523814; -fx-text-fill: #ffffff;");
+        btnVentas.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
+        btnInicio.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
+        btnReportes.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/products.fxml"));
             ScrollPane scrollPane = loader.load();
@@ -80,6 +110,10 @@ public class HomeController implements Initializable{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void backChangeViewProducts(MouseEvent mouseEvent) {
+        btnProducts.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
     }
 
     public void fillTable(FXMLLoader loader) {
@@ -93,8 +127,11 @@ public class HomeController implements Initializable{
         }
     }
 
-    public void changeViewReports(ActionEvent actionEvent) {
+    public void changeViewReports(javafx.scene.input.MouseEvent mouseEvent) {
         btnReportes.setStyle("-fx-background-color: #523814; -fx-text-fill: #ffffff;");
+        btnVentas.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
+        btnProducts.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
+        btnInicio.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/reports.fxml"));
             ScrollPane scroll = loader.load();
@@ -103,6 +140,10 @@ public class HomeController implements Initializable{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void backChangeViewReports(MouseEvent mouseEvent) {
+        btnReportes.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
     }
 
     public void changeViewResupply(ActionEvent actionEvent) {
@@ -141,11 +182,13 @@ public class HomeController implements Initializable{
 
     public void initComponentsReports(FXMLLoader loader){
         VentaDAO ventaDAO = new VentaDAO();
+        ProductoDAO productoDAO = new ProductoDAO();
         ReportsController reportsController = null;
-        List<Venta> ventas = ventaDAO.getSalesThisMonth();
         try {
             reportsController = loader.getController();
-            reportsController.init(ventas);
+            reportsController.init(ventaDAO.getTop5Products());
+            reportsController.setData(ventaDAO.getIncomeThisMonth(),productoDAO.getProductsCreatedThisMonth(),
+                    ventaDAO.getSales().size(),productoDAO.getAllProducts().size());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -185,8 +228,11 @@ public class HomeController implements Initializable{
     }
 
 
-    public void changeViewSales(ActionEvent actionEvent) {
+    public void changeViewSales(javafx.scene.input.MouseEvent mouseEvent) {
         btnVentas.setStyle("-fx-background-color: #523814; -fx-text-fill: #ffffff;");
+        btnInicio.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
+        btnProducts.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
+        btnReportes.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/history.fxml"));
             BorderPane borderPane = loader.load();
@@ -197,6 +243,10 @@ public class HomeController implements Initializable{
             e.printStackTrace();
         }
     }
+    public void backChangeViewSales(MouseEvent mouseEvent) {
+        btnVentas.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
+    }
+
 
     public void initComponentsSales(FXMLLoader loader){
         VentaDAO ventaDAO = new VentaDAO();
@@ -211,4 +261,6 @@ public class HomeController implements Initializable{
             e.printStackTrace();
         }
     }
+
+
 }

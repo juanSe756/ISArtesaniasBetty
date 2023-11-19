@@ -32,9 +32,10 @@ public class ProductController {
 
 
     public void setData(Producto producto) {
+        ProductoDAO productoDAO = new ProductoDAO();
         nameProduct.setText(producto.getNombre());
         amountProduct.setText("Cantidad = " + producto.getStock());
-        ProductoDAO.convertBytesToImage(producto.getFoto(), producto.getNombre());
+        productoDAO.convertBytesToImage(producto.getFoto(), producto.getNombre());
         loadImage();
     }
 
@@ -44,6 +45,4 @@ public class ProductController {
         System.out.println(enlace);
         imageProduct.setImage(new Image(enlace));
     }
-
-
 }

@@ -42,7 +42,7 @@
                </children>
             </Pane>
             <Label minHeight="10.0" minWidth="0.0" prefHeight="167.0" prefWidth="200.0" styleClass="home-container" stylesheets="@../styles/home_style.css" />
-            <Button fx:id="btnInicio" alignment="BASELINE_LEFT" graphicTextGap="10.0" minWidth="0.0" mnemonicParsing="false" onAction="#changeBackground" prefHeight="50.0" prefWidth="260.0" stylesheets="@../styles/home_style.css" text="Inicio" textAlignment="CENTER">
+            <Button fx:id="btnInicio" alignment="BASELINE_LEFT" graphicTextGap="10.0" minWidth="0.0" mnemonicParsing="false" onMouseClicked="#changeBackground" onMouseReleased="#backChangeBackground" prefHeight="50.0" prefWidth="260.0" stylesheets="@../styles/home_style.css" text="Inicio" textAlignment="CENTER">
                <font>
                   <Font name="Century Schoolbook" size="30.0" />
                </font>
@@ -58,7 +58,7 @@
                   <String fx:value="home-container" />
                </styleClass>
             </Button>
-            <Button fx:id="btnProducts" alignment="BASELINE_LEFT" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="0.0" mnemonicParsing="false" onAction="#changeViewProducts" stylesheets="@../styles/home_style.css" text="Productos" textAlignment="CENTER">
+            <Button fx:id="btnProducts" alignment="BASELINE_LEFT" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="0.0" mnemonicParsing="false" onMouseClicked="#changeViewProducts" onMouseReleased="#backChangeViewProducts" stylesheets="@../styles/home_style.css" text="Productos" textAlignment="CENTER">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -74,7 +74,7 @@
                   <String fx:value="home-container" />
                </styleClass>
             </Button>
-            <Button fx:id="btnVentas" alignment="BASELINE_LEFT" graphicTextGap="10.0" minWidth="0.0" mnemonicParsing="false" onAction="#changeViewSales" prefHeight="50.0" prefWidth="260.0" stylesheets="@../styles/home_style.css" text="Ventas" textAlignment="CENTER">
+            <Button fx:id="btnVentas" alignment="BASELINE_LEFT" graphicTextGap="10.0" minWidth="0.0" mnemonicParsing="false" onMouseClicked="#changeViewSales" onMouseReleased="#backChangeViewSales" prefHeight="50.0" prefWidth="260.0" stylesheets="@../styles/home_style.css" text="Ventas" textAlignment="CENTER">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -90,7 +90,7 @@
                   <String fx:value="font" />
                </styleClass>
             </Button>
-            <Button fx:id="btnReportes" alignment="BASELINE_LEFT" graphicTextGap="10.0" minWidth="0.0" mnemonicParsing="false" onAction="#changeViewReports" prefHeight="50.0" prefWidth="260.0" stylesheets="@../styles/home_style.css" text="Reportes" textAlignment="CENTER">
+            <Button fx:id="btnReportes" alignment="BASELINE_LEFT" graphicTextGap="10.0" minWidth="0.0" mnemonicParsing="false" onMouseClicked="#changeViewReports" onMouseReleased="#backChangeViewReports" prefHeight="50.0" prefWidth="260.0" stylesheets="@../styles/home_style.css" text="Reportes" textAlignment="CENTER">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -156,7 +156,7 @@
          <center>
             <ScrollPane fx:id="scrollProducts" fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" prefHeight="190.0" prefWidth="1305.0" style="-fx-background-color: white;" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
                <content>
-                  <FlowPane fx:id="flowProducts" prefHeight="825.0" prefWidth="1282.0" style="-fx-background-color: white;" />
+                  <FlowPane fx:id="flowProducts" onMousePressed="#changeViewReports" onMouseReleased="#backChangeViewReports" prefHeight="825.0" prefWidth="1282.0" style="-fx-background-color: white;" />
                </content>
             </ScrollPane>
          </center>

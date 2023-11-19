@@ -42,7 +42,9 @@ public class NewProductController {
         initCombo();
     }
     public void initCombo(){
-        ObservableList<String> productosList = FXCollections.observableArrayList(toListText(ProductoDAO.getAllCategories()));
+        ProductoDAO productoDAO = new ProductoDAO();
+        ObservableList<String> productosList =
+                FXCollections.observableArrayList(toListText(productoDAO.getAllCategories()));
         comboCategoria.setItems(productosList);
     }
 
@@ -79,7 +81,6 @@ public class NewProductController {
             String imageUrl = null;
             try {
                 imageUrl = imgFile.toURI().toURL().toString();
-                // Create Image object from the URL
                 Image image = new Image(imageUrl);
                 imagenProducto.setImage(image);
             } catch (MalformedURLException e) {

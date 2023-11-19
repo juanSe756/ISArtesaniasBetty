@@ -86,9 +86,10 @@ public class registerSaleController {
 
     public void generateSale(ActionEvent actionEvent) {
         HashMap<Integer,Integer> hashMap = new HashMap<>();
+        ProductoDAO productoDAO = new ProductoDAO();
         if(ventas.size() > 0) {
             for (RegisterSaleTable venta : ventas) {
-                hashMap.put(ProductoDAO.searchProduct(venta.getName()).getId(), venta.getAmount());
+                hashMap.put(productoDAO.searchProduct(venta.getName()).getId(), venta.getAmount());
             }
             createSale(areaDescripcion.getText(), 1, hashMap);
         }

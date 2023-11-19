@@ -12,30 +12,49 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class ProductoDAO {
     private static final int IMG_SIZE = 200;
     public static String outputPath;
-    public String createProduct(String nombre, double precio, String desc, int stock, int categ, String fotoURL) {
+
+    public void createProduct(String nombre, double precio, String desc, int stock, int categ, String fotoURL) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            byte[] foto=convertImageToBytes(fotoURL);
+            System.out.println("Foto: "+fotoURL);
+            saveImage(fotoURL, nombre);
+            byte[] foto = convertImageToBytes(fotoURL);
             em.getTransaction().begin();
             Categoria categoria = em.find(Categoria.class, categ);
             Estado estado = em.find(Estado.class, 1);
-            Producto producto = new Producto(nombre, precio, desc, stock, categoria, estado,foto, new Timestamp(System.currentTimeMillis()));
+            Producto producto = new Producto(nombre, precio, desc, stock, categoria, estado, foto, new Timestamp(System.currentTimeMillis()));
             em.persist(producto);
             em.getTransaction().commit();
-            return "Product created";
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return "Error creating product";
         }
     }
+
+    public HashMap<String,byte[]> getProductsImage() {
+        HashMap<String,byte[]> resultStrings = new HashMap<>();
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            TypedQuery<Object[]> query = em.createQuery("SELECT p.nombre, p.foto FROM Producto p WHERE p.estadoProducto = :activo", Object[].class)
+                    .setParameter("activo", em.find(Estado.class, 1));
+            List<Object[]> resultList = query.getResultList();
+            for (Object[] result : resultList) {
+                resultStrings.put((String) result[0],(byte[]) result[1]);
+            }
+            return resultStrings;
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
     public List<StringBuilder> getProductsTable() {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            TypedQuery<Object[]> query = em.createQuery("SELECT p.id, p.nombre, p.precio, p.desc, p.stock, p.categoria.nombre FROM Producto p", Object[].class);
+            TypedQuery<Object[]> query = em.createQuery("SELECT p.id, p.nombre, p.precio, p.desc, p.stock, p.categoria.nombre FROM Producto p WHERE p.estadoProducto = :activo", Object[].class)
+                    .setParameter("activo", em.find(Estado.class, 1));
             List<Object[]> resultList = query.getResultList();
             List<StringBuilder> resultStrings = new ArrayList<>();
             for (Object[] result : resultList) {
@@ -46,6 +65,7 @@ public class ProductoDAO {
             return null;
         }
     }
+
     public List<ReStock> getReStocksThisMonth() {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             return em.createQuery("SELECT r FROM ReStock r WHERE r.fecha BETWEEN :start AND :end AND r.cantidad > 0", ReStock.class)
@@ -56,6 +76,7 @@ public class ProductoDAO {
             return null;
         }
     }
+
     public List<ReStock> getReStocks() {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             return em.createQuery("SELECT r FROM ReStock r WHERE r.cantidad > 0", ReStock.class)
@@ -64,18 +85,20 @@ public class ProductoDAO {
             return null;
         }
     }
+
     //    Obtener la cantidad de productos creados en el ultimo mes
 //    2592000000L = 30 dias en milisegundos
-    public List<Producto> getProductsCreatedThisMonth() {
+    public int getProductsCreatedThisMonth() {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             return em.createQuery("SELECT p FROM Producto p WHERE p.fechaRegistroProducto BETWEEN :start AND :end", Producto.class)
                     .setParameter("start", new Timestamp(System.currentTimeMillis() - 2592000000L))
                     .setParameter("end", new Timestamp(System.currentTimeMillis()))
-                    .getResultList();
+                    .getResultList().size();
         } catch (Exception e) {
-            return null;
+            return 0;
         }
     }
+
     private byte[] convertImageToBytes(String imagePath) throws IOException {
         BufferedImage originalImage = ImageIO.read(new File(imagePath));
         BufferedImage resizedImage = resize(originalImage);
@@ -83,6 +106,7 @@ public class ProductoDAO {
         ImageIO.write(resizedImage, "jpg", baos);
         return baos.toByteArray();
     }
+
     private BufferedImage resize(BufferedImage img) {
         Image tmp = img.getScaledInstance(IMG_SIZE, IMG_SIZE, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(IMG_SIZE, IMG_SIZE, BufferedImage.TYPE_INT_RGB);
@@ -91,7 +115,8 @@ public class ProductoDAO {
         g2d.dispose();
         return dimg;
     }
-    public static void convertBytesToImage(byte[] imageBytes, String productName) {
+
+    public void convertBytesToImage(byte[] imageBytes, String productName) {
         try {
             outputPath = "src/main/resources/assets/prods/" + productName + ".jpg";
             FileOutputStream fos = new FileOutputStream(outputPath);
@@ -102,43 +127,44 @@ public class ProductoDAO {
         }
     }
 
-    public String decrementStock(int id, int cantidad) {
-        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            em.getTransaction().begin();
-            Producto producto = em.find(Producto.class, id);
-            if(producto.getStock() > cantidad){
-                producto.setStock(producto.getStock() - cantidad);
-                em.persist(producto);
-                em.getTransaction().commit();
-                return "decremented stock";
-            }
-            else{
-                return "Not enough stock";
-            }
-        } catch (Exception e) {
-            return "Error decrementing stock";
+    public void saveImage(String imagePath, String productName) {
+        try {
+            byte[] imageBytes = convertImageToBytes(imagePath);
+            convertBytesToImage(imageBytes, productName);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
-    public String incrementStock(int id, int cantidad,String desc, int idUsuario) {
+
+    public void decrementStock(int id, int cantidad, EntityManager em) {
+        Producto producto = em.find(Producto.class, id);
+        producto.setStock(producto.getStock() - cantidad);
+        em.persist(producto);
+//        em.getTransaction().commit();
+    }
+
+    public String incrementStock(int id, int cantidad, String desc, int idUsuario) {
         ReStock reStock;
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
-            reStock= new ReStock(desc, producto, cantidad, new Timestamp(System.currentTimeMillis()), em.find(Usuario.class, idUsuario));
+            reStock = new ReStock(desc, producto, cantidad, new Timestamp(System.currentTimeMillis()), em.find(Usuario.class, idUsuario));
             em.persist(reStock);
             producto.setStock(producto.getStock() + cantidad);
             em.persist(producto);
             em.getTransaction().commit();
             em.close();
-            return "incremented stock";
+            return "Producto reabastecido exitosamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "Error incrementing stock";
+        return "Error reabasteciendo producto";
     }
-    public String modifyProduct(int id, String nombre, double precio, String desc, int stock, int categoria, String fotoURL) {
+
+    public String modifyProduct(int id, String nombre, double precio, String desc, int stock, int categoria, String
+            fotoURL) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            byte[] foto=convertImageToBytes(fotoURL);
+            byte[] foto = convertImageToBytes(fotoURL);
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
             Categoria categ = em.find(Categoria.class, categoria);
@@ -150,42 +176,47 @@ public class ProductoDAO {
             producto.setFoto(foto);
             em.getTransaction().commit();
             em.close();
-            return "product modified";
+            return "Producto modificado exitosamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "Error modifying product";
+        return "Error modificando producto";
     }
+
     public String removeProduct(int id) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
-            em.remove(producto);
+            producto.setEstadoProducto(em.find(Estado.class, 2));
+            em.persist(producto);
             em.getTransaction().commit();
-            return "product removed";
+            return "Producto eliminado exitosamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "Error removing product";
+        return "Error eliminando producto";
     }
+
     //    metodo para traer todos los productos en una lista
     public List<Producto> getAllProducts() {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            TypedQuery<Producto> query = em.createQuery("SELECT p FROM Producto p", Producto.class);
+            TypedQuery<Producto> query = em.createQuery("SELECT p FROM Producto p WHERE p.estadoProducto = :activo", Producto.class);
+            query.setParameter("activo", em.find(Estado.class, 1));
             return query.getResultList();
         } catch (NoResultException e) {
             return null;
         }
     }
+
     public Producto searchProduct(int id) {
-        try(EntityManager em = EntityMF.getInstance().createEntityManager()){
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             return em.find(Producto.class, id);
-        }
-        catch (NoResultException e){
+        } catch (NoResultException e) {
             return null;
         }
     }
-    public static Producto searchProduct(String name) {
+
+    public Producto searchProduct(String name) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             TypedQuery<Producto> query = em.createQuery("SELECT p FROM Producto p WHERE p.nombre = :name", Producto.class);
             query.setParameter("name", name);
@@ -195,7 +226,7 @@ public class ProductoDAO {
         }
     }
 
-    public static List<Categoria> getAllCategories() {
+    public List<Categoria> getAllCategories() {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             TypedQuery<Categoria> query = em.createQuery("SELECT c FROM Categoria c", Categoria.class);
             return query.getResultList();

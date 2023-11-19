@@ -1,9 +1,8 @@
 .bar-chart {
-    width: 400px; /* Ancho del gráfico */
-    height: 300px; /* Alto del gráfico */
-    background-color: #f0f0f0; /* Color de fondo del gráfico */
-    border: 1px solid #ccc; /* Borde del gráfico */
-    position: relative; /* Para posicionar las barras correctamente */
+    width: 400px;
+    height: 300px;
+    background-color: #f0f0f0;
+    position: relative;
 }
 
 /* Estilo para las barras del gráfico */
