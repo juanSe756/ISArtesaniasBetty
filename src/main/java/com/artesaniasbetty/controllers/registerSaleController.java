@@ -75,6 +75,7 @@ public class registerSaleController {
             txtPrecio.setText("$" + totalPrice);
         }else {
             mostrarAlertError();
+            System.out.println("hola");
         }
     }
 
