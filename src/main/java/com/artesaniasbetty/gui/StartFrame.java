@@ -21,7 +21,7 @@ public class StartFrame extends JFrame {
         setLayout(new GridBagLayout());
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize((int) screenSize.getWidth(), (int) screenSize.getHeight());
-        getContentPane().setBackground(new Color(85, 55, 57));
+        getContentPane().setBackground(new Color(194, 168, 148));
 
         initComponents(a);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

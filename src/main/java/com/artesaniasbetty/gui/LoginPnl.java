@@ -114,7 +114,7 @@ public class LoginPnl extends JPanel {
         gbc.gridy=5;
         add(userTag,gbc);
         gbc.anchor=GridBagConstraints.CENTER;
-        gbc.insets.set(20,25,0,25);
+        gbc.insets.set(20,25,0,70);
         gbc.ipady=0;
         gbc.ipadx=50;
         gbc.gridx=0;
@@ -128,7 +128,7 @@ public class LoginPnl extends JPanel {
         gbc.gridy=7;
         add(passwordTag,gbc);
         //gbc.anchor=GridBagConstraints.CENTER;
-        gbc.insets.set(20,25,0,25);
+        gbc.insets.set(20,25,0,70);
         gbc.ipady=0;
         gbc.ipadx=0;
         gbc.gridx=0;

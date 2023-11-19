@@ -9,25 +9,36 @@ import java.util.*;
 
 @Getter
 public class VentaDAO {
+    //    hashmap de productosVenta con id de producto y cantidad
     private HashMap<Integer, Integer> productosVenta = new HashMap<>();
+
+    public String addToHashmap(int idProducto, int cantidad) {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            Producto producto = em.find(Producto.class, idProducto);
+            if (producto.getStock() >= cantidad) {
+                productosVenta.put(idProducto, cantidad);
+                return "Producto agregado al carrito";
+            } else {
+                return "No hay suficiente inventario";
+            }
+        } catch (Exception e) {
+            return "Error agregando producto al carrito";
+        }
+    }
 
     public String recordSale(String desc, int idUsuario, HashMap<Integer, Integer> productosVenta) {
         ProductoDAO productoController = new ProductoDAO();
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
-            if (hasEnoughStock(productosVenta, em)) {
-                Usuario usuario = em.find(Usuario.class, idUsuario);
-                Venta venta = new Venta(desc, new Timestamp(System.currentTimeMillis()), usuario, getCostOfProducts(productosVenta));
-                em.persist(venta);
-                for (Integer producto : productosVenta.keySet()) {
-                    DetalleVenta detalleVenta = new DetalleVenta(em.find(Producto.class, producto), venta, productosVenta.get(producto));
-                    productoController.decrementStock(producto, productosVenta.get(producto), em);
-                    em.persist(detalleVenta);
-                }
-                em.getTransaction().commit();
-            } else {
-                return "No hay suficiente inventario";
+            Usuario usuario = em.find(Usuario.class, idUsuario);
+            Venta venta = new Venta(desc, new Timestamp(System.currentTimeMillis()), usuario, getCostOfProducts(productosVenta));
+            em.persist(venta);
+            for (Integer producto : productosVenta.keySet()) {
+                DetalleVenta detalleVenta = new DetalleVenta(em.find(Producto.class, producto), venta, productosVenta.get(producto));
+                productoController.decrementStock(producto, productosVenta.get(producto), em);
+                em.persist(detalleVenta);
             }
+            em.getTransaction().commit();
             return "Venta realizada exitosamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -42,18 +53,6 @@ public class VentaDAO {
             return null;
         }
     }
-
-
-    public boolean hasEnoughStock(HashMap<Integer, Integer> productosVenta, EntityManager em) {
-        for (Integer producto : productosVenta.keySet()) {
-            Producto p = em.find(Producto.class, producto);
-            if (p.getStock() < productosVenta.get(producto)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public double getIncomeThisMonth() {
         double income = 0;
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
