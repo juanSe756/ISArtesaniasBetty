@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class SalesController {
     public TableView<SaleTable> salesTable;
@@ -37,10 +38,9 @@ public class SalesController {
         sales.add(saleTable);
         salesTable.setItems(sales);
         salesTable.refresh();
-        manageSelection();
     }
 
-    private void manageSelection() {
+    public void manageSelection() {
         // Configurar el escuchador para manejar la selección en la tabla
         salesTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -58,8 +58,7 @@ public class SalesController {
         VentaDAO ventaDAO = new VentaDAO();
         List<DetalleVenta> detalleVentas = ventaDAO.getDetalleFromVenta(idSale);
         for (DetalleVenta detalleVenta : detalleVentas) {
-            System.out.println(toDetailTable(detalleVenta));
-            updateDetail(toDetailTable(detalleVenta));
+        updateDetail(toDetailTable(detalleVenta));
         }
     }
 

@@ -2,6 +2,9 @@ package com.artesaniasbetty.dao;
 
 import com.artesaniasbetty.model.*;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import lombok.Getter;
 
 import java.sql.Timestamp;
@@ -9,13 +12,26 @@ import java.util.*;
 
 @Getter
 public class VentaDAO {
+
     private HashMap<Integer, Integer> productosVenta = new HashMap<>();
 
+    public boolean addToHashmap(int idProducto, int cantidad) {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            Producto producto = em.find(Producto.class, idProducto);
+            if (producto.getStock() >= cantidad) {
+                productosVenta.put(idProducto, cantidad);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
     public String recordSale(String desc, int idUsuario, HashMap<Integer, Integer> productosVenta) {
         ProductoDAO productoController = new ProductoDAO();
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
-            if (hasEnoughStock(productosVenta, em)) {
                 Usuario usuario = em.find(Usuario.class, idUsuario);
                 Venta venta = new Venta(desc, new Timestamp(System.currentTimeMillis()), usuario, getCostOfProducts(productosVenta));
                 em.persist(venta);
@@ -25,9 +41,6 @@ public class VentaDAO {
                     em.persist(detalleVenta);
                 }
                 em.getTransaction().commit();
-            } else {
-                return "No hay suficiente inventario";
-            }
             return "Venta realizada exitosamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -37,37 +50,28 @@ public class VentaDAO {
 
     public List<Venta> getSales() {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            return em.createQuery("SELECT v FROM Venta v", Venta.class).getResultList();
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Venta> cq = cb.createQuery(Venta.class);
+            Root<Venta> root = cq.from(Venta.class);
+            cq.select(root);
+            return em.createQuery(cq).getResultList();
         } catch (Exception e) {
-            return null;
+            return Collections.emptyList();
         }
-    }
-
-
-    public boolean hasEnoughStock(HashMap<Integer, Integer> productosVenta, EntityManager em) {
-        for (Integer producto : productosVenta.keySet()) {
-            Producto p = em.find(Producto.class, producto);
-            if (p.getStock() < productosVenta.get(producto)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public double getIncomeThisMonth() {
-        double income = 0;
-        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            List<Venta> ventas = em.createQuery("SELECT v FROM Venta v WHERE v.fechaRegistroVenta BETWEEN :start AND :end", Venta.class)
-                    .setParameter("start", new Timestamp(System.currentTimeMillis() - 2592000000L))
-                    .setParameter("end", new Timestamp(System.currentTimeMillis()))
-                    .getResultList();
-            for (Venta venta : ventas) {
-                income += venta.getTotalVenta();
+            try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+                Double income = em.createQuery(
+                                "SELECT SUM(v.totalVenta) FROM Venta v " +
+                                        "WHERE FUNCTION('MONTH', v.fechaRegistroVenta) = FUNCTION('MONTH', CURRENT_DATE) " +
+                                        "AND FUNCTION('YEAR', v.fechaRegistroVenta) = FUNCTION('YEAR', CURRENT_DATE)", Double.class)
+                        .getSingleResult();
+
+                return income != null ? income : 0;
+            } catch (Exception e) {
+                return 0;
             }
-            return income;
-        } catch (Exception e) {
-            return 0;
-        }
     }
 
     //    Obtener las ventas hechas este mes
@@ -87,27 +91,22 @@ public class VentaDAO {
     public HashMap<String, Integer> getTop5Products() {
         HashMap<String, Integer> top5 = new HashMap<>();
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            List<Producto> resultList = em.createQuery("SELECT dv.producto FROM DetalleVenta dv GROUP BY dv.producto ORDER BY SUM(dv.cantidad) DESC", Producto.class)
+            List<Object[]> resultList = em.createQuery(
+                            "SELECT dv.producto, SUM(dv.cantidad) " +
+                                    "FROM DetalleVenta dv " +
+                                    "GROUP BY dv.producto ", Object[].class)
                     .setMaxResults(5)
                     .getResultList();
-            for (Producto producto : resultList) {
-                top5.put(producto.getNombre(), getQuantitySold(producto));
+
+            for (Object[] result : resultList) {
+                Producto producto = (Producto) result[0];
+                Long cantidadVendida = (Long) result[1];
+                top5.put(producto.getNombre(), cantidadVendida.intValue());
             }
+
             return top5;
         } catch (Exception e) {
             return null;
-        }
-    }
-
-    //    obtener la cantidad total vendida de un producto
-    private int getQuantitySold(Producto producto) {
-        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            return em.createQuery("SELECT SUM(dv.cantidad) FROM DetalleVenta dv WHERE dv.producto = :idProducto", Long.class)
-                    .setParameter("idProducto", producto)
-                    .getSingleResult().intValue();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return 0;
         }
     }
 

@@ -4,6 +4,7 @@ import com.artesaniasbetty.dao.ProductoDAO;
 import com.artesaniasbetty.dao.VentaDAO;
 import com.artesaniasbetty.model.Producto;
 import com.artesaniasbetty.model.Venta;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,10 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -41,6 +39,7 @@ public class MainProductController {
     public TableColumn colButtonDelete;
     public TableColumn colButtonModify;
     private ObservableList<ProductTable> products = FXCollections.observableArrayList();
+    ProductoDAO productoDAO = new ProductoDAO();
 
     public ProductTable toProductTable(StringBuilder producto) {
         ProductTable productTable = null;
@@ -102,7 +101,6 @@ public class MainProductController {
     }
 
     public void initComponentsNewProduct(FXMLLoader loader,Stage stage){
-        ProductoDAO productoDAO = new ProductoDAO();
         NewProductController newProductController = null;
         //List<ProductoDAO> ventas = productoDAO;
         try {
@@ -127,9 +125,13 @@ public class MainProductController {
                 deleteButton.setGraphic(deleteIcon);
                 deleteButton.setOnAction(event -> {
                     ProductTable producto = getTableView().getItems().get(getIndex());
-                    // Manejar la acción de eliminación aquí
-                    // Puedes querer eliminar el producto de la ObservableList
-                    products.remove(producto);
+                    boolean selected = showAlert(producto.getName());
+                    if(selected){
+                        productoDAO.removeProduct(producto.getId());
+                        products.remove(producto);
+                    }else {
+                        showAlertInfo();
+                    }
                 });
             }
 
@@ -175,6 +177,32 @@ public class MainProductController {
 
         // Asignar la ObservableList a la TableView
         productsTable.setItems(products);
+    }
+
+    private boolean showAlert(String nameProduct) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Confirmacion");
+        alert.setContentText("¿Deseas realmente eliminar el producto "+ nameProduct+ "?" );
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+        return result == ButtonType.OK;
+    }
+
+    private void mostrarAlertError(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle("Error");
+        alert.setContentText("Error en la aplicacion");
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void showAlertInfo() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Info");
+        alert.setContentText("Proceso cancelado");
+        alert.showAndWait();
     }
 }
 

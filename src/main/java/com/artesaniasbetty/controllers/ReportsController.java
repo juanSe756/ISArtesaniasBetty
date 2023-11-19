@@ -1,6 +1,7 @@
 package com.artesaniasbetty.controllers;
 
 import com.artesaniasbetty.model.Venta;
+import javafx.application.Platform;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -34,17 +35,16 @@ public class ReportsController {
     }
     public void initChart(HashMap<String, Integer> top5Products) {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-
-        int colorIndex = 0;
-        for (Map.Entry<String, Integer> entry : top5Products.entrySet()) {
-            String productName = entry.getKey();
-            int quantitySold = entry.getValue();
-            XYChart.Data<String, Number> data = new XYChart.Data<>(productName, quantitySold);
-            series.getData().add(data);
-            colorIndex++;
-        }
-        barChart.getData().add(series);
-        aplicarEstilos(barChart);
+            int colorIndex = 0;
+            for (Map.Entry<String, Integer> entry : top5Products.entrySet()) {
+                String productName = entry.getKey();
+                int quantitySold = entry.getValue();
+                XYChart.Data<String, Number> data = new XYChart.Data<>(productName, quantitySold);
+                series.getData().add(data);
+                colorIndex++;
+            }
+            barChart.getData().add(series);
+            aplicarEstilos(barChart);
     }
 
     private void aplicarEstilos(BarChart<String, Number> barChart) {

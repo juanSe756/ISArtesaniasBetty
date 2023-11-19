@@ -57,19 +57,25 @@ public class registerSaleController {
     public void addSaleTable(ActionEvent actionEvent) {
         ProductoDAO productoDAO = new ProductoDAO();
         Producto producto = productoDAO.searchProduct(scrollProductos.getSelectionModel().getSelectedItem().toString());
-        RegisterSaleTable registerSaleTable =
-                new RegisterSaleTable(Integer.parseInt(spinnerCantidad.getValue().toString()),
-                producto.getNombre(),
-                producto.getPrecio());
-        ventas.add(registerSaleTable);
-        colCantidad.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colPrecioUnitario.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
-        colPrecioTotal.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
-        products.add(registerSaleTable);
-        tablaVentas.setItems(products);
-        tablaVentas.refresh();
-        txtPrecio.setText("$"+calculateTotalPrice());
+        VentaDAO ventaDAO = new VentaDAO();
+        if(producto.getStock() >= Integer.parseInt(spinnerCantidad.getValue().toString())) {
+            RegisterSaleTable registerSaleTable =
+                    new RegisterSaleTable(Integer.parseInt(spinnerCantidad.getValue().toString()),
+                            producto.getNombre(),
+                            producto.getPrecio());
+            ventas.add(registerSaleTable);
+            double totalPrice = calculateTotalPrice();
+            colCantidad.setCellValueFactory(new PropertyValueFactory<>("amount"));
+            colNombre.setCellValueFactory(new PropertyValueFactory<>("name"));
+            colPrecioUnitario.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+            colPrecioTotal.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
+            products.add(registerSaleTable);
+            tablaVentas.setItems(products);
+            tablaVentas.refresh();
+            txtPrecio.setText("$" + totalPrice);
+        }else {
+            mostrarAlertError();
+        }
     }
 
     private double calculateTotalPrice(){
@@ -82,6 +88,14 @@ public class registerSaleController {
 
     private void createSale(String desc, int idUser, HashMap<Integer,Integer> hashMap){
         new VentaDAO().recordSale(desc, idUser, hashMap);
+    }
+
+    private void mostrarAlertError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle("Error");
+        alert.setContentText("No hay suficiente inventario de este producto");
+        alert.showAndWait();
     }
 
     public void generateSale(ActionEvent actionEvent) {

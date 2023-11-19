@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.ModifyProductController">
+   <top>
+      <Pane prefHeight="21.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+         <children>
+            <FlowPane prefHeight="22.0" prefWidth="500.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="433.0" />
+                  <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: black;" stylesheets="@../styles/saleWindow.css">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/minimizar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: black;">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/cerrar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </FlowPane>
+         </children>
+      </Pane>
+   </top>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="579.0" prefWidth="500.0">
+               <top>
+                  <Pane prefHeight="70.0" prefWidth="542.0" styleClass="home-container" stylesheets="@../styles/saleWindow.css" BorderPane.alignment="CENTER">
+                     <children>
+                        <FlowPane layoutY="-1.0" prefHeight="68.0" prefWidth="500.0">
+                           <children>
+                              <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="82.0" styleClass="home-container">
+                                 <opaqueInsets>
+                                    <Insets left="10.0" />
+                                 </opaqueInsets>
+                                 <FlowPane.margin>
+                                    <Insets left="50.0" top="8.0" />
+                                 </FlowPane.margin>
+                              </Button>
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/adjuntar.png" />
+                                 </image>
+                              </ImageView>
+                              <Label style="-fx-font-size: 22; -fx-font-weight: bold;" text="Modificar producto" textFill="WHITE">
+                                 <FlowPane.margin>
+                                    <Insets left="10.0" />
+                                 </FlowPane.margin>
+                                 <font>
+                                    <Font name="Poppins Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </FlowPane>
+                     </children>
+                  </Pane>
+               </top>
+               <center>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ComboBox fx:id="comboCategoria" layoutX="296.8" layoutY="107.4" prefHeight="30.0" prefWidth="145.0" style="-fx-font-size: 15;" styleClass="font" stylesheets="@../styles/saleWindow.css" AnchorPane.leftAnchor="296.8" AnchorPane.topAnchor="107.4" />
+                        <Spinner fx:id="spinnerCantidad" layoutX="298.4" layoutY="165.0" prefHeight="31.0" prefWidth="70.0" AnchorPane.leftAnchor="298.0" AnchorPane.topAnchor="165.0" />
+                        <TextArea fx:id="campoDescripcion" layoutX="55.0" layoutY="302.0" prefHeight="66.0" prefWidth="390.0" />
+                        <Label layoutX="55.0" layoutY="282.0" text="Descripción">
+                           <font>
+                              <Font name="Inter Regular" size="13.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="btnCancelar" layoutX="88.0" layoutY="390.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-cancel" stylesheets="@../styles/saleWindow.css" text="Cancelar">
+                           <font>
+                              <Font name="Poppins SemiBold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnConfirmar" layoutX="270.0" layoutY="390.0" mnemonicParsing="false" onAction="#modifyProduct" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-success" stylesheets="@../styles/saleWindow.css" text="Confirmar">
+                           <font>
+                              <Font name="Poppins SemiBold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnImagen" layoutX="55.0" layoutY="34.0" mnemonicParsing="false" onAction="#uploadImage" prefHeight="220.0" prefWidth="220.0" AnchorPane.leftAnchor="55.0" AnchorPane.topAnchor="34.0">
+                           <graphic>
+                              <ImageView fx:id="imagenProducto" fitHeight="228.0" fitWidth="202.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/adjuntar.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <TextField fx:id="campoNombre" layoutX="297.6" layoutY="50.6" prefHeight="36.0" prefWidth="145.0" AnchorPane.leftAnchor="297.6" AnchorPane.topAnchor="50.6" />
+                        <Label layoutX="299.2" layoutY="30.6" text="Nombre" AnchorPane.rightAnchor="152.8" AnchorPane.topAnchor="30.6">
+                           <font>
+                              <Font name="Poppins" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="299.2" layoutY="86.6" text="Categoria">
+                           <font>
+                              <Font name="Poppins" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="299.0" layoutY="146.0" text="Cantidad">
+                           <font>
+                              <Font name="Poppins" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="campoPrecio" layoutX="298.0" layoutY="215.0" prefHeight="36.0" prefWidth="145.0" />
+                        <Label layoutX="299.0" layoutY="197.0" text="Precio">
+                           <font>
+                              <Font name="Poppins" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

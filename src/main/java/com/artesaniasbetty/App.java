@@ -5,11 +5,17 @@ import com.artesaniasbetty.dao.UsuarioDAO;
 import com.artesaniasbetty.gui.StartFrame;
 import com.artesaniasbetty.model.Usuario;
 import jakarta.persistence.*;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class App implements ActionListener {
+public class App  extends Application implements ActionListener{
     StartFrame sf;
     UsuarioDAO uc;
 
@@ -18,6 +24,17 @@ public class App implements ActionListener {
         sf = new StartFrame(this);
         uc = new UsuarioDAO();
     }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root1 = FXMLLoader.load(getClass().getResource("/archivesViews/home.fxml"));
+        Screen screen = Screen.getPrimary();
+        javafx.geometry.Rectangle2D bounds = screen.getVisualBounds();
+        Scene scene1 = new Scene(root1, bounds.getWidth(), bounds.getHeight());
+        stage.setScene(scene1);
+        stage.show();
+    }
+
     public static void main(String[] args) {
         new App();
     }
@@ -45,7 +62,8 @@ public class App implements ActionListener {
                 sf.setLogined(true);
                 sf.login();
                 System.out.println("Logined");
-                // sf.dispose();
+                //sf.dispose();
+                launchApp();
             } else {
                 sf.getLoginPnl().setLoginInfo("Contraseña incorrecta");
                 sf.getLoginPnl().getLogin().setEnabled(true);
@@ -54,6 +72,10 @@ public class App implements ActionListener {
             sf.getLoginPnl().setLoginInfo("Usuario no encontrado");
             sf.getLoginPnl().getLogin().setEnabled(true);
         }
+    }
+
+    private static void launchApp() {
+        launch();
     }
 
 }

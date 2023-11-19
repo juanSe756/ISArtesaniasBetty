@@ -4,10 +4,13 @@ import com.artesaniasbetty.dao.ProductoDAO;
 import com.artesaniasbetty.dao.VentaDAO;
 import com.artesaniasbetty.model.Producto;
 import com.artesaniasbetty.model.Venta;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -15,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,6 +44,10 @@ public class HomeController implements Initializable{
     private ProductoDAO productoDAO;
 
     public void inicializar() {
+        btnInicio.setStyle("-fx-background-color: #523814; -fx-text-fill: #ffffff;");
+        btnVentas.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
+        btnProducts.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
+        btnReportes.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
         productoDAO = new ProductoDAO();
         List<Producto> products = productoDAO.getAllProducts();
         FlowPane flowPane = new FlowPane();
@@ -181,16 +189,41 @@ public class HomeController implements Initializable{
         }
     }
 
-    public void initComponentsReports(FXMLLoader loader){
+    public void showLoadingWindow() {
+        // Crea una ventana de carga
+        Stage loadingStage = new Stage();
+        loadingStage.initStyle(StageStyle.UNDECORATED);
+        loadingStage.initModality(Modality.APPLICATION_MODAL);
+
+        // Carga el FXML de la ventana de carga
+        try {
+            FXMLLoader loadingLoader = new FXMLLoader(getClass().getResource("/archivesViews/LoadingWindow.fxml"));
+            Parent loadingRoot = loadingLoader.load();
+            Scene loadingScene = new Scene(loadingRoot);
+            loadingStage.setScene(loadingScene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Muestra la ventana de carga
+        loadingStage.show();
+    }
+
+    public void hideLoadingWindow(Stage loadingStage) {
+        // Oculta la ventana de carga
+        Platform.runLater(() -> loadingStage.hide());
+    }
+
+    public void initComponentsReports(FXMLLoader loader) {
         VentaDAO ventaDAO = new VentaDAO();
         ProductoDAO productoDAO = new ProductoDAO();
         ReportsController reportsController = null;
         try {
             reportsController = loader.getController();
             reportsController.init(ventaDAO.getTop5Products());
-            reportsController.setData(ventaDAO.getIncomeThisMonth(),productoDAO.getProductsCreatedThisMonth(),
-                    ventaDAO.getSales().size(),productoDAO.getAllProducts().size());
-        }catch (Exception e){
+            reportsController.setData(ventaDAO.getIncomeThisMonth(), (int) productoDAO.getProductsCreatedThisMonth(),
+                    ventaDAO.getSalesThisMonth().size(), productoDAO.getAllProducts().size());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -258,6 +291,7 @@ public class HomeController implements Initializable{
             for (Venta v : ventas) {
                 salesController.setData(v);
             }
+            salesController.manageSelection();
         }catch (Exception e){
             e.printStackTrace();
         }

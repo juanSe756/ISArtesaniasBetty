@@ -59,6 +59,7 @@ public class StartFrame extends JFrame {
         if(logined){
             remove(loginPnl);
             this.dispose();
+            this.setVisible(false);
         }
     }
 
