@@ -96,6 +96,7 @@ public class HomeController implements Initializable{
         btnInicio.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
     }
 
+
     public void changeViewProducts(javafx.scene.input.MouseEvent mouseEvent) {
         btnProducts.setStyle("-fx-background-color: #523814; -fx-text-fill: #ffffff;");
         btnVentas.setStyle("-fx-background-color: #c2a894; -fx-text-fill: #000000;");
