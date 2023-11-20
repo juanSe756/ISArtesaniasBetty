@@ -129,8 +129,9 @@ public class MainProductController {
                     if(selected){
                         productoDAO.removeProduct(producto.getId());
                         products.remove(producto);
+                        showAlertInfo("Prodcuto eliminado exitosamente");
                     }else {
-                        showAlertInfo();
+                        showAlertInfo("Proceso cancelado");
                     }
                 });
             }
@@ -197,11 +198,11 @@ public class MainProductController {
     }
 
     @FXML
-    private void showAlertInfo() {
+    private void showAlertInfo(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setTitle("Info");
-        alert.setContentText("Proceso cancelado");
+        alert.setContentText(message);
         alert.showAndWait();
     }
 }

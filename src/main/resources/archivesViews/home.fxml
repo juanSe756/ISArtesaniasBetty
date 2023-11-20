@@ -130,7 +130,7 @@
       <HBox prefHeight="26.0" prefWidth="1540.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
             <Label minHeight="0.0" minWidth="0.0" prefHeight="29.0" prefWidth="1476.0" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: black;">
+            <Button fx:id="btnMinimizar" mnemonicParsing="false" onAction="#minimizeApp" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: black;">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -139,7 +139,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: black;">
+            <Button fx:id="btnCerrar" mnemonicParsing="false" onAction="#closeApp" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: black;">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -93,7 +93,7 @@
                               <Font name="Inter Regular" size="13.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btnCancelar" layoutX="88.0" layoutY="390.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-cancel" stylesheets="@../styles/saleWindow.css" text="Cancelar">
+                        <Button fx:id="btnCancelar" layoutX="88.0" layoutY="390.0" mnemonicParsing="false" onAction="#cancelOperation" prefHeight="42.0" prefWidth="154.0" styleClass="home-product-cancel" stylesheets="@../styles/saleWindow.css" text="Cancelar">
                            <font>
                               <Font name="Poppins SemiBold" size="12.0" />
                            </font>

@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class registerSaleController {
     public TableColumn<RegisterSaleTable,Double> colPrecioUnitario;
     public TableColumn<RegisterSaleTable,Double> colPrecioTotal;
     public Button btnConfirmar;
+    public Button btnCancelar;
     private List<RegisterSaleTable> ventas;
     private List<Producto> productosVendadidos;
 
@@ -37,6 +39,7 @@ public class registerSaleController {
         ventas = new ArrayList<>();
         ObservableList<String> productosList = FXCollections.observableArrayList(toListText(productos));
         scrollProductos.setItems(productosList);
+        scrollProductos.setValue(productosList.get(0));
         initSpinner();
     }
 
@@ -74,8 +77,7 @@ public class registerSaleController {
             tablaVentas.refresh();
             txtPrecio.setText("$" + totalPrice);
         }else {
-            mostrarAlertError();
-            System.out.println("hola");
+            showAlertSuccess(new ActionEvent(),"No hay stock de este producto");
         }
     }
 
@@ -91,11 +93,11 @@ public class registerSaleController {
         new VentaDAO().recordSale(desc, idUser, hashMap);
     }
 
-    private void mostrarAlertError() {
+    private void showAlertError(ActionEvent actionEvent,String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
         alert.setTitle("Error");
-        alert.setContentText("No hay suficiente inventario de este producto");
+        alert.setContentText(message);
         alert.showAndWait();
     }
 
@@ -107,6 +109,22 @@ public class registerSaleController {
                 hashMap.put(productoDAO.searchProduct(venta.getName()).getId(), venta.getAmount());
             }
             createSale(areaDescripcion.getText(), 1, hashMap);
+            showAlertSuccess(new ActionEvent(),"Venta registrada correctamente");
+        }else {
+            showAlertError(new ActionEvent(),"Venta vacía");
         }
+    }
+
+    private void showAlertSuccess(ActionEvent event,String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Info");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public void cancelOperation(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) btnCancelar.getScene().getWindow();
+        currentStage.close();
     }
 }

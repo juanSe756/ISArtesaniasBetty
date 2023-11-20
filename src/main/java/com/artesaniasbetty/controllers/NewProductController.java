@@ -9,8 +9,10 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 public class NewProductController {
     public ComboBox comboCategoria;
@@ -38,14 +41,27 @@ public class NewProductController {
     }
 
     public void initComponents(){
+        campoPrecio.addEventHandler(KeyEvent.KEY_TYPED, event -> SoloNumerosEnteros(event));
         initSpinner();
         initCombo();
     }
-    public void initCombo(){
+
+    public void SoloNumerosEnteros(KeyEvent keyEvent) {
+        try {
+            char key = keyEvent.getCharacter().charAt(0);
+
+            if (!Character.isDigit(key))
+                keyEvent.consume();
+
+        } catch (Exception ex) {
+        }
+    }
+        public void initCombo(){
         ProductoDAO productoDAO = new ProductoDAO();
         ObservableList<String> productosList =
                 FXCollections.observableArrayList(toListText(productoDAO.getAllCategories()));
         comboCategoria.setItems(productosList);
+        comboCategoria.setValue(productosList.get(0));
     }
 
     public List<String> toListText(List<Categoria> categorias){
@@ -86,16 +102,47 @@ public class NewProductController {
             } catch (MalformedURLException e) {
                 throw new RuntimeException(e);
             }
-
-
         }
     }
 
     public void registerProduct(ActionEvent actionEvent) {
-        System.out.println(imagenProducto.getImage().getUrl());
-        new ProductoDAO().createProduct(campoNombre.getText(),Integer.parseInt(campoPrecio.getText()),
-                campoDescripcion.getText(), Integer.parseInt(spinnerCantidad.getValue().toString()),
-                comboCategoria.getSelectionModel().getSelectedItem().toString().equalsIgnoreCase("Canastos")?1:2,
-                imagenProducto.getImage().getUrl().replace("file:/",""));
+        if (!campoPrecio.getText().isEmpty() && !campoNombre.getText().isEmpty() && imagenProducto.getImage() != null) {
+            boolean created = new ProductoDAO().createProduct(
+                    campoNombre.getText(),
+                    Integer.parseInt(campoPrecio.getText()),
+                    campoDescripcion.getText(),
+                    Integer.parseInt(spinnerCantidad.getValue().toString()),
+                    comboCategoria.getSelectionModel().getSelectedItem().toString().equalsIgnoreCase("Canastos") ? 1 : 2,
+                    imagenProducto.getImage().getUrl().replace("file:/", "")
+            );
+            if (created) {
+                showAlertSucess(new ActionEvent(), "Producto creado exitosamente");
+            } else {
+                showAlertError(new ActionEvent(), "Error al crear el producto");
+            }
+        } else {
+            showAlertError(new ActionEvent(), "Debe ingresar todos los campos");
+        }
+    }
+
+    private void showAlertError(ActionEvent event, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle("Error");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showAlertSucess(ActionEvent event, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Info");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public void cancelOperation(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) btnCancelar.getScene().getWindow();
+        currentStage.close();
     }
 }

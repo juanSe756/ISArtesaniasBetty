@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -28,6 +29,7 @@ public class ResupplyController{
     public void initComponents(List<Producto> productos){
         ObservableList<String> productosList = FXCollections.observableArrayList(toListText(productos));
         comboProductos.setItems(productosList);
+        comboProductos.setValue(productosList.get(0));
         initSpinner();
     }
 
@@ -52,14 +54,23 @@ public class ResupplyController{
         alert.setTitle("Info");
         alert.setContentText("No se reabateció el producto");
         alert.showAndWait();
+        Stage currentStage = (Stage) btnCancelResupply.getScene().getWindow();
+        currentStage.close();
     }
 
     public void updateSupply(ActionEvent actionEvent) {
-
         String name = (String) comboProductos.getValue();
         int amount = (int) spinnerCantidad.getValue();
         String description = areaDescripcion.getText();
-        //App.usuarioLogeado.getId(
         productoDAO.incrementStock(productoDAO.searchProduct(name).getId(),amount,description,1);
+        showAlertInfo(new ActionEvent(),"Producto abastecido exitosamente");
+    }
+
+    private void showAlertInfo(ActionEvent event,String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Info");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

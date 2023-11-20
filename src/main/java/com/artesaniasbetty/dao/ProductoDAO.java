@@ -20,7 +20,8 @@ public class ProductoDAO {
     private static final int IMG_SIZE = 200;
     public static String outputPath;
 
-    public void createProduct(String nombre, double precio, String desc, int stock, int categ, String fotoURL) {
+    public boolean createProduct(String nombre, double precio, String desc, int stock, int categ, String fotoURL) {
+        boolean operation = false;
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             System.out.println("Foto: "+fotoURL);
             saveImage(fotoURL, nombre);
@@ -31,9 +32,11 @@ public class ProductoDAO {
             Producto producto = new Producto(nombre, precio, desc, stock, categoria, estado, foto, new Timestamp(System.currentTimeMillis()));
             em.persist(producto);
             em.getTransaction().commit();
+            operation = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return operation;
     }
 
     public HashMap<String,byte[]> getProductsImage() {

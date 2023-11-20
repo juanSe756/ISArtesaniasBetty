@@ -298,4 +298,9 @@ public class HomeController implements Initializable{
     }
 
 
+    public void minimizeApp(ActionEvent actionEvent) {
+    }
+
+    public void closeApp(ActionEvent actionEvent) {
+    }
 }
