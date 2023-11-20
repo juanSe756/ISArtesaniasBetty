@@ -84,9 +84,7 @@ public class NewProductController {
 
         // Agregar filtros para facilitar la busqueda
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All Images", "*.*"),
-                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-                new FileChooser.ExtensionFilter("PNG", "*.png")
+                new FileChooser.ExtensionFilter("JPG", "*.jpg")
         );
 
         // Obtener la imagen seleccionada
@@ -113,7 +111,7 @@ public class NewProductController {
                     campoDescripcion.getText(),
                     Integer.parseInt(spinnerCantidad.getValue().toString()),
                     comboCategoria.getSelectionModel().getSelectedItem().toString().equalsIgnoreCase("Canastos") ? 1 : 2,
-                    imagenProducto.getImage().getUrl().replace("file:/", "")
+                    imagenProducto.getImage().getUrl().replace("file:/", "").replace("%20", " ").replace("%", " ")
             );
             if (created) {
                 showAlertSucess(new ActionEvent(), "Producto creado exitosamente");

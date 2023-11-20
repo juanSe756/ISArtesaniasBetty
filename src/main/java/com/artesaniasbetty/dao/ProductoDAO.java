@@ -10,6 +10,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -170,6 +172,7 @@ public class ProductoDAO {
         boolean result = false;
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             byte[] foto = convertImageToBytes(fotoURL);
+            saveImage(fotoURL, nombre);
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
             Categoria categ = em.find(Categoria.class, categoria);
@@ -192,6 +195,7 @@ public class ProductoDAO {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
+            Files.delete(Paths.get("/assets/prods/" + producto.getNombre() + ".jpg"));
             producto.setEstadoProducto(em.find(Estado.class, 2));
             em.persist(producto);
             em.getTransaction().commit();

@@ -18,6 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ModifyProductController {
@@ -32,19 +33,23 @@ public class ModifyProductController {
     public Button btnCancelar;
     private ProductoDAO productoDAO = new ProductoDAO();
 
+    private int idProduct;
+
     private Stage stage;
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
     public void setData(Producto producto){
+        idProduct = producto.getId();
         campoNombre.setText(producto.getNombre());
         campoDescripcion.setText(producto.getDesc());
         campoPrecio.setText(""+producto.getPrecio());
         campoPrecio.addEventHandler(KeyEvent.KEY_TYPED, event -> SoloNumerosEnteros(event));
-        imagenProducto.setImage(new Image(new ByteArrayInputStream(producto.getFoto())));
+        imagenProducto.setImage(new Image("/assets/prods/" + producto.getNombre() + ".jpg"));
         initSpinner(producto.getStock());
         initCombo(producto.getCategoria().getNombre());
+
     }
 
     public void SoloNumerosEnteros(KeyEvent keyEvent) {
@@ -80,13 +85,14 @@ public class ModifyProductController {
         spinnerCantidad.getValueFactory().setValue(stock);
     }
     public void modifyProduct(ActionEvent actionEvent) {
-        if (!campoPrecio.getText().isEmpty() && !campoNombre.getText().isEmpty() && imagenProducto.getImage() != null) {
-            boolean modified = productoDAO.modifyProduct(productoDAO.searchProduct(campoNombre.getText()).getId(),
+        System.out.println(imagenProducto.getImage().getUrl());
+        if (!campoPrecio.getText().isEmpty() && !campoNombre.getText().isEmpty() && imagenProducto.getImage().getUrl() != null) {
+            boolean modified = productoDAO.modifyProduct(idProduct,
                     campoNombre.getText(),
                     Double.parseDouble(campoPrecio.getText()), campoDescripcion.getText(),
                     Integer.parseInt(spinnerCantidad.getValue().toString()),
-                    comboCategoria.getSelectionModel().getSelectedItem().toString().equalsIgnoreCase("Madera") ? 1 : 2,
-                    imagenProducto.getImage().getUrl().replace("file:/", ""));
+                    comboCategoria.getSelectionModel().getSelectedItem().toString().equalsIgnoreCase("Madera") ? 2 : 1,
+                    imagenProducto.getImage().getUrl().replace("file:/", "").replace("%20", " ").replace("%", " ")); //
             if(modified){
                 showAlertSucess(new ActionEvent(),"Producto modificado exitosamente");
             }else {
@@ -103,9 +109,7 @@ public class ModifyProductController {
 
         // Agregar filtros para facilitar la busqueda
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All Images", "*.*"),
-                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-                new FileChooser.ExtensionFilter("PNG", "*.png")
+                new FileChooser.ExtensionFilter("JPG", "*.jpg")
         );
 
         // Obtener la imagen seleccionada

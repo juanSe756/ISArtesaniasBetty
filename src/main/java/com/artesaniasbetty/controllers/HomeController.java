@@ -75,19 +75,10 @@ public class HomeController implements Initializable{
     }
 
     private void loadImage(ProductoDAO productoDAO){
-        Thread loadImageThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // Método loadImage
-                List<Producto> listProductos = productoDAO.getAllProducts();
-                for (Producto producto : listProductos) {
-                    productoDAO.convertBytesToImage(producto.getFoto(), producto.getNombre());
-                }
-            }
-        });
-
-        // Iniciar el hilo
-        loadImageThread.start();
+        List<Producto> listProductos = productoDAO.getAllProducts();
+        for (Producto producto : listProductos) {
+            productoDAO.convertBytesToImage(producto.getFoto(), producto.getNombre());
+        }
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
