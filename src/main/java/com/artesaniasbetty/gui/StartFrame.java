@@ -28,7 +28,8 @@ public class StartFrame extends JFrame {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize((int) screenSize.getWidth(), (int) screenSize.getHeight());
         getContentPane().setBackground(new Color(194, 168, 148));
-
+        setIconImage(new ImageIcon(Objects.requireNonNull(getClass()
+                .getResource("/assets/logo.png"))).getImage());
         initComponents(a);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);

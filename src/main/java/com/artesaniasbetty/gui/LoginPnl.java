@@ -41,7 +41,7 @@ public class LoginPnl extends JPanel {
         login = new RoundButton("Ingresar",18,100,45,fontButton,blues);
         login.setActionCommand("LOGIN");
         login.addActionListener(a);
-        logo = new ClearMiniButton(new ImageIcon(getClass().getResource("/assets/logo_betty.png")),100,100);
+        logo = new ClearMiniButton(new ImageIcon(getClass().getResource("/assets/logo.png")),100,100);
         //logo.setEnabled(false);
         title = new MyJLabel("Artesanías",fontTitle,Color.BLACK);
         title2 = new MyJLabel("Betty",fontTitle,Color.BLACK);
