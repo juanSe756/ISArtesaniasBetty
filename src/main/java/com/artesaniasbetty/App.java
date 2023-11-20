@@ -45,10 +45,14 @@ public class App  extends Application implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()){
             case "SEE_PASSWORD":    sf.managePasswordButton();
-                                    break;
+                break;
             case "LOGIN":           sf.getLoginPnl().getLogin().setEnabled(false);
                 authorizeLogin();
-                                    break;
+                break;
+            case "MINIMIZE":        sf.setState(sf.ICONIFIED);
+                break;
+            case "CLOSE":           sf.dispose();
+                break;
         }
     }
     private void authorizeLogin() {
