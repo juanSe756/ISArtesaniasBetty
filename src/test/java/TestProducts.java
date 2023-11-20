@@ -24,14 +24,14 @@ public class TestProducts {
 
 //        Producto prod = new ProductoController().searchProduct(1);
 //          String prod = new ProductoController().modifyProduct(1, "pofa", 2000,"o",2, 2,"https://image.com");
-//        List<StringBuilder> x= new ProductoDAO().getProductsTable();
-//        for (StringBuilder stringBuilder : x) {
-//            System.out.println(stringBuilder);
-//        }
-        HashMap<String,byte[]> x= new ProductoDAO().getProductsImage();
-        for (String producto : x.keySet()) {
-            System.out.println(producto + "---" + Arrays.toString(x.get(producto)));
+        List<StringBuilder> x= new ProductoDAO().getProductsTable();
+        for (StringBuilder stringBuilder : x) {
+            System.out.println(stringBuilder);
         }
+//        HashMap<String,byte[]> x= new ProductoDAO().getProductsImage();
+//        for (String producto : x.keySet()) {
+//            System.out.println(producto + "---" + Arrays.toString(x.get(producto)));
+//        }
 //        List<ReStock> x = new ProductoDAO().getReStocks();
 ////        System.out.println(x);
 //        for (ReStock venta : x) {

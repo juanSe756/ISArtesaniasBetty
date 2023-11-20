@@ -16,10 +16,13 @@ public class TestVentas {
 //        productos.put(15, 15);
 //        String sale = new VentaDAO().recordSale("Venta de canastos", 4, productos);
 //        System.out.println(sale);
-//        List<DetalleVenta> x = new VentaDAO().getDetalleFromVenta(2);
+        List<DetalleVenta> x = new VentaDAO().getDetalleFromVenta(2);
+        for (DetalleVenta detalleVenta : x) {
+            System.out.println(detalleVenta.getProducto().getNombre() + " " + detalleVenta.getCantidad());
+        }
 //        List<Venta> x = new VentaDAO().getSalesThisMonth();
-        double x = new VentaDAO().getIncomeThisMonth();
-        System.out.println(x);
+//        double x = new VentaDAO().getIncomeThisMonth();
+//        System.out.println(x);
 //        HashMap<String, Integer> x = new VentaDAO().getTop5Products();
 //        for (String producto : x.keySet()) {
 //            System.out.println(producto + "---" + x.get(producto));

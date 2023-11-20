@@ -53,17 +53,16 @@ public class VentaDAO {
             return null;
         }
     }
+
     public double getIncomeThisMonth() {
-        double income = 0;
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            List<Venta> ventas = em.createQuery("SELECT v FROM Venta v WHERE v.fechaRegistroVenta BETWEEN :start AND :end", Venta.class)
-                    .setParameter("start", new Timestamp(System.currentTimeMillis() - 2592000000L))
-                    .setParameter("end", new Timestamp(System.currentTimeMillis()))
-                    .getResultList();
-            for (Venta venta : ventas) {
-                income += venta.getTotalVenta();
-            }
-            return income;
+            Double income = em.createQuery(
+                            "SELECT SUM(v.totalVenta) FROM Venta v " +
+                                    "WHERE FUNCTION('MONTH', v.fechaRegistroVenta) = FUNCTION('MONTH', CURRENT_DATE) " +
+                                    "AND FUNCTION('YEAR', v.fechaRegistroVenta) = FUNCTION('YEAR', CURRENT_DATE)", Double.class)
+                    .getSingleResult();
+
+            return income != null ? income : 0;
         } catch (Exception e) {
             return 0;
         }
@@ -86,29 +85,41 @@ public class VentaDAO {
     public HashMap<String, Integer> getTop5Products() {
         HashMap<String, Integer> top5 = new HashMap<>();
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            List<Producto> resultList = em.createQuery("SELECT dv.producto FROM DetalleVenta dv GROUP BY dv.producto ORDER BY SUM(dv.cantidad) DESC", Producto.class)
+            List<Object[]> resultList = em.createQuery(
+                            "SELECT dv.producto, SUM(dv.cantidad) " +
+                            "FROM DetalleVenta dv " +
+                                    "GROUP BY dv.producto " +
+                                    "ORDER BY SUM(dv.cantidad) DESC", Object[].class)
                     .setMaxResults(5)
                     .getResultList();
-            for (Producto producto : resultList) {
-                top5.put(producto.getNombre(), getQuantitySold(producto));
+
+            for (Object[] result : resultList) {
+                Producto producto = (Producto) result[0];
+                Long cantidadVendida = (Long) result[1];
+                top5.put(producto.getNombre(), cantidadVendida.intValue());
             }
+
             return top5;
         } catch (Exception e) {
             return null;
         }
     }
-
-    //    obtener la cantidad total vendida de un producto
-    private int getQuantitySold(Producto producto) {
+//    obtener la cantidad de veces que se ha vendido un producto
+    public int getQuantitySoldByProduct(int idProducto) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            return em.createQuery("SELECT SUM(dv.cantidad) FROM DetalleVenta dv WHERE dv.producto = :idProducto", Long.class)
-                    .setParameter("idProducto", producto)
-                    .getSingleResult().intValue();
+            Long cantidadVendida = em.createQuery(
+                            "SELECT SUM(dv.cantidad) " +
+                                    "FROM DetalleVenta dv " +
+                                    "WHERE dv.producto = :idProducto", Long.class)
+                    .setParameter("idProducto", em.find(Producto.class, idProducto))
+                    .getSingleResult();
+
+            return cantidadVendida != null ? cantidadVendida.intValue() : 0;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return 0;
         }
     }
+
 
 
     public List<DetalleVenta> getDetalleFromVenta(int idVenta) {

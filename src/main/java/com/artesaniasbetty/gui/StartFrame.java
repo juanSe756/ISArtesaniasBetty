@@ -1,5 +1,7 @@
 package com.artesaniasbetty.gui;
 
+import com.artesaniasbetty.gui.customs.ClearMiniButton;
+import com.artesaniasbetty.gui.customs.ClosePanel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,9 +17,13 @@ public class StartFrame extends JFrame {
     private boolean logined = false;
     @Getter
     private LoginPnl loginPnl;
+    private JLabel label;
 
+
+    private JPanel closePnl;
     public StartFrame(ActionListener a) {
         setTitle("Artesanias Betty");
+        setUndecorated(true);
         setLayout(new GridBagLayout());
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize((int) screenSize.getWidth(), (int) screenSize.getHeight());
@@ -31,10 +37,20 @@ public class StartFrame extends JFrame {
 
     private void initComponents(ActionListener a) {
         loginPnl = new LoginPnl(a);
+        closePnl = new ClosePanel(a);
+
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.weightx=GridBagConstraints.HORIZONTAL;
+        gbc.weighty=GridBagConstraints.NORTH;
+        gbc.insets.set(0, 0, this.getHeight()-20, 0);
+        gbc.ipady = 30;
+        gbc.ipadx = this.getWidth();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        getContentPane().add(closePnl, gbc);
         gbc.insets.set(0, 0, 0, 0);
         gbc.ipady = 0;
-        gbc.ipadx = 0;
+        gbc.ipadx = 100;
         gbc.gridx = 0;
         gbc.gridy = 0;
         getContentPane().add(loginPnl, gbc);

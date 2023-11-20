@@ -27,6 +27,10 @@ public class App implements ActionListener {
             case "LOGIN":           sf.getLoginPnl().getLogin().setEnabled(false);
                 authorizeLogin();
                                     break;
+            case "MINIMIZE":        sf.setState(sf.ICONIFIED);
+                                    break;
+            case "CLOSE":           sf.dispose();
+                                    break;
         }
     }
     private void authorizeLogin() {
