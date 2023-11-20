@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Test extends Application {
     @Override
@@ -14,6 +15,8 @@ public class Test extends Application {
         Screen screen = Screen.getPrimary();
         javafx.geometry.Rectangle2D bounds = screen.getVisualBounds();
         Scene scene1 = new Scene(root1, bounds.getWidth(), bounds.getHeight());
+        stage.setFullScreen(true);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene1);
         stage.show();
     }

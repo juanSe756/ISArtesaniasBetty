@@ -1,6 +1,7 @@
 package com.artesaniasbetty.controllers;
 
 import com.artesaniasbetty.dao.ProductoDAO;
+import com.artesaniasbetty.dao.VentaDAO;
 import com.artesaniasbetty.model.Producto;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,14 +30,35 @@ public class ProductController {
     public Label amountProduct;
     @FXML
     public FlowPane productPane;
+    public ImageView imageStock;
+    public ImageView imageTrend;
+    ProductoDAO productoDAO = new ProductoDAO();
+    VentaDAO ventaDAO = new VentaDAO();
 
 
     public void setData(Producto producto) {
-        ProductoDAO productoDAO = new ProductoDAO();
         nameProduct.setText(producto.getNombre());
         amountProduct.setText("Cantidad = " + producto.getStock());
         productoDAO.convertBytesToImage(producto.getFoto(), producto.getNombre());
+        loadImageTrend(producto.getId());
+        loadImageStock(producto);
         loadImage();
+    }
+
+    private void loadImageTrend(int idProduct){
+        int amountSales = ventaDAO.getQuantitySoldByProduct(idProduct);
+        if(amountSales <= 2 ){
+            imageTrend.setImage(new Image("/assets/down.png"));
+        }
+    }
+
+    private void loadImageStock(Producto producto){
+        int stockProduct = producto.getStock();
+        if(stockProduct <= 0 ){
+            imageStock.setImage(new Image("/assets/warning.png"));
+        } else if (stockProduct <= 5 && stockProduct > 0) {
+            imageStock.setImage(new Image("/assets/exclamation.png"));
+        }
     }
 
     public void loadImage() {

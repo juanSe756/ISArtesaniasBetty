@@ -165,8 +165,9 @@ public class ProductoDAO {
         return "Error reabasteciendo producto";
     }
 
-    public String modifyProduct(int id, String nombre, double precio, String desc, int stock, int categoria, String
+    public boolean modifyProduct(int id, String nombre, double precio, String desc, int stock, int categoria, String
             fotoURL) {
+        boolean result = false;
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             byte[] foto = convertImageToBytes(fotoURL);
             em.getTransaction().begin();
@@ -180,11 +181,11 @@ public class ProductoDAO {
             producto.setFoto(foto);
             em.getTransaction().commit();
             em.close();
-            return "Producto modificado exitosamente";
+            result = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "Error modificando producto";
+        return result;
     }
 
     public String removeProduct(int id) {

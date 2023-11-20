@@ -156,10 +156,9 @@ public class MainProductController {
             {
                 modifyButton.setGraphic(modifyIcon);
                 modifyButton.setOnAction(event -> {
-                    ProductTable producto = getTableView().getItems().get(getIndex());
-                    // Manejar la acción de modificación aquí
-                    // Puedes abrir un diálogo de edición u otras acciones
-                    System.out.println("Modificar producto: " + producto.getName());
+                    ProductTable productTable = getTableView().getItems().get(getIndex());
+                    Producto product = productoDAO.searchProduct(productTable.getName());
+                    changeViewModifyProduct(product);
                 });
             }
 
@@ -178,6 +177,41 @@ public class MainProductController {
 
         // Asignar la ObservableList a la TableView
         productsTable.setItems(products);
+    }
+
+    public void changeViewModifyProduct(Producto producto) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/modifyProduct.fxml"));
+        BorderPane panel = null;
+        try {
+            panel = loader.load();
+            Scene scene = new Scene(panel, 500, 550);
+
+            // Obtén la ventana actual y muestra el nuevo panel en una ventana emergente
+            Scene currentScene = btnNewProduct.getScene();
+            Stage stage = (Stage) currentScene.getWindow();
+
+            Stage panelStage = new Stage();
+            panelStage.setScene(scene);
+            panelStage.initModality(Modality.APPLICATION_MODAL); // Esto hará que la nueva ventana sea modal
+            panelStage.initOwner(stage); // Establece la ventana principal como propietaria de la nueva ventana
+            initComponentsModifyProduct(loader,stage,producto);
+            panelStage.show();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void initComponentsModifyProduct(FXMLLoader loader,Stage stage,Producto producto){
+        ModifyProductController modifyProductController = null;
+        //List<ProductoDAO> ventas = productoDAO;
+        try {
+            modifyProductController = loader.getController();
+            modifyProductController.setStage(stage);
+            modifyProductController.setData(producto);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private boolean showAlert(String nameProduct) {

@@ -110,6 +110,23 @@ public class VentaDAO {
         }
     }
 
+    public int getQuantitySoldByProduct(int idProducto) {
+        try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
+            String jpql = "SELECT COALESCE(SUM(dv.cantidad), 0) " +
+                    "FROM DetalleVenta dv " +
+                    "JOIN dv.producto p " +
+                    "WHERE p.id = :idProducto";
+
+            Long cantidadVendida = em.createQuery(jpql, Long.class)
+                    .setParameter("idProducto", idProducto)
+                    .getSingleResult();
+
+            return cantidadVendida.intValue();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
 
     public List<DetalleVenta> getDetalleFromVenta(int idVenta) {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {

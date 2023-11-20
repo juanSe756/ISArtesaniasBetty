@@ -121,7 +121,7 @@ public class NewProductController {
                 showAlertError(new ActionEvent(), "Error al crear el producto");
             }
         } else {
-            showAlertError(new ActionEvent(), "Debe ingresar todos los campos");
+            showAlertError(new ActionEvent(), "Debe rellenar todos los campos");
         }
     }
 

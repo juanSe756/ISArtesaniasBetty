@@ -41,6 +41,8 @@ public class HomeController implements Initializable{
     public Button btnAlabaster;
     public Button btnRegistrarVenta;
     public Button btnVentas;
+    public Button btnCerrar;
+    public Button btnMinimizar;
     private ProductoDAO productoDAO;
 
     public void inicializar() {
@@ -243,18 +245,19 @@ public class HomeController implements Initializable{
             panelStage.setScene(scene);
             panelStage.initModality(Modality.APPLICATION_MODAL); // Esto hará que la nueva ventana sea modal
             panelStage.initOwner(stage); // Establece la ventana principal como propietaria de la nueva ventana
-            initComponentsRegisterSale(loader);
+            initComponentsRegisterSale(loader,stage);
             panelStage.show();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public void initComponentsRegisterSale(FXMLLoader loader){
+    public void initComponentsRegisterSale(FXMLLoader loader,Stage stage){
         ProductoDAO productoDAO = new ProductoDAO();
         registerSaleController registerSaleController = null;
         try {
             registerSaleController = loader.getController();
+            registerSaleController.setStage(stage);
             registerSaleController.initComponents(productoDAO.getAllProducts());
         }catch (Exception e){
             e.printStackTrace();
@@ -299,8 +302,12 @@ public class HomeController implements Initializable{
 
 
     public void minimizeApp(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) btnMinimizar.getScene().getWindow();
+        currentStage.setIconified(true);
     }
 
     public void closeApp(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) btnCerrar.getScene().getWindow();
+        currentStage.close();
     }
 }

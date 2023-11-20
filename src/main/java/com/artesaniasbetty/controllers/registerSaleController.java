@@ -9,7 +9,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +34,8 @@ public class registerSaleController {
     public Button btnCancelar;
     private List<RegisterSaleTable> ventas;
     private List<Producto> productosVendadidos;
+    @Getter
+    private Stage stage;
 
     private ObservableList<RegisterSaleTable> products = FXCollections.observableArrayList();
 
@@ -77,7 +81,11 @@ public class registerSaleController {
             tablaVentas.refresh();
             txtPrecio.setText("$" + totalPrice);
         }else {
-            showAlertSuccess(new ActionEvent(),"No hay stock de este producto");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("No hay suficiente stock de este producto");
+            alert.showAndWait();
         }
     }
 
@@ -116,6 +124,7 @@ public class registerSaleController {
     }
 
     private void showAlertSuccess(ActionEvent event,String message) {
+        stage.requestFocus();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setTitle("Info");
@@ -126,5 +135,9 @@ public class registerSaleController {
     public void cancelOperation(ActionEvent actionEvent) {
         Stage currentStage = (Stage) btnCancelar.getScene().getWindow();
         currentStage.close();
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

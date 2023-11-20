@@ -50,9 +50,9 @@
                                     <FlowPane minHeight="0.0" minWidth="0.0" prefHeight="49.0" prefWidth="302.0" styleClass="home-product-redondeado" BorderPane.alignment="CENTER">
                                        <children>
                                           <Label prefHeight="18.0" prefWidth="24.0" />
-                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="imageTrend" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../assets/campana.png" />
+                                                <Image url="@../assets/commit.png" />
                                              </image>
                                           </ImageView>
                                           <Label fx:id="nameProduct" alignment="CENTER" prefHeight="42.0" prefWidth="190.0" text="Nombre" textAlignment="CENTER" textFill="WHITE">
@@ -61,9 +61,9 @@
                                                 <String fx:value="font-middle" />
                                              </styleClass>
                                           </Label>
-                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="imageStock" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../assets/incremento.png" />
+                                                <Image url="@../assets/correct.png" />
                                              </image>
                                           </ImageView>
                                        </children>

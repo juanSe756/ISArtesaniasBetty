@@ -6,14 +6,17 @@ import com.artesaniasbetty.gui.StartFrame;
 import com.artesaniasbetty.model.Usuario;
 import jakarta.persistence.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class App  extends Application implements ActionListener{
     StartFrame sf;
@@ -25,7 +28,6 @@ public class App  extends Application implements ActionListener{
         uc = new UsuarioDAO();
     }
 
-    @Override
     public void start(Stage stage) throws Exception {
         Parent root1 = FXMLLoader.load(getClass().getResource("/archivesViews/home.fxml"));
         Screen screen = Screen.getPrimary();
@@ -63,7 +65,7 @@ public class App  extends Application implements ActionListener{
                 sf.login();
                 System.out.println("Logined");
                 //sf.dispose();
-                launchApp();
+                showMainStage();
             } else {
                 sf.getLoginPnl().setLoginInfo("Contraseña incorrecta");
                 sf.getLoginPnl().getLogin().setEnabled(true);
@@ -74,8 +76,22 @@ public class App  extends Application implements ActionListener{
         }
     }
 
-    private static void launchApp() {
-        launch();
+    private void showMainStage() {
+        Platform.runLater(() -> {
+            Stage mainStage = new Stage();
+            try {
+                Parent root1 = FXMLLoader.load(getClass().getResource("/archivesViews/home.fxml"));
+                Screen screen = Screen.getPrimary();
+                javafx.geometry.Rectangle2D bounds = screen.getVisualBounds();
+                Scene scene1 = new Scene(root1, bounds.getWidth(), bounds.getHeight());
+                mainStage.setFullScreen(true);
+                mainStage.initStyle(StageStyle.UNDECORATED);
+                mainStage.setScene(scene1);
+                mainStage.show();
+            } catch (IOException e) {
+                e.printStackTrace(); // Manejar la excepción según tu caso
+            }
+        });
     }
 
 }
