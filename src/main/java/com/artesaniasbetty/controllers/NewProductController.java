@@ -6,12 +6,17 @@ import com.artesaniasbetty.model.Producto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.converter.IntegerStringConverter;
 
 import javax.imageio.ImageIO;
@@ -32,6 +37,8 @@ public class NewProductController {
     public ImageView imagenProducto;
     public TextField campoNombre;
     public TextField campoPrecio;
+    public Button btnMinimize;
+    public Button btnClose;
     private Stage stage;
     private Image imagen;
 
@@ -114,12 +121,13 @@ public class NewProductController {
                     imagenProducto.getImage().getUrl().replace("file:/", "").replace("%20", " ").replace("%", " ")
             );
             if (created) {
-                showAlertSucess(new ActionEvent(), "Producto creado exitosamente");
+                changeViewErrors(new ActionEvent(), false,"Producto creado exitosamente");
+                closeApp(new ActionEvent());
             } else {
-                showAlertError(new ActionEvent(), "Error al crear el producto");
+                changeViewErrors(new ActionEvent(),false, "Error al crear el producto");
             }
         } else {
-            showAlertError(new ActionEvent(), "Debe rellenar todos los campos");
+            changeViewErrors(new ActionEvent(), false,"Debe rellenar todos los campos");
         }
     }
 
@@ -143,4 +151,52 @@ public class NewProductController {
         Stage currentStage = (Stage) btnCancelar.getScene().getWindow();
         currentStage.close();
     }
+
+    public void minimizeApp(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) btnMinimize.getScene().getWindow();
+        currentStage.setIconified(true);
+    }
+
+    public void closeApp(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) btnClose.getScene().getWindow();
+        currentStage.close();
+    }
+    public void changeViewErrors(ActionEvent actionEvent, boolean type, String message) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/Errores.fxml"));
+        BorderPane panel = null;
+        try {
+            panel = loader.load();
+
+            // Obtén la ventana actual y muestra el nuevo panel en una ventana emergente
+            Scene currentScene = btnConfirmar.getScene();
+            Stage stage = (Stage) currentScene.getWindow();
+
+            // Crea la escena de la ventana de errores con las dimensiones de la ventana principal
+            Scene scene = new Scene(panel, 350, 200);
+
+            Stage panelStage = new Stage();
+            panelStage.setScene(scene);
+            panelStage.initModality(Modality.APPLICATION_MODAL);
+            panelStage.initOwner(stage);
+            initComponentsErrores(loader, stage, type, message);
+            panelStage.initStyle(StageStyle.UNDECORATED);
+            panelStage.showAndWait();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void initComponentsErrores(FXMLLoader loader,Stage stage,boolean type, String message){
+        ErrorController errorController = null;
+        try {
+            errorController = loader.getController();
+            errorController.setData(type,message);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
 }

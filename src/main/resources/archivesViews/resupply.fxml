@@ -21,7 +21,7 @@
             <FlowPane prefHeight="26.0" prefWidth="450.0">
                <children>
                   <Label prefHeight="22.0" prefWidth="387.0" />
-                  <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: black;" stylesheets="@../styles/saleWindow.css">
+                  <Button fx:id="btnMinimize" mnemonicParsing="false" onAction="#minimizeApp" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: black;" stylesheets="@../styles/saleWindow.css">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -30,7 +30,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: black;">
+                  <Button fx:id="btnClose" mnemonicParsing="false" onAction="#closeApp" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: black;">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>

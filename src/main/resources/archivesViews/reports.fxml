@@ -15,19 +15,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="670.0" prefWidth="1340.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.ReportsController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="670.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.ReportsController">
    <content>
-      <BorderPane prefHeight="800.0" prefWidth="1350.0" stylesheets="@../styles/home_style.css">
+      <BorderPane prefHeight="670.0" prefWidth="1050.0" stylesheets="@../styles/home_style.css">
          <center>
-            <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="800.0" minWidth="1340.0" prefHeight="800.0" prefWidth="1340.0" BorderPane.alignment="CENTER">
+            <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="670.0" minWidth="1050.0" prefHeight="800.0" prefWidth="1340.0" BorderPane.alignment="CENTER">
                <content>
-                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="722.0" prefWidth="1326.0">
+                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="722.0" prefWidth="1050.0">
                      <top>
-                        <FlowPane prefHeight="122.0" prefWidth="1326.0" BorderPane.alignment="CENTER">
+                        <FlowPane prefHeight="141.0" prefWidth="1183.0" BorderPane.alignment="CENTER">
                            <children>
                               <Pane prefHeight="110.0" prefWidth="214.0" style="-fx-background-radius: 10px;" styleClass="home-product">
                                  <FlowPane.margin>
-                                    <Insets bottom="10.0" left="200.0" right="10.0" top="10.0" />
+                                    <Insets bottom="10.0" left="25.0" right="10.0" top="10.0" />
                                  </FlowPane.margin>
                                  <children>
                                     <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="109.0" prefWidth="215.0">
@@ -153,9 +153,9 @@
                         </FlowPane>
                      </top>
                      <left>
-                        <Pane prefHeight="670.0" prefWidth="1326.0" BorderPane.alignment="CENTER">
+                        <Pane prefHeight="580.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
                            <children>
-                              <BarChart fx:id="barChart" layoutX="332.0" layoutY="84.0" prefHeight="434.0" prefWidth="816.0" stylesheets="@../styles/reports.css">
+                              <BarChart fx:id="barChart" layoutX="126.0" layoutY="49.0" prefHeight="434.0" prefWidth="816.0" stylesheets="@../styles/reports.css">
                                  <xAxis>
                                     <CategoryAxis fx:id="axisX" label="Producto" prefWidth="703.0">
                                        <tickLabelFont>
@@ -175,7 +175,7 @@
                                     <String fx:value="bar-chart" />
                                  </styleClass>
                               </BarChart>
-                              <Label layoutX="571.0" layoutY="40.0" styleClass="font-middle" stylesheets="@../styles/reports.css" text="Productos más vendidos" />
+                              <Label layoutX="368.0" layoutY="7.0" styleClass="font-middle" stylesheets="@../styles/reports.css" text="Productos más vendidos" />
                            </children>
                         </Pane>
                      </left>

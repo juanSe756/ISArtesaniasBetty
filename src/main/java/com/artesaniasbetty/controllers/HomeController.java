@@ -1,7 +1,9 @@
 package com.artesaniasbetty.controllers;
 
+import com.artesaniasbetty.App;
 import com.artesaniasbetty.dao.ProductoDAO;
 import com.artesaniasbetty.dao.VentaDAO;
+import com.artesaniasbetty.gui.StartFrame;
 import com.artesaniasbetty.model.Producto;
 import com.artesaniasbetty.model.Venta;
 import javafx.application.Platform;
@@ -43,6 +45,7 @@ public class HomeController implements Initializable{
     public Button btnVentas;
     public Button btnCerrar;
     public Button btnMinimizar;
+    public Button btnExit;
     private ProductoDAO productoDAO;
 
     public void inicializar() {
@@ -164,6 +167,7 @@ public class HomeController implements Initializable{
             panelStage.initModality(Modality.APPLICATION_MODAL); // Esto hará que la nueva ventana sea modal
             panelStage.initOwner(stage); // Establece la ventana principal como propietaria de la nueva ventana
             initComponentsResupply(loader);
+            panelStage.initStyle(StageStyle.UNDECORATED);
             panelStage.show();
 
         } catch (IOException e) {
@@ -185,7 +189,6 @@ public class HomeController implements Initializable{
     public void showLoadingWindow() {
         // Crea una ventana de carga
         Stage loadingStage = new Stage();
-        loadingStage.initStyle(StageStyle.UNDECORATED);
         loadingStage.initModality(Modality.APPLICATION_MODAL);
 
         // Carga el FXML de la ventana de carga
@@ -198,6 +201,7 @@ public class HomeController implements Initializable{
             e.printStackTrace();
         }
 
+        loadingStage.initStyle(StageStyle.UNDECORATED);
         // Muestra la ventana de carga
         loadingStage.show();
     }
@@ -231,12 +235,12 @@ public class HomeController implements Initializable{
             // Obtén la ventana actual y muestra el nuevo panel en una ventana emergente
             Scene currentScene = btnRegistrarVenta.getScene();
             Stage stage = (Stage) currentScene.getWindow();
-
             Stage panelStage = new Stage();
             panelStage.setScene(scene);
             panelStage.initModality(Modality.APPLICATION_MODAL); // Esto hará que la nueva ventana sea modal
             panelStage.initOwner(stage); // Establece la ventana principal como propietaria de la nueva ventana
             initComponentsRegisterSale(loader,stage);
+            panelStage.initStyle(StageStyle.UNDECORATED);
             panelStage.show();
 
         } catch (IOException e) {
@@ -300,5 +304,11 @@ public class HomeController implements Initializable{
     public void closeApp(ActionEvent actionEvent) {
         Stage currentStage = (Stage) btnCerrar.getScene().getWindow();
         currentStage.close();
+    }
+
+    public void exitApp(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) btnCerrar.getScene().getWindow();
+        currentStage.close();
+        new App();
     }
 }

@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lombok.Getter;
 
 import javax.swing.text.Element;
@@ -93,6 +94,7 @@ public class MainProductController {
             panelStage.initModality(Modality.APPLICATION_MODAL); // Esto hará que la nueva ventana sea modal
             panelStage.initOwner(stage); // Establece la ventana principal como propietaria de la nueva ventana
             initComponentsNewProduct(loader,stage);
+            panelStage.initStyle(StageStyle.UNDECORATED);
             panelStage.show();
 
         } catch (IOException e) {
@@ -125,13 +127,15 @@ public class MainProductController {
                 deleteButton.setGraphic(deleteIcon);
                 deleteButton.setOnAction(event -> {
                     ProductTable producto = getTableView().getItems().get(getIndex());
-                    boolean selected = showAlert(producto.getName());
+                    boolean selected = changeViewWarning(new ActionEvent(),
+                            "¿Está seguro de eliminar el producto " + producto.getName() +
+                                    "?");;
                     if(selected){
+                        changeViewErrors(new ActionEvent(),false,"Producto eliminado exitosamente");
                         productoDAO.removeProduct(producto.getId());
                         products.remove(producto);
-                        showAlertInfo("Prodcuto eliminado exitosamente");
                     }else {
-                        showAlertInfo("Proceso cancelado");
+                        changeViewErrors(new ActionEvent(),true,"Proceso cancelado");
                     }
                 });
             }
@@ -195,6 +199,7 @@ public class MainProductController {
             panelStage.initModality(Modality.APPLICATION_MODAL); // Esto hará que la nueva ventana sea modal
             panelStage.initOwner(stage); // Establece la ventana principal como propietaria de la nueva ventana
             initComponentsModifyProduct(loader,stage,producto);
+            panelStage.initStyle(StageStyle.UNDECORATED);
             panelStage.show();
 
         } catch (IOException e) {
@@ -238,6 +243,84 @@ public class MainProductController {
         alert.setTitle("Info");
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void changeViewErrors(ActionEvent actionEvent, boolean type, String message) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/Errores.fxml"));
+        BorderPane panel = null;
+        try {
+            panel = loader.load();
+
+            // Obtén la ventana actual y muestra el nuevo panel en una ventana emergente
+            Scene currentScene = btnNewProduct.getScene();
+            Stage stage = (Stage) currentScene.getWindow();
+
+            // Crea la escena de la ventana de errores con las dimensiones de la ventana principal
+            Scene scene = new Scene(panel, 350, 200);
+
+            Stage panelStage = new Stage();
+            panelStage.setScene(scene);
+            panelStage.initModality(Modality.APPLICATION_MODAL);
+            panelStage.initOwner(stage);
+            initComponentsErrores(loader, stage, type, message);
+            panelStage.initStyle(StageStyle.UNDECORATED);
+            panelStage.showAndWait();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void initComponentsErrores(FXMLLoader loader,Stage stage,boolean type, String message){
+        ErrorController errorController = null;
+        try {
+            errorController = loader.getController();
+            errorController.setData(type,message);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public boolean changeViewWarning(ActionEvent actionEvent, String message) {
+        boolean result = false;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/Warning.fxml"));
+        BorderPane panel = null;
+        try {
+            panel = loader.load();
+
+            // Obtén la ventana actual y muestra el nuevo panel en una ventana emergente
+            Scene currentScene = btnNewProduct.getScene();
+            Stage stage = (Stage) currentScene.getWindow();
+
+            // Crea la escena de la ventana de errores con las dimensiones de la ventana principal
+            Scene scene = new Scene(panel, 350, 200);
+
+            Stage panelStage = new Stage();
+            panelStage.setScene(scene);
+            panelStage.initModality(Modality.APPLICATION_MODAL);
+            panelStage.initOwner(stage);
+            panelStage.initStyle(StageStyle.UNDECORATED);
+            result = initComponentsWarning(loader, message);
+            panelStage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+
+    public boolean initComponentsWarning(FXMLLoader loader, String message){
+        boolean result = false;
+        WarningController errorController = null;
+        try {
+            errorController = loader.getController();
+            errorController.setData(message);
+            result = errorController.confirmarOperation(new ActionEvent());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 }
 

@@ -195,7 +195,6 @@ public class ProductoDAO {
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, id);
-            Files.delete(Paths.get("/assets/prods/" + producto.getNombre() + ".jpg"));
             producto.setEstadoProducto(em.find(Estado.class, 2));
             em.persist(producto);
             em.getTransaction().commit();

@@ -7,12 +7,18 @@ import com.artesaniasbetty.model.Producto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lombok.Getter;
 
+import javax.swing.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +38,8 @@ public class registerSaleController {
     public TableColumn<RegisterSaleTable,Double> colPrecioTotal;
     public Button btnConfirmar;
     public Button btnCancelar;
+    public Button btnMinimize;
+    public Button btnClose;
     private List<RegisterSaleTable> ventas;
     private List<Producto> productosVendadidos;
     @Getter
@@ -81,11 +89,7 @@ public class registerSaleController {
             tablaVentas.refresh();
             txtPrecio.setText("$" + totalPrice);
         }else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText("No hay suficiente stock de este producto");
-            alert.showAndWait();
+            changeViewErrors(new ActionEvent(), true,"No hay suficiente stock de este producto");
         }
     }
 
@@ -117,10 +121,14 @@ public class registerSaleController {
                 hashMap.put(productoDAO.searchProduct(venta.getName()).getId(), venta.getAmount());
             }
             createSale(areaDescripcion.getText(), 1, hashMap);
-            showAlertSuccess(new ActionEvent(),"Venta registrada correctamente");
+            changeViewErrors(new ActionEvent(),false,"Venta registrada correctamente");
+            Stage currentStage = (Stage) btnClose.getScene().getWindow();
+            currentStage.close();
         }else {
-            showAlertError(new ActionEvent(),"Venta vacía");
+            changeViewErrors(new ActionEvent(),true,"Venta vacía");
         }
+        Stage currentStage = (Stage) btnClose.getScene().getWindow();
+        currentStage.close();
     }
 
     private void showAlertSuccess(ActionEvent event,String message) {
@@ -139,5 +147,52 @@ public class registerSaleController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public void minimizeApp(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) btnMinimize.getScene().getWindow();
+        currentStage.setIconified(true);
+    }
+
+    public void closeApp(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) btnClose.getScene().getWindow();
+        currentStage.close();
+    }
+
+    public void changeViewErrors(ActionEvent actionEvent, boolean type, String message) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/Errores.fxml"));
+        BorderPane panel = null;
+        try {
+            panel = loader.load();
+
+            // Obtén la ventana actual y muestra el nuevo panel en una ventana emergente
+            Scene currentScene = btnCancelar.getScene();
+            Stage stage = (Stage) currentScene.getWindow();
+
+            // Crea la escena de la ventana de errores con las dimensiones de la ventana principal
+            Scene scene = new Scene(panel, 350, 200);
+
+            Stage panelStage = new Stage();
+            panelStage.setScene(scene);
+            panelStage.initModality(Modality.APPLICATION_MODAL);
+            panelStage.initOwner(stage);
+            initComponentsErrores(loader, stage, type, message);
+            panelStage.initStyle(StageStyle.UNDECORATED);
+            panelStage.showAndWait();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void initComponentsErrores(FXMLLoader loader,Stage stage,boolean type, String message){
+        ErrorController errorController = null;
+        try {
+            errorController = loader.getController();
+            errorController.setData(type,message);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

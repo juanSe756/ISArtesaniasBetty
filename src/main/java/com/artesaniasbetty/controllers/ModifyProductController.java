@@ -6,16 +6,21 @@ import com.artesaniasbetty.model.Producto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +36,8 @@ public class ModifyProductController {
     public TextField campoNombre;
     public TextField campoPrecio;
     public Button btnCancelar;
+    public Button btnMinimize;
+    public Button btnClose;
     private ProductoDAO productoDAO = new ProductoDAO();
 
     private int idProduct;
@@ -94,13 +101,15 @@ public class ModifyProductController {
                     comboCategoria.getSelectionModel().getSelectedItem().toString().equalsIgnoreCase("Madera") ? 2 : 1,
                     imagenProducto.getImage().getUrl().replace("file:/", "").replace("%20", " ").replace("%", " ")); //
             if(modified){
-                showAlertSucess(new ActionEvent(),"Producto modificado exitosamente");
+                changeViewErrors(new ActionEvent(),false,"Producto modificado exitosamente");
             }else {
-                showAlertError(new ActionEvent(),"Error al modificar el producto");
+                changeViewErrors(new ActionEvent(),true, "Error al modificar el producto");
             }
         }else {
-            showAlertError(new ActionEvent(),"Debe rellenar todos los campos");
+            changeViewErrors(new ActionEvent(),true,"Debe rellenar todos los campos");
         }
+        Stage currentStage = (Stage) btnCancelar.getScene().getWindow();
+        currentStage.close();
     }
 
     public void uploadImage(ActionEvent actionEvent) {
@@ -147,5 +156,52 @@ public class ModifyProductController {
     public void cancelOperation(ActionEvent actionEvent) {
         Stage currentStage = (Stage) btnCancelar.getScene().getWindow();
         currentStage.close();
+    }
+
+    public void minimizeApp(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) btnMinimize.getScene().getWindow();
+        currentStage.setIconified(true);
+    }
+
+    public void closeApp(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) btnClose.getScene().getWindow();
+        currentStage.close();
+    }
+
+    public void changeViewErrors(ActionEvent actionEvent, boolean type, String message) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/archivesViews/Errores.fxml"));
+        BorderPane panel = null;
+        try {
+            panel = loader.load();
+
+            // Obtén la ventana actual y muestra el nuevo panel en una ventana emergente
+            Scene currentScene = btnCancelar.getScene();
+            Stage stage = (Stage) currentScene.getWindow();
+
+            // Crea la escena de la ventana de errores con las dimensiones de la ventana principal
+            Scene scene = new Scene(panel, 350, 200);
+
+            Stage panelStage = new Stage();
+            panelStage.setScene(scene);
+            panelStage.initModality(Modality.APPLICATION_MODAL);
+            panelStage.initOwner(stage);
+            initComponentsErrores(loader, stage, type, message);
+            panelStage.initStyle(StageStyle.UNDECORATED);
+            panelStage.showAndWait();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void initComponentsErrores(FXMLLoader loader,Stage stage,boolean type, String message){
+        ErrorController errorController = null;
+        try {
+            errorController = loader.getController();
+            errorController.setData(type,message);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

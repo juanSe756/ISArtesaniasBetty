@@ -40,7 +40,7 @@ public class ProductController {
         nameProduct.setText(producto.getNombre());
         amountProduct.setText("Cantidad = " + producto.getStock());
         productoDAO.convertBytesToImage(producto.getFoto(), producto.getNombre());
-        loadImageTrend(producto.getId());
+        //loadImageTrend(producto.getId());
         loadImageStock(producto);
         loadImage();
     }
