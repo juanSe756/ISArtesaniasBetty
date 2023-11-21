@@ -10,19 +10,19 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 
-<FlowPane fx:id="productPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="350.0" prefWidth="350.0" prefWrapLength="420.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.ProductController">
+<FlowPane fx:id="productPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="320.0" prefWidth="320.0" prefWrapLength="420.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artesaniasbetty.controllers.ProductController">
    <children>
-      <Button minHeight="0.0" minWidth="0.0" mnemonicParsing="false" prefHeight="350.0" prefWidth="350.0" style="-fx-background-color: white;">
+      <Button minHeight="0.0" minWidth="0.0" mnemonicParsing="false" prefHeight="320.0" prefWidth="320.0" style="-fx-background-color: white;">
          <graphic>
             <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="340.0" prefWidth="250.0" style="-fx-background-color: white;">
                <children>
-                  <BorderPane layoutX="-14.0" layoutY="-2.0" minHeight="0.0" minWidth="0.0" prefHeight="324.0" prefWidth="330.0" style="-fx-background-color: white;">
-                     <center>
-                        <Pane minHeight="0.0" minWidth="0.0" prefHeight="281.0" prefWidth="300.0" style="-fx-background-color: white;" stylesheets="@../styles/home_style.css" BorderPane.alignment="CENTER">
+                  <BorderPane layoutX="-14.0" layoutY="-2.0" minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="320.0" style="-fx-background-color: white;">
+                     <top>
+                        <Pane minHeight="0.0" minWidth="0.0" prefHeight="3.0" prefWidth="330.0" BorderPane.alignment="CENTER">
                            <children>
-                              <BorderPane layoutX="2.0" layoutY="1.0" prefHeight="295.0" prefWidth="302.0" style="-fx-background-color: white;" styleClass="home-container-search">
+                              <BorderPane layoutX="14.0" layoutY="14.0" prefHeight="295.0" prefWidth="302.0" style="-fx-background-color: white;" styleClass="home-container-search">
                                  <bottom>
-                                    <Label fx:id="amountProduct" alignment="CENTER" contentDisplay="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="45.0" prefWidth="302.0" stylesheets="@../styles/home_style.css" text="Cantidad : 10" textAlignment="CENTER" BorderPane.alignment="CENTER">
+                                    <Label fx:id="amountProduct" alignment="CENTER" contentDisplay="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="45.0" prefWidth="302.0" style="-fx-background-radius: 10px; -fx-border-color: white;" stylesheets="@../styles/home_style.css" text="Cantidad : 10" textAlignment="CENTER" BorderPane.alignment="CENTER">
                                        <styleClass>
                                           <String fx:value="font-sub" />
                                           <String fx:value="home-product-redondeado" />
@@ -33,9 +33,9 @@
                                     <Insets />
                                  </opaqueInsets>
                                  <center>
-                                    <Pane maxWidth="1.7976931348623157E308" prefHeight="223.0" prefWidth="302.0" BorderPane.alignment="CENTER">
+                                    <Pane maxWidth="1.7976931348623157E308" prefHeight="202.0" prefWidth="293.0" style="-fx-border-width: 2px; -fx-border-color: rgb(194, 168, 148); -fx-border-radius: 10px;" BorderPane.alignment="CENTER">
                                        <children>
-                                          <ImageView fx:id="imageProduct" fitHeight="208.0" fitWidth="200.0" layoutX="56.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="imageProduct" fitHeight="194.0" fitWidth="196.0" layoutX="56.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../assets/prods/Pantalla.jpg" />
                                              </image>
@@ -47,7 +47,7 @@
                                     </Pane>
                                  </center>
                                  <top>
-                                    <FlowPane minHeight="0.0" minWidth="0.0" prefHeight="49.0" prefWidth="302.0" styleClass="home-product-redondeado" BorderPane.alignment="CENTER">
+                                    <FlowPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="302.0" style="-fx-background-radius: 10px; -fx-border-color: white;" styleClass="home-product-redondeado" stylesheets="@../styles/home_style.css" BorderPane.alignment="CENTER">
                                        <children>
                                           <Label prefHeight="18.0" prefWidth="24.0" />
                                           <ImageView fx:id="imageTrend" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -71,22 +71,15 @@
                                  </top>
                               </BorderPane>
                            </children>
-                           <styleClass>
-                              <String fx:value="home-container-search" />
-                              <String fx:value="home-product-special" />
-                           </styleClass>
                         </Pane>
-                     </center>
-                     <top>
-                        <Pane prefHeight="25.0" prefWidth="50.0" styleClass="home-container-search" BorderPane.alignment="CENTER" />
                      </top>
-                     <left>
-                        <Pane prefHeight="50.0" prefWidth="25.0" style="-fx-background-color: white;" styleClass="home-container-search" BorderPane.alignment="CENTER" />
-                     </left>
                   </BorderPane>
                </children>
             </Pane>
          </graphic>
+         <FlowPane.margin>
+            <Insets />
+         </FlowPane.margin>
       </Button>
    </children>
 </FlowPane>

@@ -64,7 +64,6 @@ public class ProductController {
     public void loadImage() {
         String enlace = ProductoDAO.outputPath;
         enlace = enlace.replace("src/main/resources","");
-        System.out.println(enlace);
         imageProduct.setImage(new Image(enlace));
     }
 }

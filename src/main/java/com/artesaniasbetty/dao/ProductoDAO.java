@@ -25,7 +25,6 @@ public class ProductoDAO {
     public boolean createProduct(String nombre, double precio, String desc, int stock, int categ, String fotoURL) {
         boolean operation = false;
         try (EntityManager em = EntityMF.getInstance().createEntityManager()) {
-            System.out.println("Foto: "+fotoURL);
             saveImage(fotoURL, nombre);
             byte[] foto = convertImageToBytes(fotoURL);
             em.getTransaction().begin();

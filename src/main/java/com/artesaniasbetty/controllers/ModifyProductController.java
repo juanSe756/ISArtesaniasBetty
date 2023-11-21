@@ -92,7 +92,6 @@ public class ModifyProductController {
         spinnerCantidad.getValueFactory().setValue(stock);
     }
     public void modifyProduct(ActionEvent actionEvent) {
-        System.out.println(imagenProducto.getImage().getUrl());
         if (!campoPrecio.getText().isEmpty() && !campoNombre.getText().isEmpty() && imagenProducto.getImage().getUrl() != null) {
             boolean modified = productoDAO.modifyProduct(idProduct,
                     campoNombre.getText(),

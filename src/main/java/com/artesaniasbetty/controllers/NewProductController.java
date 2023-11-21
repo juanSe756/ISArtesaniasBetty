@@ -124,10 +124,10 @@ public class NewProductController {
                 changeViewErrors(new ActionEvent(), false,"Producto creado exitosamente");
                 closeApp(new ActionEvent());
             } else {
-                changeViewErrors(new ActionEvent(),false, "Error al crear el producto");
+                changeViewErrors(new ActionEvent(),true, "Error al crear el producto");
             }
         } else {
-            changeViewErrors(new ActionEvent(), false,"Debe rellenar todos los campos");
+            changeViewErrors(new ActionEvent(), true,"Debe rellenar todos los campos");
         }
     }
 

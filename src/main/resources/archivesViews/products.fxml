@@ -14,16 +14,16 @@
          <children>
             <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="17.0" layoutY="100.0" minHeight="0.0" minWidth="0.0" prefHeight="520.0" prefWidth="1000.0" style="-fx-font-size: 20px;">
                <content>
-                  <TableView fx:id="productsTable" editable="true" minHeight="0.0" minWidth="0.0" prefHeight="518.0" prefWidth="979.0" style="-fx-border-width: 7px; -fx-border-radius: 10px; -fx-border-color: rgb(194, 168, 148);">
+                  <TableView fx:id="productsTable" editable="true" minHeight="0.0" minWidth="0.0" prefHeight="518.0" prefWidth="1102.0" style="-fx-border-width: 7px; -fx-border-radius: 10px; -fx-border-color: rgb(194, 168, 148);">
                      <columns>
                         <TableColumn fx:id="idColumn" prefWidth="73.59997272491455" text="Id" />
-                        <TableColumn fx:id="nameColumn" prefWidth="166.4000244140625" text="Nombre" />
-                        <TableColumn fx:id="priceColumn" prefWidth="154.39988708496094" text="Precio unitario" />
-                        <TableColumn fx:id="descriptionColum" prefWidth="216.0" text="Descripción" />
-                        <TableColumn fx:id="stockColumn" minWidth="8.800048828125" prefWidth="130.4000244140625" text="Stock" />
-                        <TableColumn fx:id="categoryColumn" prefWidth="158.4000244140625" text="Categoria" />
-                        <TableColumn fx:id="colButtonDelete" prefWidth="56.0" />
-                        <TableColumn fx:id="colButtonModify" prefWidth="56.0" />
+                        <TableColumn fx:id="nameColumn" prefWidth="144.80005645751953" text="Nombre" />
+                        <TableColumn fx:id="priceColumn" prefWidth="144.00003051757812" text="Precio unitario" />
+                        <TableColumn fx:id="descriptionColum" prefWidth="192.0" text="Descripción" />
+                        <TableColumn fx:id="stockColumn" minWidth="8.800048828125" prefWidth="104.800048828125" text="Stock" />
+                        <TableColumn fx:id="categoryColumn" prefWidth="178.4000244140625" text="Categoria" />
+                        <TableColumn fx:id="colButtonDelete" prefWidth="60.0" />
+                        <TableColumn fx:id="colButtonModify" prefWidth="60.0" />
                      </columns>
                   </TableView>
                </content>

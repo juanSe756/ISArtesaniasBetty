@@ -16,7 +16,7 @@ public class Test extends Application {
         javafx.geometry.Rectangle2D bounds = screen.getVisualBounds();
         Scene scene1 = new Scene(root1, bounds.getWidth(), bounds.getHeight());
         stage.setFullScreen(true);
-        stage.initStyle(StageStyle.UNDECORATED);
+        stage.ini--module-path "C:\Users\Jorge\Downloads\openjfx-21.0.1_windows-x64_bin-sdk\javafx-sdk-21.0.1\lib" --add-modules javafx.controls,javafx.fxmltStyle(StageStyle.UNDECORATED);
         stage.setScene(scene1);
         stage.show();
     }
